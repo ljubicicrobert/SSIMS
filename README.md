@@ -90,7 +90,21 @@ Toggle visibility of legend and point list using **F1** key.
 ### Selecting features for transformation
 Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the **Select features for transformation** button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
 
-To help you choose the best features, an additional analysis is available by clicking the **Analyze RMSD** button in the top-left corner. This will run the _feature_goodness.py_ script and will show a bar graph of summed root-mean-squared differences for all frames relative to the reference frame. In the graph, the best features are likely to have lower RMSD scores. **KEEP IN MIND** that this is a simplified analysis, as it will likely be impacted by the shape and color of the selected features.
+To help you choose the best features, an additional analysis is available by clicking the **Analyze RMSD** button in the top-left corner. This will run the _feature_goodness.py_ script and will show a bar graph of summed root-mean-squared differences for all frames relative to the reference frame (initial, average, or median). In the bar graph, the best features are likely to have lower RMSD scores, which can help you decide which ones to keep and which ones to remove from the transformation.
+
+**KEEP IN MIND** that this is a simplified analysis, as it will likely be impacted by the shape and color of the selected features.
 
 
 ### Orthorectification
+
+
+### Image stabilization (transformation)
+
+
+### Acknowledgements
+
+
+### References
+
+
+### Licence
