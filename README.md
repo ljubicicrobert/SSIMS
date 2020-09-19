@@ -71,17 +71,26 @@ Argument _--fold_ should point to the folder named _gcp_img_ which is automatica
 
 If used on Windows platform, a convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form]() in which the feature tracking and image transformation parameters are defined.
 
-Form for [video unpacking]() and removal of camera distortion can be called using the appropriate button in the top-left corner of the MAIN form.
+[Form for video unpacking]() and removal of camera distortion can be called using the appropriate button in the top-left corner of the MAIN form.
 
-Form for [creating videos]() can be called using the appropriate button in the top-right corner of the MAIN form.
+[Form for creating videos]() can be called using the appropriate button in the top-right corner of the MAIN form.
 
 ### Selecting features for tracking
 In the MAIN form, user can select or input the location of original images, as well as the output location. Once the images have been found, user can start feature selection and tracking using the **Track features** button in the bottom-left corner, which will open a new form to allow the user to select the static feature which will be tracked.
 
 Use the **RIGHT mouse button** to select the static feature. Once a feature is selected, a regions representing interrogation area (IA) and search area (SA) will be shown around it.
 
-If you wish to delete the previously selected feature, use the **MIDDLE mouse button** or the key **D** on keyboard. This will remove the IA/SA regions from the image.
+If you wish to delete the previously selected feature, use the **MIDDLE mouse button** or the key **D** on keyboard. This will also clear the IA/SA regions from the image.
 
-Use keys **O** and **O** to zoom and pan the image. Use keys **LEFT** and **RIGHT** to undo and redo the zoom or pan commands. Use key **ENTER/RETURN** to accept the selected features and start the tracking.
+Use keys **O** and **P** to zoom and pan the image. Use keys **LEFT** and **RIGHT** to undo and redo the zoom or pan commands. Use key **ENTER/RETURN** to accept the selected features and start the tracking.
 
 Toggle visibility of legend and point list using **F1** key.
+
+
+### Selecting features for transformation
+Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the **Select features for transformation** button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
+
+To help you choose the best features, an additional analysis is available by clicking the **Analyze RMSD** button in the top-left corner. This will run the _feature_goodness.py_ script and will show a bar graph of summed root-mean-squared differences for all frames relative to the reference frame. In the graph, the best features are likely to have lower RMSD scores. **KEEP IN MIND** that this is a simplified analysis, as it will likely be impacted by the shape and color of the selected features.
+
+
+### Orthorectification
