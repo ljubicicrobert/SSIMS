@@ -1,0 +1,11 @@
+--- Expand search area ---
+Whether to increase the search area size if the maximal SSIM index is below a certain threshold.
+
+--- Expand coefficient ---
+Search area expansion factor (must be > 1).
+
+--- Expand threshold ---
+Search area will be expanded if the maximal SSIM index is below this value (between 0 and 1, noninclusive). Should be used if significant sudden movement is present.
+
+--- Update features after each frame ---
+Whether to use features from the previous frame of the sequence (reference) frame, rather than from the initial (reference) frame. Should only be used if significant rotation of the ROI is present (usually > 20-25 deg) as it slightly deteriorates the detection accuracy.

@@ -1,0 +1,34 @@
+﻿;Semicolon denotes comment line, these can be removed
+;Do not change or remove section headers!
+
+
+[Unpack video]
+
+VideoPath = "Full path to video file, with extension"
+OutputFolder = "Path to the folder in which the frames will be stored"
+
+;Prefix of frame files, can be empty
+Prefix = frame_
+
+;Specify frame extension without leading dot
+Extension = jpg
+
+;Image wuality, must be between 1 and 100
+Quality = 95
+
+;Image scale factor, 1.0 keeps the original resolution
+Scale = 1.0
+
+;Start frame index
+Start = 0
+
+;Start numbering images from
+StartNum = 0
+
+;End frame index. If higher than total number of frames in video then frames
+;will be extracted up to the end of the video
+End = 999999
+
+;Whether to undistort the video using the camera parameters specified
+;in the camera_parameters.txt file in the OutputFolder
+Undistort = 0

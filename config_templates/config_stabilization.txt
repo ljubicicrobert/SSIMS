@@ -1,0 +1,53 @@
+﻿;Semicolon denotes comment line, these can be removed
+;Do not change or remove section headers!
+
+
+[Stabilization]
+
+InputFolder = "Path to folder containing original frames"
+OutputFolder = "Path to folder containing feature tracking results"
+
+;Specify extension without leading dot
+ImageExtension = jpg
+
+;Quality must be between 1 and 100
+ImageQuality = 95
+
+;Whether to create a video from stabilized frames
+CreateVideo = 1
+
+;Framerate for the stabilized video
+fps = 30.00
+
+;Transformation method:
+;   0-similarity
+;   1-affine2D_strict
+;   2-affine2D_optimal
+;   3-affine3D_optimal
+;   4-projective_strict
+;   5-projective_optimal
+Method = 5
+
+;Whether to filter feature points using RANSAC
+UseRANSAC = 0
+
+;RANSAC threshold
+RANSACThreshold = 2.0
+
+;Whether to also orthorectify images. Keep in mind that the real-world GCP
+;coordinates must be specified in gcp_real.txt file in the OutputFolder
+Orthorectify = 0
+
+;PX per meter
+PXRatio = 100
+
+;Which tracked features to use for the stabilization, e.g. 10110 means only
+;the first, third and fourth feature will be used. If == 1 then all features
+;are used.
+FeatureMask = 1
+
+;If orthorectifying, number of pixels to gather from original images around
+;the specified GCPs, e.g. PaddX = 50-100 will collect 50 pixels to the left
+;of the leftmost GCP and 100 to the right of the rightmost GCP
+PaddX = 0-0
+PaddY = 0-0

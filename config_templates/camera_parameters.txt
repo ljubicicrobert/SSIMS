@@ -1,0 +1,30 @@
+﻿;Semicolon denotes comment line, these can be removed
+;Do not change or remove section headers!
+
+;Explanation on camera parameters can be found at:
+;https://www.mathworks.com/help/vision/ref/cameraparameters.html
+;or at
+;https://docs.opencv.org/master/dc/dbb/tutorial_py_calibration.html
+
+
+[Camera]
+Model = Sony RX10 M2
+
+[Intrinsics]
+fx = 3735.928
+fy = 3726.427
+s = 1.239937
+cx = 2751.342
+cy = 1526.788
+
+[Radial]
+k1 = -0.002001801
+k2 = -0.0001716619
+k3 = 0
+k4 = 0
+k5 = 0
+k6 = 0
+
+[Tangential]
+p1 = 0.0007808374
+p2 = 0.001317771

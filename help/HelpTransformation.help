@@ -1,0 +1,26 @@
+--- Select features for transformation ---
+Interactively select which of the tracked features will be used for the stabilization and which ones will be discarded. Useful when exploring different transformation methods.
+
+--- Output extension ---
+File extension to use for output (stabilized) frames. Can impact output image quality.
+
+--- Image quality ---
+Higher numbers ensure better output image quality (lower compression) and vice-versa. In range from 1 to 100, JPG default compression is 95, PNG and WEBP use lossless compression if value is 100.
+
+--- Create video from frames ---
+Whether to use the transformed frames to create a new stabilized video.
+
+--- Video framerate ---
+Framerate for the output video, made from individual stabilized frames. Should be identical to theframerate of the original input video.
+
+--- Transformation method ---
+Geometric transformation method used to stabilize frames. Several affine and projective methods are available.
+
+--- Use RANSAC filtering ---
+Whether to use Random Sample Concensus method to detect features that lead to unacceptable reprojection errors. Only available for methods that use least-square optimization.
+
+--- RANSAC threshold ---
+Threshold (in pixels) for detecting unacceptable reprojection errors.
+
+--- Orthorectify ---
+Whether to perform orthorectification using GCPs, along with the stabilization. Stabilization and orthorectification are performed simultaneously to avoid the accumulation of compression and interpolation errors.

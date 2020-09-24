@@ -1,0 +1,23 @@
+﻿;Semicolon denotes comment line, these can be removed
+;Do not change or remove section headers!
+
+
+[Create video]
+
+VideoName = "Name of the video, do not put extension as only AVI is supported"
+FramesFolder = "Full path to the frames folder"
+
+;Specify frame extension without leading dot
+ImageExtension = jpg
+
+;Which codec to use for the video. Supported: MJPG, DIVX, XVID, WMV1, WMV2.
+Codec = MJPG
+
+;Framerate of the output video file
+FPS = 25.00
+
+;Scaling factor for the frames, 1.0 will keep the original frame resolution
+Scale = 1.0
+
+;Interpolation scheme for scaling: 0-bilinear, 1-bicubic, 2-Lanczos
+Interpolation = 0

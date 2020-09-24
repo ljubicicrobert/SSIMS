@@ -1,0 +1,33 @@
+﻿;Semicolon denotes comment line, these can be removed
+;Do not change or remove section headers!
+
+
+[Basic]
+
+InputFolder = "Path to folder containing original frames"
+OutputFolder = "Path to folder in which the results will be stored"
+
+;Specify extension without leading dot
+ImageExtension = jpg
+
+;SA and IA window sizes must be odd integers, e.g. 11, 13, 15, ...
+SearchAreaSize = 21
+InterrogationAreaSize = 11
+
+;Size of the subpixel estimation kernel, must be odd integer or 0 if
+;no subpixel estimation is used
+Subpixel = 3
+
+
+[Advanced]
+
+;Whether to expand the SA window size by the factor of ExpandSACoef is
+;the SSIM score is below ExpandSAThreshold value
+ExpandSA = 0
+ExpandSACoef = 2.0
+ExpandSAThreshold = 0.50
+
+;To update kernels after each frame. USE ONLY IF significant scaling or
+;rotation is present in the sequence since this will reduce the feature
+;tracking accuracy
+UpdateKernels = 0
