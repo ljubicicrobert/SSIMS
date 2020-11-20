@@ -69,11 +69,11 @@ Argument _--fold_ should point to the folder named _gcp_img_ which is automatica
 
 ## Graphical user interface (GUI)
 
-If used on Windows platform, a convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form](ljubicicrobert/SSIMS/blob/master/screenshots/main.png) in which the feature tracking and image transformation parameters are defined.
+If used on Windows platform, a convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form](screenshots/main.png) in which the feature tracking and image transformation parameters are defined.
 
-[Form for video unpacking](ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) and removal of camera distortion can be called using the appropriate button in the top-left corner of the MAIN form.
+[Form for video unpacking](screenshots/video_unpack.png) and removal of camera distortion can be called using the appropriate button in the top-left corner of the MAIN form.
 
-[Form for creating videos](ljubicicrobert/SSIMS/blob/master/screenshots/video_create.png) can be called using the appropriate button in the top-right corner of the MAIN form.
+[Form for creating videos](screenshots/video_create.png) can be called using the appropriate button in the top-right corner of the MAIN form.
 
 ### Selecting features for tracking
 In the MAIN form, user can select or input the location of original images, as well as the output location. Once the images have been found, user can start feature selection and tracking using the **Track features** button in the bottom-left corner, which will open a new form to allow the user to select the static feature which will be tracked.
