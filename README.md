@@ -71,12 +71,16 @@ Argument _--fold_ should point to the folder named _gcp_img_ which is automatica
 
 If used on Windows platform, a convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/main.png) in which the feature tracking and image transformation parameters are defined.
 
+Keep in mind that some options are only available after certain steps have already been completed (e.g. filtering features for image transformation is only available after the feature tracking stage has been completed, etc.).
+
 [Form for video unpacking](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/video_unpack.png) and removal of camera distortion can be called using the appropriate button in the top-left corner of the MAIN form.
 
 [Form for creating videos](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/video_create.png) can be called using the appropriate button in the top-right corner of the MAIN form.
 
+
 ### Selecting features for tracking
-In the MAIN form, user can select or input the location of original images, as well as the output location. Once the images have been found, user can start feature selection and tracking using the **Track features** button in the bottom-left corner, which will open a new form to allow the user to select the static feature which will be tracked.
+
+In the MAIN form, user can select or input the location of original images, as well as the output location. Once the images have been found, user can start feature selection and tracking using the [Track features](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/select_features.png) button in the bottom-left corner, which will open a new form to allow the user to select the static feature which will be tracked.
 
 Use the **RIGHT mouse button** to select the static feature. Once a feature is selected, a regions representing interrogation area (IA) and search area (SA) will be shown around it.
 
@@ -88,23 +92,44 @@ Toggle visibility of legend and point list using **F1** key.
 
 
 ### Selecting features for transformation
-Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the **Select features for transformation** button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
 
-To help you choose the best features, an additional analysis is available by clicking the **Analyze RMSD** button in the top-left corner of the **Select features for transformation** window. This will run the _feature_goodness.py_ script and will show a bar graph of summed root-mean-squared differences for all frames relative to the reference frame (initial, average, or median). In the bar graph, the best features are likely to have lower RMSD scores, which can help you decide which ones to keep and which ones to remove from the transformation.
+Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the [Select features for transformation](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png) button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
 
-**KEEP IN MIND** that this is a simplified analysis, as it will likely be impacted by the shape and color of the selected features.
+To help you choose the best features, an additional analysis is available by clicking the **Analyze RMSD** button in the top-left corner of the **Select features for transformation** window. This will run the _feature_goodness.py_ script and will show a [bar graph of summed root-mean-squared differences](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/features_RMSD.png) (RMSD) for all frames relative to the reference frame (initial, average, or median). In the bar graph, the best features are likely to have lower RMSD scores, which can help you decide which ones to keep and which ones to remove from the transformation.
+
+**KEEP IN MIND** that this is a simplified analysis, as it will likely be impacted by the shape and color of the selected features. Additional metrics are to be implemented in future releases.
+
+
+### Image stabilization (transformation)
+
+The software offers several options for the final stage, i.e. image transformation: (1) chosing the output images' extension, (2) choosing image quality, (3) whether to also create a video from the transformed images, (4) image transformation method, (5) whether to use RANSAC filtering/outlier detection, and (6) orthorectification. The latter is explained in the **Orthorectification** section below.
+
+The most important parameter is the **transformation method** which can significantly impact the stabilization accuracy. Five methods are available:
+
+1. **Similarity**, based on [cv2.estimateAffinePartial2D](https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html#gad767faff73e9cbd8b9d92b955b50062d) from OpenCV, which requires at least 2 features (4 degrees of freedom),
+2. **Affine 2D (strict)**, based on [cv2.getAffineTransform](https://docs.opencv.org/3.4/da/d54/group__imgproc__transform.html#ga8f6d378f9f8eebb5cb55cd3ae295a999), which requires exactly 3 features,
+3. **Affine 2D (optimal)**, based on [cv2.estimateAffine2D](https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html#ga27865b1d26bac9ce91efaee83e94d4dd), which requires at least 3 features,
+4. **Projective (strict)**, based on [cv2.getPerspectiveTransform](https://docs.opencv.org/3.4/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043), which requires exactly 4 features, and
+5. **Projective (optimal)**, based on [cv2.findHomography](https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780), which requires at least 4 features. This is the default option and is usually the best starting point.
+
+**NOTE:** RANSAC filtering option is only available for methods labeled as **(optimal)**.
 
 
 ### Orthorectification
 
+The GUI also offers a simple orthorectification to be performed by estimating the transformation matrix between the in-image positions of tracking features and their corresponding real-world coordinates.
 
-### Image stabilization (transformation)
+[Form for orthorectification](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png) can be shown by clicking **Orthorectify** in the Image transformation group of the [MAIN form](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/main.png). Here the user can specify the real-world coordinates (in meteres) of only those features **which have been selected for the image transformation** (see section **Selecting features for transformation** for more details).
+
+Users can also set a ground sampling distance (GSD, in px/m) to rescale the image and help with the postprocessing - use this feature carefully as it will always introduce additional errors/noise in the transformaed images. **It's best to keep this ratio as close as possible to the original GSD!**
 
 
 ### Acknowledgements
 
 
+
 ### References
+
 
 
 ### Licence
