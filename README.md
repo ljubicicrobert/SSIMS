@@ -95,7 +95,7 @@ Toggle visibility of legend and point list using **F1** key.
 
 Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the [Select features for transformation](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png) button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
 
-To help you choose the best features, an additional analysis is available by clicking the **Analyze RMSD** button in the top-left corner of the **Select features for transformation** window. This will run the _feature_goodness.py_ script and will show a [bar graph of summed root-mean-squared differences](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/features_RMSD.png) (RMSD) for all frames relative to the reference frame (initial, average, or median). In the bar graph, the best features are likely to have lower RMSD scores, which can help you decide which ones to keep and which ones to remove from the transformation.
+To help you choose the best features, an additional analysis is available by clicking the **Analyze RMSD** button in the top-left corner of the **Select features for transformation** window. This will run the _feature_goodness.py_ script and will show a [bar graph of sumarised root-mean-squared differences](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/features_RMSD.png) (RMSD) for all frames relative to the reference frame (initial, average, or median). In the bar graph, the best features are likely to have lower RMSD scores, which can help you decide which ones to keep and which ones to remove from the transformation.
 
 **KEEP IN MIND** that this is a simplified analysis, as it will likely be impacted by the shape and color of the selected features. Additional metrics are to be implemented in future releases.
 
@@ -126,7 +126,14 @@ Users can also set a ground sampling distance (GSD, in px/m) to rescale the imag
 
 ### Acknowledgements
 
-
+I wish to express my gratitude to the following people (in no particular order):
+    [Mrs. Sophie Pierce](https://www.worcester.ac.uk/about/profiles/sophie-pearce) - for motivating me to start the work in the first place;
+    [Mrs. Dariia Strelnikova](https://www.fh-kaernten.at/en/en/faculty-and-staff-details?personId=4298793872) and [Dr Anette Eltner](https://tu-dresden.de/bu/umwelt/geo/ipf/photogrammetrie/die-professur/beschaeftigte/Anette_Eltner?set_language=en) - for testing the software and allowing me to learn from their own work;
+    Dr Alonso Pizaro and [Dr Salvador Peña‐Haro](https://www.researchgate.net/profile/Salvador_Pena-Haro) - for providing me with insights into their own work;
+    [Dr Budo Zindović](https://www.grf.bg.ac.rs/fakultet/pro/e?nid=153) - for helping me with many implementational details;
+    Dr Salvatore Manfreda and Dr Silvano Dal Sasso - for hosting me at the Università Basilicata in Potenza where I have learned and improved my algorithm;
+    Dr Matthew Perks - for providing me with helpfull comments, as well as providing most of the camera parameters;
+    
 
 ### References
 
