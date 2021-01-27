@@ -99,6 +99,8 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 	vidcap.set(1, start)
 	success, image = vidcap.read()
 
+	height, width = image.shape[:2]
+
 	if verbose:
 		print('[BEGIN] Starting VIDEOTOFRAMES '.ljust(len(separator), '-'))
 		print('[INFO] Starting extraction of frames from', video, 'starting from frame', start)
@@ -125,6 +127,10 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 			save_str = '{}/{}{}.{}'.format(folder, frame_prefix, n, ext)
 
 		if cm is not None and dist is not None:
+			cm[0, 0] = cm[0, 0] * width
+			cm[1, 1] = cm[1, 1] * height
+			cm[0, 2] = cm[0, 2] * width
+			cm[1, 2] = cm[1, 2] * height
 			image = cv2.undistort(image, cm, dist)
 
 		if scale is not None and scale != 1.0:
