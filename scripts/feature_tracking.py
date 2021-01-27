@@ -578,6 +578,8 @@ if __name__ == '__main__':
 			times = deque(maxlen=10)
 			script_start = time()
 
+			ssim_scores = np.zeros([num_raw_frames, len(markers)])
+
 			for n in range(num_raw_frames):
 				try:
 					logger.log(separator)
@@ -608,7 +610,7 @@ if __name__ == '__main__':
 								search_size = exp_search_size
 								search_space = cv2.getRectSubPix(img_ch, (search_size, search_size), (xx, yy))
 
-								rel_center, _ = find_gcp(search_space,
+								rel_center, ssim_max = find_gcp(search_space,
 														 kernels[j],
 														 show=False,
 														 subpixel=subpixel,
@@ -623,6 +625,7 @@ if __name__ == '__main__':
 							real_y = rel_center[1] + yy - (search_size - 1) / 2
 
 							markers[j] = [real_x, real_y]
+							ssim_scores[n, j] = ssim_max
 
 							if is_expanded_search:
 								is_expanded_search = False
@@ -658,6 +661,7 @@ if __name__ == '__main__':
 				remaining = np.mean(times) * (num_raw_frames - n)
 
 				np.savetxt('{}/gcps_csv/{}.txt'.format(results_folder, str(n).rjust(numbering_len, '0')), markers, fmt='%.3f', delimiter=' ')
+				np.savetxt('{}/ssim_scores.txt'.format(results_folder), ssim_scores, fmt='%.3f', delimiter=' ')
 
 				logger.log('[INFO] Markers: {}'.format([[round(x, 3), round(y, 3)] for x, y in markers]))
 				logger.log('[INFO] Frame processing time = {:.3f} sec'.format(dt))

@@ -162,7 +162,6 @@ def coordTransform(image: np.ndarray,
 	:param method:			Method to use for the transformation: 	cv2.estimateAffinePartial2D,
 																	cv2.getAffineTransform,
 																	cv2.estimateAffine2D,
-																	cv2.estimateAffine3D,
 																	cv2.getPerspectiveTransform, or
 																	cv2.findHomography (default).
 	:param M_ortho:			Orthorectification matrix.
@@ -191,12 +190,6 @@ def coordTransform(image: np.ndarray,
 				 'Using only the first 3 features in from the file to estimate the transformation matrix.')
 		M_stable = method(points_old[:3], points_new[:3])
 		status = []
-
-	elif method == cv2.estimateAffine3D:
-		if use_ransac:
-			M_stable, status = method(points_old, points_new, ransacThreshold=ransac_thr, confidence=confidence)
-		else:
-			M_stable, status = method(points_old, points_new, confidence=confidence)
 
 	elif method == cv2.getPerspectiveTransform:
 		if len(points_old) != 4:
@@ -362,14 +355,12 @@ if __name__ == '__main__':
 		methods = {0: cv2.estimateAffinePartial2D,
 				   1: cv2.getAffineTransform,
 				   2: cv2.estimateAffine2D,
-				   3: cv2.estimateAffine3D,
-				   4: cv2.getPerspectiveTransform,
-				   5: cv2.findHomography}
+				   3: cv2.getPerspectiveTransform,
+				   4: cv2.findHomography}
 
 		methods_alias = ['similarity',
 						 'affine_2D_strict',
 						 'affine_2D_optimal',
-						 'affine_3D_optimal',
 						 'projective_strict',
 						 'projective_optimal']
 

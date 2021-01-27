@@ -183,13 +183,15 @@ if __name__ == '__main__':
 				'[ERROR] There was a problem reading the configuration file!\nCheck if project has valid configuration.')
 			exit()
 
+		video_path = cfg.get(section, 'VideoPath')
+		video_folder = path.dirname(video_path)
 		results_folder = cfg.get(section, 'OutputFolder')
 		remove_distortion = int(cfg.get(section, 'Undistort'))
 
-		camera_matrix, distortion = get_camera_parameters('{}/camera_parameters.txt'.format(results_folder))\
+		camera_matrix, distortion = get_camera_parameters('{}/camera_parameters.txt'.format(video_folder))\
 										if remove_distortion else None, None
 
-		videoToFrames(video=		cfg.get(section, 'VideoPath'),
+		videoToFrames(video=		video_path,
 					  folder=		results_folder,
 					  frame_prefix=	cfg.get(section, 'Prefix', fallback=''),
 					  ext=			cfg.get(section, 'Extension', fallback='jpg'),
