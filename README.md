@@ -128,21 +128,23 @@ Users can also set a ground sampling distance (GSD, in px/m) to rescale the imag
 
 I wish to express my gratitude to the following people (in no particular order):
 
-    [Mrs. Sophie Pierce](https://www.worcester.ac.uk/about/profiles/sophie-pearce) - for motivating me to start the work in the first place;
-    
-    [Mrs. Dariia Strelnikova](https://www.fh-kaernten.at/en/en/faculty-and-staff-details?personId=4298793872) and [Dr Anette Eltner](https://tu-dresden.de/bu/umwelt/geo/ipf/photogrammetrie/die-professur/beschaeftigte/Anette_Eltner?set_language=en) - for testing the software and allowing me to learn from their own work;
-    
-    Dr Alonso Pizaro and [Dr Salvador Peña‐Haro](https://www.researchgate.net/profile/Salvador_Pena-Haro) - for providing me with insights into their own work;
-    
-    [Dr Budo Zindović](https://www.grf.bg.ac.rs/fakultet/pro/e?nid=153) - for helping me with many implementational details;
-    
-    [Dr Salvatore Manfreda](https://www.salvatoremanfreda.it) and [Dr Silvano Fortunato Dal Sasso](https://www.researchgate.net/profile/Silvano_Fortunato_Dal_Sasso) - for hosting me at the Università Basilicata in Potenza where I have learned and improved my algorithm;
-    
-    [Dr Matthew T. Perks](https://www.ncl.ac.uk/gps/staff/profile/matthewperks.html#teaching) - for providing me with helpfull comments, as well as providing most of the camera parameters;
-    
+[Mrs. Sophie Pierce](https://www.worcester.ac.uk/about/profiles/sophie-pearce) - for motivating me to start the work in the first place;
+
+[Mrs. Dariia Strelnikova](https://www.fh-kaernten.at/en/en/faculty-and-staff-details?personId=4298793872) and [Dr Anette Eltner](https://tu-dresden.de/bu/umwelt/geo/ipf/photogrammetrie/die-professur/beschaeftigte/Anette_Eltner?set_language=en) - for testing the software and allowing me to learn from their own work;
+
+[Dr Alonso Pizarro](https://www.researchgate.net/profile/Alonso_Pizarro) and [Dr Salvador Peña‐Haro](https://www.researchgate.net/profile/Salvador_Pena-Haro) - for providing me with valuable insights into their own work;
+
+[Dr Budo Zindović](https://www.grf.bg.ac.rs/fakultet/pro/e?nid=153) - for helping me with many implementational details;
+
+[Dr Salvatore Manfreda](https://www.salvatoremanfreda.it) and [Dr Silvano Fortunato Dal Sasso](https://www.researchgate.net/profile/Silvano_Fortunato_Dal_Sasso) - for hosting me at the Università Basilicata in Potenza where I have learned and improved my algorithm;
+
+[Dr Matthew T. Perks](https://www.ncl.ac.uk/gps/staff/profile/matthewperks.html#teaching) - for providing me with helpfull comments, as well as providing most of the camera parameters;
+
 
 ### References
 
 
 
-### Licence
+### Licence and disclaimer
+
+This tool is published under the [General Public Licence v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) and can be used and distributed freely and without charge. The author does not bear the responsibility regarding any possible (mis)use of the software/code, as well as for any damages (physical, hardware, and/or software) that may arise from the use of this tool. The package was scanned using Avast Antivirus prior to the upload, but a rescan after download is always recommended.
