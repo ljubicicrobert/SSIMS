@@ -551,6 +551,12 @@ if __name__ == '__main__':
 		show_legend = True
 		legend_toggle = None
 		markers = get_gcps_from_image(img_rgb, verbose=True, ia=k_size, sa=search_size)
+		cfg['Basic']['SearchAreaSize'] = str(search_size)
+		cfg['Basic']['InterrogationAreaSize'] = str(k_size)
+		
+		with open(args.cfg, 'w') as configfile:
+			cfg.write(configfile)
+
 		markers_mask = [1] * len(markers)
 
 		folders_to_check = ['{}/gcps_csv'.format(results_folder),
