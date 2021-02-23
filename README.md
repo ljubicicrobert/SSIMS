@@ -143,7 +143,7 @@ I wish to express my gratitude to the following people (in no particular order):
 
 ### References
 
-
+Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P.: *Image Quality Assessment: From Error Visibility to Structural Similarity*, IEEE Trans. Image Process., 13(4), 600–612, [https://doi.org/10.1109/TIP.2003.819861](https://doi.org/10.1109/TIP.2003.819861), 2004.
 
 ### Licence and disclaimer
 
