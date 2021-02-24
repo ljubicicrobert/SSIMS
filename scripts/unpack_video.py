@@ -18,7 +18,6 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-
 	from os import path, makedirs
 	from math import log
 
@@ -41,7 +40,7 @@ def get_camera_parameters(path):
 	sec = 'Intrinsics'
 	fx = float(cp.get(sec, 'fx'))
 	fy = float(cp.get(sec, 'fy'))
-	s = float(cp.get(sec, 's'))
+	s = float(cp.get(sec, 's'))			# Skew coefficient currently not used
 	cx = float(cp.get(sec, 'cx'))
 	cy = float(cp.get(sec, 'cy'))
 
@@ -86,6 +85,9 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 	:param qual:			Output image quality in range (1-100). Default is 95.
 	:param scale:			Scale parameter for the output images. Default is None, which preserves the original size.
 	:param interp:			Interpolation algorithm for image resizing from cv2 package. Default is cv2.INTER_LINEAR.
+	:param cm:				Camera matrix. If None, no camera rectification will be performed.
+							Note that parameters [fx, fy, cx, cy] are divided by image size so they are dimensionless here.
+	:param dist:			Camera distortion parameters. If None, no camera rectification will be performed.
 	:return: 				True (if success) or False (if error).
 	"""
 
@@ -127,10 +129,10 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 			save_str = '{}/{}{}.{}'.format(folder, frame_prefix, n, ext)
 
 		if cm is not None and dist is not None:
-			cm[0, 0] = cm[0, 0] * width
-			cm[1, 1] = cm[1, 1] * height
-			cm[0, 2] = cm[0, 2] * width
-			cm[1, 2] = cm[1, 2] * height
+			cm[0, 0] = cm[0, 0] * width			# fx
+			cm[1, 1] = cm[1, 1] * width			# fy
+			cm[0, 2] = cm[0, 2] * width			# cx
+			cm[1, 2] = cm[1, 2] * height		# cy
 			image = cv2.undistort(image, cm, dist)
 
 		if scale is not None and scale != 1.0:
@@ -185,8 +187,7 @@ if __name__ == '__main__':
 		try:
 			cfg.read(args.cfg, encoding='utf-8-sig')
 		except:
-			print(
-				'[ERROR] There was a problem reading the configuration file!\nCheck if project has valid configuration.')
+			print('[ERROR] There was a problem reading the configuration file!\nCheck if project has valid configuration.')
 			exit()
 
 		video_path = cfg.get(section, 'VideoPath')

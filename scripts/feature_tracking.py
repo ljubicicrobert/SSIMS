@@ -18,7 +18,6 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-
 	from math import log
 	from shutil import copy, SameFileError
 	from os import makedirs, listdir, remove, rename
@@ -93,11 +92,12 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 	Use middle mouse button or BACKSPACE key to remove the last selected point from the list.
 	Pres ENTER to accept the list of points, or ESC to cancel the operation.
 
-	:param image_orig:	Image as numpy array to be rectified.
-	:param verbose:		Whether to use verbose output. Default is False.
-	:param ia:			Interrogation area size. Default is 11.
-	:param sa:			Search area size. Default is 21.
-	:return:			A list of initial pixel positions to use with coordTransform().
+	:param image_orig:		Image as numpy array to be rectified.
+	:param verbose:			Whether to use verbose output. Default is False.
+	:param ia:				Interrogation area size. Default is 11.
+	:param sa:				Search area size. Default is 21.
+	:param hide_sliders:	Whether to hide the IA/SA size sliders.
+	:return:				A list of initial pixel positions to use with coordTransform().
 	"""
 
 	global legend_toggle

@@ -18,7 +18,6 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-
 	from os import path, listdir
 	from glob import glob
 	from math import log

@@ -18,7 +18,6 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-
 	from stabilize_frames import framesToVideo
 
 except Exception as ex:

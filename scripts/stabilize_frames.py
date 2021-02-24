@@ -18,7 +18,6 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-
 	from datetime import timedelta
 	from shutil import copy, SameFileError
 	from time import time
