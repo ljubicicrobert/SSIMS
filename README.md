@@ -28,6 +28,8 @@ The GUI requires only **.NET Framework 4.0+**, which can be downloaded from the 
 
 The backend requires that Python 3+ exists in the %PATH% if you are using Windows, or $PATH if you are using Linux. Please make sure that this is the case before running. If you have multiple instances of Python 3 in the %PATH% (Windows platform), the GUI will detect and use only the first instance.
 
+**WARNING**: The GUI will look for the first instance of Python in %PATH% which it will then use. Some software (happened to me with Inkscape) are known to deploy their own Python distributions and register them in %PATH%. The best remedy is to install your Python distribution prior to any other software that might be using it. Otherwise, make sure that the main version of Python (one containing all the necessary libraries listed below) is the first one in the %PATH% listing.
+
 So far, the package was tested using **Python** versions **3.6.8, 3.7.2** and **3.8.5**. You can download latest Python from the [official site](https://www.python.org/downloads/)
 
 Python library requirements (other than the standard library):
