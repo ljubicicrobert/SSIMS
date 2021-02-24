@@ -66,7 +66,7 @@ Final script in the package performs an estimation of how well each feature was 
 ```bash
 python feature_goodness.py --fold path_to_SA_folder --ref {0/1/2}
 ```
-Argument _--fold_ should point to the folder named _gcp_img_ which is automatically created by the _feature_tracking.py_ script in the output folder. Argument _--ref_ indicates which frame will be used as a reference when estimating the "goodness" of each feature: 1 - initial frame, 2 - pixel intensity averages, 3 - pixel intensity medians.
+Argument _--fold_ should point to the folder named _gcp_img_ which is automatically created by the _feature_tracking.py_ script in the output folder. Argument _--ref_ indicates which frame will be used as a reference when estimating the "goodness" of each feature: 0 - initial frame, 1 - pixel intensity averages, 2 - pixel intensity medians.
 
 
 ## Graphical user interface (GUI)
