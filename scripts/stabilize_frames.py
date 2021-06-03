@@ -337,7 +337,7 @@ if __name__ == '__main__':
 		pdy = cfg.get(section, 'PaddY')
 
 		# Whether to use camera perameters to remove distortion
-		remove_distortion = int(cfg.get(section, 'Undistort'))
+		remove_distortion = int(cfg.get(section, 'Undistort', fallback=0))
 
 		if remove_distortion and not path.exists(r'{}/camera_parameters.txt'.format(results_folder)):
 			print('[WARNING] Camera parameters file not found in {}'.format(results_folder))
