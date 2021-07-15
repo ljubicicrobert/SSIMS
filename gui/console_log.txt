@@ -1,0 +1,1 @@
+C:\WPy64-3850\python-3.8.5.amd64\python.exe -u "C:\Users\rljub\OneDrive\Robert\Programiranje\SSIMS\0.1.3.5\scripts\stabilize_frames.py" --cfg "C:\Users\rljub\Downloads\VID_20210715_151821\stabilization\config_stabilization.txt"

@@ -305,8 +305,11 @@ if __name__ == '__main__':
 		except SameFileError:
 			pass
 
-		# Prefix for frame files
-		ext = cfg.get(section, 'ImageExtension', fallback='jpg')
+		# Extension for input frame files
+		ext_in = cfg.get(section, 'ImageExtensionIn', fallback='jpg')
+
+		# Extension for output frame files
+		ext_out = cfg.get(section, 'ImageExtensionOut', fallback='jpg')
 
 		# Output image quality [1-100]
 		qual = float(cfg.get(section, 'ImageQuality', fallback='95'))
@@ -378,7 +381,7 @@ if __name__ == '__main__':
 		if path.exists(end_file):
 			remove(end_file)
 
-		raw_frames_list = glob.glob('{}/*.{}'.format(frames_folder, ext))
+		raw_frames_list = glob.glob('{}/*.{}'.format(frames_folder, ext_in))
 		features_coord = glob.glob('{}/*.txt'.format(gcp_folder))
 		total_frames = len(raw_frames_list)
 		num_len = int(log(total_frames, 10)) + 1
@@ -474,17 +477,17 @@ if __name__ == '__main__':
 
 				n = str(i).rjust(num_len, '0')
 				np.savetxt('{}/{}.txt'.format(transform_folder, n), M, delimiter=' ')
-				save_str_img = '{}/{}.{}'.format(stabilized_folder, n, ext)
+				save_str_img = '{}/{}.{}'.format(stabilized_folder, n, ext_out)
 
-				if ext.lower() in ['jpg', 'jpeg']:
+				if ext_out.lower() in ['jpg', 'jpeg']:
 					cv2.imwrite(save_str_img,
 								stabilized,
 								[int(cv2.IMWRITE_JPEG_QUALITY), qual])
-				elif ext.lower() == 'png':
+				elif ext_out.lower() == 'png':
 					cv2.imwrite(save_str_img,
 								stabilized,
-								[int(cv2.IMWRITE_PNG_COMPRESSION), 9 - int(0.09 * qual)])
-				elif ext.lower() == 'webp':
+								[int(cv2.IMWRITE_PNG_COMPRESSION), int(9 - 0.09 * qual)])
+				elif ext_out.lower() == 'webp':
 					cv2.imwrite(save_str_img,
 								stabilized,
 								[int(cv2.IMWRITE_WEBP_QUALITY), qual + 1])
@@ -503,7 +506,7 @@ if __name__ == '__main__':
 				break
 
 		if create_video:
-			framesToVideo('!stabilized' if not orthorectify else '!orthorectified', folder=stabilized_folder, ext=ext, fps=fps, verbose=True)
+			framesToVideo('!stabilized' if not orthorectify else '!orthorectified', folder=stabilized_folder, ext=ext_out, fps=fps, verbose=True)
 
 		open(end_file, 'w').close()
 
