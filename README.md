@@ -1,4 +1,4 @@
-# SSIMS
+# SSIMS: SSIM-based digital image stabilization suite
 
 Video stabilization suite based on _Structural Similarity Index (SSIM)_ metric, developed primarily for application with UAS/UAV videos. Developed in cooperation with the COST Action HARMONIOUS (CA16219, funded by the European Cooperation in Science and Technology - COST Association).
 
@@ -146,6 +146,9 @@ I wish to express my gratitude to the following people (in no particular order):
 ### References
 
 Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P.: *Image Quality Assessment: From Error Visibility to Structural Similarity*, IEEE Trans. Image Process., 13(4), 600–612, [https://doi.org/10.1109/TIP.2003.819861](https://doi.org/10.1109/TIP.2003.819861), 2004.
+
+### How to cite
+Ljubicic, R.: *SSIMS: SSIM-based digital image stabilization suite*, [https://github.com/ljubicicrobert/SSIMS](https://github.com/ljubicicrobert/SSIMS), 2021.
 
 ### Licence and disclaimer
 
