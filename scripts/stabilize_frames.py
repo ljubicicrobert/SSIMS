@@ -473,7 +473,8 @@ if __name__ == '__main__':
 													   use_ransac=use_ransac_filtering,
 													   ransac_thr=ransac_filtering_thr)
 
-				stabilized = stabilized[::-1]
+				if not orthorectify:
+					stabilized = stabilized[::-1]
 
 				n = str(i).rjust(num_len, '0')
 				np.savetxt('{}/{}.txt'.format(transform_folder, n), M, delimiter=' ')
