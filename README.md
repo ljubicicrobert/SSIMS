@@ -125,6 +125,8 @@ The GUI also offers a simple orthorectification to be performed by estimating th
 
 Users can also set a ground sampling distance (GSD, in px/m) to rescale the image and help with the postprocessing - use this feature carefully as it will always introduce additional errors/noise in the transformaed images. **It's best to keep this ratio as close as possible to the original GSD!**
 
+Use **Measure** button to check in-image distances and to compare them with measured data in order to optimize GSD value.
+
 
 ### Acknowledgements
 
