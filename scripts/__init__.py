@@ -5,9 +5,9 @@ from argparse import ArgumentParser
 
 __package_name__ = 'SSIMS: SSIM-based video stabilization suite'
 __description__ = 'Video stabilization suite for UAS/UAV image velocimetry based on Structural Similarity (SSIM) Index metric'
-__version__ = '0.1.4.0'
+__version__ = '0.2.0.0'
 __status__ = 'beta'
-__date_deployed__ = '2022-01-04'
+__date_deployed__ = '2022-01-25'
 
 __author__ = 'Robert Ljubicic, University of Belgrade - Civil Engineering Faculty'
 __author_email__ = 'rljubicic@grf.bg.ac.rs'
