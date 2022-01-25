@@ -71,13 +71,13 @@ Argument _--fold_ should point to the folder named _gcp_img_ which is automatica
 
 ## Graphical user interface (GUI)
 
-If used on Windows platform, a convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/main.png) in which the feature tracking and image transformation parameters are defined.
+If used on Windows platform, a convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png) in which the feature tracking and image transformation parameters are defined.
 
 Keep in mind that some options are only available after certain steps have already been completed (e.g. filtering features for image transformation is only available after the feature tracking stage has been completed, etc.).
 
-[Form for video unpacking](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/video_unpack.png) and removal of camera distortion can be called using the appropriate button in the top-left corner of the MAIN form.
+[Form for video unpacking](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) and removal of camera distortion can be called using the appropriate button in the top-left corner of the MAIN form.
 
-[Form for creating videos](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/video_create.png) can be called using the appropriate button in the top-right corner of the MAIN form.
+[Form for creating videos](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_create.png) can be called using the appropriate button in the top-right corner of the MAIN form.
 
 
 ### Selecting features for tracking
@@ -121,7 +121,7 @@ The most important parameter is the **transformation method** which can signific
 
 The GUI also offers a simple orthorectification to be performed by estimating the transformation matrix between the in-image positions of tracking features and their corresponding real-world coordinates.
 
-[Form for orthorectification](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png) can be shown by clicking **Orthorectify** in the Image transformation group of the [MAIN form](https://github.com/ljubicicrobert/SSIMS/edit/master/screenshots/main.png). Here the user can specify the real-world coordinates (in meteres) of only those features **which have been selected for the image transformation** (see section **Selecting features for transformation** for more details).
+[Form for orthorectification](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png) can be shown by clicking **Orthorectify** in the Image transformation group of the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png). Here the user can specify the real-world coordinates (in meteres) of only those features **which have been selected for the image transformation** (see section **Selecting features for transformation** for more details).
 
 Users can also set a ground sampling distance (GSD, in px/m) to rescale the image and help with the postprocessing - use this feature carefully as it will always introduce additional errors/noise in the transformaed images. **It's best to keep this ratio as close as possible to the original GSD!**
 
