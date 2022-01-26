@@ -157,7 +157,7 @@ Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P. (2004) *Image Qualit
 ### How to cite
 Ljubicic, R. (2021) *SSIMS: SSIM-based digital image stabilization suite*, [https://github.com/ljubicicrobert/SSIMS](https://github.com/ljubicicrobert/SSIMS)
 
-or
+    or
 
 Ljubičić R., Strelnikova D., Perks M.T., Eltner A., Pena-Haro S., Pizarro A., Dal Sasso S.F., Scherling U., Vuono P. and Manfreda S (2021) _A comparison of tools and techniques for stabilising unmanned aerial system (UAS) imagery for surface flow observations_. Hydrology and Earth System Sciences. 25 (9), pp.5105--5132, [https://doi.org/10.5194/hess-25-5105-2021](https://doi.org/10.5194/hess-25-5105-2021)
 
