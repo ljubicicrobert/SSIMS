@@ -152,14 +152,14 @@ I wish to express my gratitude to the following people (in no particular order):
 
 ### References
 
-Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P.: *Image Quality Assessment: From Error Visibility to Structural Similarity*, IEEE Trans. Image Process., 13(4), 600–612, [https://doi.org/10.1109/TIP.2003.819861](https://doi.org/10.1109/TIP.2003.819861), 2004.
+Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P. (2004) *Image Quality Assessment: From Error Visibility to Structural Similarity*, IEEE Trans. Image Process., 13(4), 600–612, [https://doi.org/10.1109/TIP.2003.819861](https://doi.org/10.1109/TIP.2003.819861)
 
 ### How to cite
-Ljubicic, R.: *SSIMS: SSIM-based digital image stabilization suite*, [https://github.com/ljubicicrobert/SSIMS](https://github.com/ljubicicrobert/SSIMS), 2021.
+Ljubicic, R. (2021) *SSIMS: SSIM-based digital image stabilization suite*, [https://github.com/ljubicicrobert/SSIMS](https://github.com/ljubicicrobert/SSIMS)
 
 or
 
-Ljubičić R., Strelnikova D., Perks M.T., Eltner A., Pena-Haro S., Pizarro A., Dal Sasso S.F., Scherling U., Vuono P. and Manfreda S (2021) _A comparison of tools and techniques for stabilising unmanned aerial system (UAS) imagery for surface flow observations_. Hydrology and Earth System Sciences. 25 (9), pp.5105--5132.
+Ljubičić R., Strelnikova D., Perks M.T., Eltner A., Pena-Haro S., Pizarro A., Dal Sasso S.F., Scherling U., Vuono P. and Manfreda S (2021) _A comparison of tools and techniques for stabilising unmanned aerial system (UAS) imagery for surface flow observations_. Hydrology and Earth System Sciences. 25 (9), pp.5105--5132, [https://doi.org/10.5194/hess-25-5105-2021](https://doi.org/10.5194/hess-25-5105-2021)
 
 ### Licence and disclaimer
 
