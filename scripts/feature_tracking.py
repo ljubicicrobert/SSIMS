@@ -331,6 +331,12 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 				  fontsize=9,
 				  )
 
+	try:
+		mng = plt.get_current_fig_manager()
+		mng.window.state('zoomed')
+	except:
+		pass
+
 	plt.show()
 
 	if verbose:

@@ -192,7 +192,7 @@ if __name__ == '__main__':
 
 		video_path = cfg.get(section, 'VideoPath')
 		video_folder = path.dirname(video_path)
-		results_folder = cfg.get(section, 'OutputFolder')
+		results_folder = cfg.get(section, 'FramesFolder')
 		remove_distortion = int(cfg.get(section, 'Undistort'))
 
 		camera_matrix, distortion = get_camera_parameters('{}/camera_parameters.txt'.format(video_folder))\
