@@ -1,4 +1,4 @@
-# SSIMS: SSIM-based digital image stabilization suite
+# SSIMS: SSIM-based digital image stabilization suite for UAVs
 
 Video stabilization suite based on _Structural Similarity Index (SSIM)_ metric, developed primarily for application with UAS/UAV videos. Developed in cooperation with the COST Action HARMONIOUS (CA16219, funded by the European Cooperation in Science and Technology - COST Association).
 
