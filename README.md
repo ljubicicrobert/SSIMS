@@ -53,18 +53,23 @@ pip install matplotlib==3.2.1
 
 ## Usage
 
-The backend consists of five scripts. Whether called from the console of from the GUI, they require adequate configuration files to be passed as arguments. For video unpacking into images:
+The backend consists of six scripts. Whether called from the console of from the GUI, they require adequate configuration files to be passed as arguments. For video unpacking into images:
 ```bash
-python unpack_video.py --cfg path_to_config_file
-python feature_tracking.py --cfg path_to_config_file
-python stabilize_frames.py --cfg path_to_config_file
-python frames_to_video.py --cfg path_to_config_file
+python unpack_video.py --cfg [path_to_config_file]
+python feature_tracking.py --cfg [path_to_config_file]
+python stabilize_frames.py --cfg [path_to_config_file]
+python frames_to_video.py --cfg [path_to_config_file]
 ```
 Each script requires a slightly different INI-type configuration file. Template configurations for each script can be found in the **Templates** folder. Keep in mind that names of sections and variables in configuration files **should not be changed**. If GUI is used, such files will be automatically created for each script before they are called.
 
+There is an option to review frames in the given folder with a specified extension (excluding dot) using the script:
+```bash
+python inspect_frames.py --folder [path_to_frames_folder] --ext [frames_extension]
+```
+
 Final script in the package performs an estimation of how well each feature was tracked by the _feature_tracking.py_:
 ```bash
-python feature_goodness.py --fold path_to_SA_folder --ref {0/1/2}
+python feature_goodness.py --fold [path_to_SA_folder] --ref {0/1/2}
 ```
 Argument _--fold_ should point to the folder named _gcp_img_ which is automatically created by the _feature_tracking.py_ script in the output folder. Argument _--ref_ indicates which frame will be used as a reference when estimating the "goodness" of each feature: 0 - initial frame, 1 - pixel intensity averages, 2 - pixel intensity medians.
 
