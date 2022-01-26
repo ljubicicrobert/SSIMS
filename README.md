@@ -157,6 +157,10 @@ Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P.: *Image Quality Asse
 ### How to cite
 Ljubicic, R.: *SSIMS: SSIM-based digital image stabilization suite*, [https://github.com/ljubicicrobert/SSIMS](https://github.com/ljubicicrobert/SSIMS), 2021.
 
+or
+
+Ljubičić R., Strelnikova D., Perks M.T., Eltner A., Pena-Haro S., Pizarro A., Dal Sasso S.F., Scherling U., Vuono P. and Manfreda S (2021) _A comparison of tools and techniques for stabilising unmanned aerial system (UAS) imagery for surface flow observations_. Hydrology and Earth System Sciences. 25 (9), pp.5105--5132.
+
 ### Licence and disclaimer
 
 This tool is published under the [General Public Licence v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) and can be used and distributed freely and without charge. The author does not bear the responsibility regarding any possible (mis)use of the software/code, as well as for any damages (physical, hardware, and/or software) that may arise from the use of this tool. The package was scanned using Avast Antivirus prior to the upload, but a rescan after download is always recommended.
