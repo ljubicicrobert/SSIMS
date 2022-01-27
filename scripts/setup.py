@@ -1,7 +1,6 @@
 import setuptools
 
-setuptools.setup(name='SSIMS: SSIM-based video stabilization suite"',
-				 version='0.1.3',
+setuptools.setup(name='SSIMS: SSIM-based video stabilization suite for UAVs"',
 				 author='Robert Ljubicic',
 				 author_email='rljubicic@grf.bg.ac.rs',
 				 url='https://github.com/ljubicicrobert/SSIMS',

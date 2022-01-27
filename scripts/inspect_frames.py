@@ -88,11 +88,11 @@ if __name__ == '__main__':
 		ext = str(args.ext).replace('.', '')
 
 		if frames_folder is None:
-			print(f'\nFrames folder not provided!')
+			print('\nFrames folder not provided!')
 			input('\nPress any key to exit...')
 			exit()
 		elif ext is None:
-			print(f'\nNo frame extension provided!')
+			print('\nNo frame extension provided!')
 			input('\nPress any key to exit...')
 			exit()
 
@@ -100,7 +100,7 @@ if __name__ == '__main__':
 		num_frames = len(frames_list)
 
 		if num_frames == 0:
-			print(f'\nNo frames were found in folder [{frames_folder}] with extension [{ext}]')
+			print('\nNo frames were found in folder [{0}] with extension [{1}]'.format(frames_folder, ext))
 			input('\nPress any key to exit...')
 			exit()
 

@@ -78,8 +78,8 @@ try:
 
 	for i in range(num_frames):
 		for j in range(num_markers):
-			marker_path = f'{str(i).rjust(n, "0")}_{j}.jpg'
-			marker_img = cv2.imread(f'{fold}/gcps_img/{marker_path}', 0)
+			marker_path = '{0}_{1}.jpg'.format(str(i).rjust(n, "0"), j)
+			marker_img = cv2.imread('{0}/gcps_img/{1}'.format(fold, marker_path), 0)
 			stack_markers[j, i] = marker_img
 			print('[INFO] Analyzing features in frame {}/{}'.format(i, num_frames-1))
 
