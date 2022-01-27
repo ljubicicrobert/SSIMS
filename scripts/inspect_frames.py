@@ -52,8 +52,6 @@ def keypress(event):
 		else:
 			sl_ax_frame_num.set_val(sl_ax_frame_num.val - 1)
 
-		update_frame(sl_ax_frame_num.val)
-
 	elif event.key == 'right':
 		if sl_ax_frame_num.val == num_frames - 1:
 			sl_ax_frame_num.set_val(0)
@@ -72,9 +70,7 @@ def keypress(event):
 		else:
 			sl_ax_frame_num.set_val(sl_ax_frame_num.val - 10)
 
-		update_frame(sl_ax_frame_num.val)
-
-		update_frame(sl_ax_frame_num.val)
+	update_frame(sl_ax_frame_num.val)
 
 
 if __name__ == '__main__':
