@@ -110,7 +110,7 @@ If the **Output folder** exists, user can open it quickly using the **Open outpu
 
 ### Selecting features for tracking
 
-In the MAIN form, user can select or input the location of original frames, as well as the location for storing results (output). Once the images have been found, user can start feature selection and tracking using the [Track features](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/select_features.png) button in the bottom-left corner, which will open a new form to allow the user to manually select static features which will be tracked.
+In the MAIN form, user can select or input the location of original frames, as well as the location for storing results (output). Once the images have been found, user can start feature selection and tracking using the Track features button in the bottom-left corner, which will open [a new window](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/select_features.png) to allow the user to manually select static features which will be tracked.
 
 Use the **RIGHT mouse button** to select the static feature. Once a feature is selected, a regions representing interrogation area (IA) and search area (SA) will be shown around it.
 
