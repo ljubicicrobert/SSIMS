@@ -36,7 +36,7 @@ try:
 except Exception as ex:
 	print('\n[EXCEPTION] Import failed: \n\n'
 		  '  {}'.format(ex))
-	input('\nPress any key to exit...')
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
 
 
@@ -169,6 +169,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 	def keypress(event):
 		global show_legend
 		global p_list
+		# global is_laplacian
 
 		if event.key == 'd' and len(points) > 0:
 			p = points.pop()
@@ -182,12 +183,22 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 			update_sa(sl_ax_sa_size.val)
 			plt.draw()
 
+		# if event.key == ' ':
+		# 	if not is_laplacian and not hide_sliders:
+		# 		img_ref.set_data(img_laplacian)
+		# 	else:
+		# 		img_ref.set_data(image)
+		#
+		# 	plt.draw()
+		# 	is_laplacian = not is_laplacian
+
 		elif event.key == 'enter':
 			plt.close()
 
 		elif event.key in ['escape', 'q']:
 			plt.close()
-			exit('EXECUTION STOPPED: Operation aborted by user!')
+			input('EXECUTION STOPPED: Operation aborted by user! Press ENTER/RETURN key to exit...')
+			exit()
 
 		elif event.key == 'f1':
 			show_legend = not show_legend
@@ -200,7 +211,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 		print('Click MOUSE RIGHT to add a point to the list')
 		print('Press ENTER key to accept the list of points')
 		print('Press D or click MOUSE MIDDLE to remove the last point in the list')
-		print("Press ESC to cancel the operation")
+		print("Press ESC or Q to cancel the operation")
 		print('---')
 
 	fig.canvas.mpl_connect('button_press_event', getPixelValue)
@@ -334,6 +345,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 	try:
 		mng = plt.get_current_fig_manager()
 		mng.window.state('zoomed')
+		mng.set_window_title('Feature selection')
 	except:
 		pass
 
@@ -552,8 +564,11 @@ if __name__ == '__main__':
 
 		img_path = raw_frames_list[0]
 		img = cv2.imread(img_path)
+		img_gray = cv2.imread(img_path, 0)
 		img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+		# img_laplacian = cv2.Laplacian(img_gray, cv2.CV_8U)
 
+		# is_laplacian = False
 		show_legend = True
 		legend_toggle = None
 		markers = get_gcps_from_image(img_rgb, verbose=True, ia=k_size, sa=search_size)
@@ -694,9 +709,9 @@ if __name__ == '__main__':
 		np.savetxt('{}/markers_mask.txt'.format(results_folder), markers_mask, fmt='%d', delimiter=' ')
 
 		print('\a')
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN key to exit...')
 
 	except Exception as ex:
 		print('\n[EXCEPTION] The following exception has occurred: \n\n'
 			  '  {}'.format(ex))
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN key to exit...')

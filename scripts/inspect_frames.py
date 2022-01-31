@@ -46,7 +46,10 @@ def update_frame(val):
 
 
 def keypress(event):
-	if event.key == 'left':
+	if event.key == 'escape':
+		exit()
+
+	elif event.key == 'left':
 		if sl_ax_frame_num.val == 0:
 			sl_ax_frame_num.set_val(num_frames - 1)
 		else:
@@ -102,6 +105,7 @@ if __name__ == '__main__':
 
 		fig, ax = plt.subplots()
 		plt.subplots_adjust(bottom=0.13)
+		plt.axis('off')
 
 		axcolor = 'lightgoldenrodyellow'
 		valfmt = "%d"
@@ -113,7 +117,7 @@ if __name__ == '__main__':
 		legend = 'Use slider to select frame,\n' \
 				 'use LEFT and RIGHT keys to move by 1 frame\n' \
 				 'or UP and DOWN keys to move by 10 frames\n' \
-				 'Press Q to exit'
+				 'Press ESC or Q to exit'
 
 		legend_toggle = plt.text(0.02, 0.97, legend,
 		                         horizontalalignment='left',
@@ -131,6 +135,7 @@ if __name__ == '__main__':
 		try:
 			mng = plt.get_current_fig_manager()
 			mng.window.state('zoomed')
+			mng.set_window_title('Inspect frames')
 		except:
 			pass
 
