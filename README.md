@@ -101,7 +101,7 @@ Keep in mind that some options are only available after certain steps have alrea
 
 [Form for creating videos](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_create.png) can be called using the appropriate button in the top-right corner of the MAIN form.
 
-[Form for image filtering]() can be called using the appropriate button in the top-middle section of the MAIN form.
+[Form for image filtering](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png) can be called using the appropriate button in the top-middle section of the MAIN form.
 
 After the **Frames folder** has been selected, user can inspect the frames using the **Inspect frames** button to the left of the **Frames folder** text box.
 
