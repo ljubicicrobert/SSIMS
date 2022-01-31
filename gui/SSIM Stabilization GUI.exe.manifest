@@ -50,8 +50,8 @@
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>GBJYYfBRnN9kNWDAqYi/cMh9R7M=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>+Bug3Zh9RqZ7GHnvTuEcFPMpQP8hHqzjR6aOQr8nJVQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,8 +62,8 @@
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>rzEnLEUZlsjup7Llanm4CIxgbDs=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>IeFA3K+j4lE3OnEkI7sRFXBzfpXk3PtvVoaNcIavdoY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -74,8 +74,8 @@
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Iu8dF0SMAfnQbt3ApKzognaZqHc=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>bqJb5JpOlsQ8ILwp6xztB49OC87EZzznIiccd7wvoSE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,20 +86,32 @@
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>a2Zb+RwN5JmzyU6pS+HpxEqrCrw=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>whvEhHrDx122S196/rD8sOIrpDa324BpJSO0gQsEbSI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SSIM Stabilization GUI.exe" size="312832">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Octokit.dll" size="944128">
+      <assemblyIdentity name="Octokit" version="0.40.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>HIua3CV8Ccv2rRVmaI1OCNGF2nuRwembBxcXr5T6PXU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SSIM Stabilization GUI.exe" size="339456">
       <assemblyIdentity name="SSIM Stabilization GUI" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>92BCW1sIQ47ZLq6rQvv9SfiGBaE=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>ehuolxdV2DeNLRWT7/focvcg+ho9gHabBi8GHWZklgI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -108,8 +120,8 @@
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>E8J4ENSE7+jx4TwCgUmgfXazEa0=</dsig:DigestValue>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>JmgDTWyFuTnkB7mvQg6nO7OXO41Bpbvz9XfO2rzAU+U=</dsig:DigestValue>
     </hash>
   </file>
   <file name="SSIM Stabilization GUI.exe.config" size="184">
@@ -117,8 +129,8 @@
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>06MAsbgFUGlKhu1U3KJ4fh8CRLU=</dsig:DigestValue>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>YyXx11OQ8Y9qQaMsAPfgWQIUIJMPT4Sw3i2UQTU2sRM=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
