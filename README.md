@@ -127,11 +127,11 @@ Toggle visibility of legend and point list using **F1** key.
 
 ### Selecting features for transformation
 
-Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the [Select features for transformation](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png) button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
+Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the [Select features for transformation](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/select_features.png) button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
 
 > **Note #8**: An average SSIM tracking score (higher is better, 1 is ideal) will be shown next to each feature coordinates on the right side of the form.
 
-To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the _ssim_scores.py_ script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/features_RMSD.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
+To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the _ssim_scores.py_ script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
 
 
 ### Image stabilization (transformation)
@@ -160,9 +160,9 @@ Users can also set a ground sampling distance (GSD, in px/m) to rescale the imag
 
 ### Image filtering
 
-Users can perform filtering of images in a folder using the [Filter frames]() form. In the form, user should first define the _frame folder path_ and the _extension_ of images in the folder. Available filters are listed on left side of the form, and the user can add them to the **filtering stack** on the right side by clicking on the desired filter. Only one filter of a given type can be selected at a time.
+Users can perform filtering of images in a folder using the [Filter frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png) form. In the form, user should first define the _frame folder path_ and the _extension_ of images in the folder. Available filters are listed on left side of the form, and the user can add them to the **filtering stack** on the right side by clicking on the desired filter. Only one filter of a given type can be selected at a time.
 
-Once the filters have been added to the filtering stack, user can edit the filter by clicking on the filter button in the filtering stack, which opens the **Filter parameters** form, or reorder the filters by draging and dropping them at the desired position. IMPORTANT: Filters will be applied in the top-down order from the filtering stack.
+Once the filters have been added to the filtering stack, user can edit the filter by clicking on the filter button in the filtering stack, which opens the [Filter parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_parameters.png) form, or reorder the filters by draging and dropping them at the desired position. IMPORTANT: Filters will be applied in the top-down order from the filtering stack.
 
 In the **Filter parameters** form, the user can remove the filter from the stack using the **Remove** button, or adjust the parameters of the filter (using the trackbar of using the neighboring numerical box) and finally apply the parameters using the **Apply** button.
 
