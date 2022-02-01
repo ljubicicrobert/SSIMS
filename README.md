@@ -44,11 +44,11 @@ scipy >= 1.0                        # pip install scipy
 skimage (scikit-image) >= 0.16.1    # pip install scikit-image
 ```
 
->**Note #2**: If you are using distributions of Python such as Anaconda or Winpython, you will likely have all the necessary libraries with the possible exception of _opencv-python_.
+>**Note #2**: If you are using distributions of Python such as Anaconda or Winpython, you will likely have all the necessary libraries with the possible exception of `opencv-python`.
 >
->**Note #3**: The tool might also work fine with _opencv-python_ version 3.6, but this is yet to be tested.
+>**Note #3**: The tool might also work fine with `opencv-python` version 3.6, but this is yet to be tested.
 >
->**Note #4**: It has been noted that newer versions of _matplotlib_ (apparently those which have been installed using PIP) are failing to be properly imported due to missing _ft2font_ DLL. In this case you can try installing _matplotlib_ version 3.2.1 which worked well during testing:
+>**Note #4**: It has been noted that newer versions of `matplotlib` (apparently those which have been installed using PIP) are failing to be properly imported due to missing `ft2font` DLL. In this case you can try installing `matplotlib` version 3.2.1 which worked well during testing:
 >```bash
 >pip install matplotlib==3.2.1
 >```
@@ -81,13 +81,13 @@ The tool also offers frame filtering using the following script:
 ```bash
 python filter_frames.py --folder [path_to_frames_folder] --ext [frames_extension] --multi [0/1]
 ```
-> **Note #6**: The use of the previous script is discouraged due to the dificulties of writing manual filter stack definitions. Users are advised to either use the GUI for this functionality or to fork (i.e., copy and edit) the _filter_frames.py_ script to their liking. **DO NOT** change the original script as this will prevent the **Filter frames** form from working properly or at all.
+> **Note #6**: The use of the previous script is discouraged due to the dificulties of writing manual filter stack definitions. Users are advised to either use the GUI for this functionality or to fork (i.e., copy and edit) the `filter_frames.py` script to their liking. **DO NOT** change the original script as this will prevent the **Filter frames** form from working properly or at all.
 
-Final script in the package performs an estimation of how well each feature was tracked by the _feature_tracking.py_:
+Final script in the package performs an estimation of how well each feature was tracked by the `feature_tracking.py`:
 ```bash
 python ssim_scores.py --folder [path_to_output_folder]
 ```
-Argument _--folder_ should point to the stabilization folder created by the _feature_tracking.py_ script. The output of the script is a boxplot of SSIM tracking scores for individual features selected by the _feature_tracking.py_.
+Argument `--folder` should point to the stabilization folder created by the `feature_tracking.py` script. The output of the script is a boxplot of SSIM tracking scores for individual features selected by the `feature_tracking.py`.
 
 
 ## Usage: Graphical user interface (GUI)
@@ -132,7 +132,7 @@ Not all of the tracked features have to be used for the transformation (stabiliz
 
 > **Note #8**: An average SSIM tracking score (higher is better, 1 is ideal) will be shown next to each feature coordinates on the right side of the form.
 
-To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the _ssim_scores.py_ script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
+To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the `ssim_scores.py` script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
 
 
 ### Image stabilization (transformation)
