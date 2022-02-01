@@ -186,7 +186,7 @@ I wish to express my gratitude to the following people (in no particular order):
 
 [Dr Salvatore Manfreda](https://www.salvatoremanfreda.it) and [Dr Silvano Fortunato Dal Sasso](https://www.researchgate.net/profile/Silvano_Fortunato_Dal_Sasso) - for hosting me at the Università Basilicata in Potenza where I have learned and improved my algorithm;
 
-[Dr Matthew T. Perks](https://www.ncl.ac.uk/gps/staff/profile/matthewperks.html#teaching) - for providing me with helpfull comments, as well as providing most of the camera parameters;
+[Dr Matthew T. Perks](https://www.ncl.ac.uk/gps/staff/profile/matthewperks.html#teaching) - for providing me with helpfull comments, as well as providing most of the camera parameters.
 
 
 ### References
