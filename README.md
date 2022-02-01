@@ -39,6 +39,7 @@ Python library requirements (other than the standard library):
 numpy >= 1.19                       # pip install numpy
 opencv-python >= 4.0                # pip install opencv-python
 matplotlib >= 3.0                   # pip install matplotlib
+mplcursors >= 0.3                   # pip install mplcursors
 scipy >= 1.0                        # pip install scipy
 skimage (scikit-image) >= 0.16.1    # pip install scikit-image
 ```
