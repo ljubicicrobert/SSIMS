@@ -32,7 +32,7 @@ The backend requires that Python 3+ exists in the **%PATH% environmental variabl
 >
 > **Note #1**: Clicking on _Python version: ..._ text in the bottom-left corner of the MAIN form will open %PATH% variables window. This window will also automatically open if Python was not found in the %PATH% variable.
 
-So far, the package was tested using **Python** versions **3.6.8, 3.7.2, 3.7.6** and **3.8.5**. You can download latest Python from the [official site](https://www.python.org/downloads/)
+So far, the package was tested using **Python** versions **3.6.8, 3.7.2, 3.7.6, 3.8.5** and **3.9.10**. You can download latest Python from the [official site](https://www.python.org/downloads/)
 
 Python library requirements (other than the standard library):
 ```python
