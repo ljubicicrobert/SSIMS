@@ -1,0 +1,18 @@
+[Camera]
+Model = DJI Mini 2
+
+[Intrinsics]
+fx = 0.7126984127
+fy = 0.7126984127
+s = 0
+cx = 0.5
+cy = 0.5
+
+[Radial]
+k1 = 0.00
+k2 = 0.0
+k3 = 0.0
+
+[Tangential]
+p1 = 0.0
+p2 = 0.0
