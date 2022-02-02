@@ -19,6 +19,8 @@ Created by Robert Ljubicic.
 try:
 	from __init__ import *
 	from os import path, makedirs
+	from scipy.signal import gaussian, convolve2d
+
 	import glob
 	import matplotlib.pyplot as plt
 	import mplcursors
@@ -89,6 +91,11 @@ def highpass(img, sigma=51):
 	return img - cv2.GaussianBlur(img, (0, 0), int(sigma)) + 127
 
 
+def laplacian(img):
+	new = cv2.Laplacian(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), cv2.CV_8U, ksize=3)
+	return cv2.cvtColor(new, cv2.COLOR_GRAY2BGR)
+
+
 def params_to_list(params):
 	if params == '':
 		return []
@@ -139,7 +146,7 @@ if __name__ == '__main__':
 
 			legend = 'Filters:'
 			for i in range(num_filters):
-				legend += '\n    ' + filters_data[i][0]
+				legend += '\n    ' + filters_data[i][0] + '/' + filters_data[i][1]
 
 			legend_toggle = plt.text(0.02, 0.97, legend,
 			                         horizontalalignment='left',

@@ -39,7 +39,7 @@ def update_frame(val):
 	h, w = img_new.shape[:2]
 
 	img_shown.set_data(img_new)
-	ax.set_title(fr'Frame #{sl_ax_frame_num.val}/{num_frames - 1}, {w}x{h}px')
+	ax.set_title(r'Frame #{}/{}, {}x{}px'.format(sl_ax_frame_num.val, num_frames - 1, w, h))
 	plt.draw()
 
 	return
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 			input('\nPress any key to exit...')
 			exit()
 
-		frames_list = glob.glob(fr'{frames_folder}\*.{ext}')
+		frames_list = glob.glob(r'{}\*.{}'.format(frames_folder, ext))
 		num_frames = len(frames_list)
 
 		if num_frames == 0:
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 		except:
 			pass
 
-		ax.set_title(fr'Frame #0/{num_frames - 1}, {w}x{h}px')
+		ax.set_title(r'Frame #0/{}, {}x{}px'.format(num_frames - 1, w, h))
 		plt.show()
 
 	except Exception as ex:

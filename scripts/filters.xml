@@ -86,7 +86,7 @@
 	<Filter>
 		<Name>Highpass</Name>
 		<Func>highpass</Func>
-		<Description>Accentuates high frequency content, can be usefull for velocimetry purposes</Description>
+		<Description>Accentuates high frequency content, can be useful for velocimetry purposes</Description>
 		
 		<Parameters>
 			<Parameter>
@@ -101,9 +101,17 @@
 	</Filter>
 	
 	<Filter>
+		<Name>Laplacian</Name>
+		<Func>laplacian</Func>
+		<Description>Calculates a Laplacian gradient map of a grayscale image, can be useful for detecting tracers</Description>
+		
+		<Parameters></Parameters>
+	</Filter>
+	
+	<Filter>
 		<Name>HSV filter</Name>
 		<Func>hsv_filter</Func>
-		<Description>Binarize image using hue, saturation and lightness, can be usefull for velocimetry purposes</Description>
+		<Description>Binarize image using hue, saturation and lightness, can be useful for velocimetry purposes</Description>
 		
 		<Parameters>
 			<Parameter>
@@ -160,8 +168,8 @@
 	<Filter>
 		<Name>Denoise</Name>
 		<Func>denoise</Func>
-		<Description>Removes high frequency content, usefull for removing camera noise but VERY slow</Description>
-		
+		<Description>Removes high frequency content, useful for removing camera noise but is VERY SLOW</Description>
+
 		<Parameters>
 			<Parameter>
 				<PName>Strength</PName>

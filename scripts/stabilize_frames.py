@@ -290,6 +290,7 @@ if __name__ == '__main__':
 			cfg.read(args.cfg, encoding='utf-8-sig')
 		except:
 			print('[ERROR] There was a problem reading the configuration file!\nCheck if project has valid configuration.')
+			input('Press ENTER/RETURN key to exit...')
 			exit()
 
 		section = 'Stabilization'
@@ -312,7 +313,7 @@ if __name__ == '__main__':
 		ext_out = cfg.get(section, 'ImageExtensionOut', fallback='jpg')
 
 		# Output image quality [1-100]
-		qual = float(cfg.get(section, 'ImageQuality', fallback='95'))
+		qual = int(cfg.get(section, 'ImageQuality', fallback='95'))
 
 		# FPS count for stabilized video
 		fps = float(cfg.get(section, 'fps'))
@@ -512,9 +513,9 @@ if __name__ == '__main__':
 		open(end_file, 'w').close()
 
 		print('\a')
-		input('Press any key to exit...')
+		input('Press ENTER/RETURN key to exit...')
 
 	except Exception as ex:
 		print('\n[EXCEPTION] The following exception has occurred: \n\n'
 			  '  {}'.format(ex))
-		input('\nPress any key to exit...')
+		input('Press ENTER/RETURN key to exit...')
