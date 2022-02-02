@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Filters>
+	<Filter>
+		<Name>Grayscale</Name>
+		<Func>grayscale</Func>
+		<Description>Converts a color image to 8bit grayscale [0..255]</Description>
+		
+		<Parameters></Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>Brightness/Contrast</Name>
+		<Func>brightness_contrast</Func>
+		<Description>Adjusts overall brightness and contrast using linear transformation [Alpha*Y + Beta]</Description>
+		
+		<Parameters>
+			<Parameter>
+				<PName>Alpha</PName>
+				<PType>float</PType>
+				<PUpper>5.0</PUpper>
+				<PStart>1.0</PStart>
+				<PLower>0.0</PLower>
+				<PStep>0.1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Beta</PName>
+				<PType>int</PType>
+				<PUpper>255</PUpper>
+				<PStart>0</PStart>
+				<PLower>-255</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>Adjust gamma</Name>
+		<Func>gamma</Func>
+		<Description>Adjusts gamma exposure of the image using linear transformation [Alpha*Y]</Description>
+		
+		<Parameters>
+			<Parameter>
+				<PName>Alpha</PName>
+				<PType>float</PType>
+				<PUpper>3.0</PUpper>
+				<PStart>1.0</PStart>
+				<PLower>0.0</PLower>
+				<PStep>0.1</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>Hist. equalization</Name>
+		<Func>histeq</Func>
+		<Description>Stretches the histogram of the image to improve dynamic range and accentuate details</Description>
+		
+		<Parameters></Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>CLAHE</Name>
+		<Func>clahe</Func>
+		<Description>Contrast limiting adaptive histogram equalization, i.e., adaptive version of the histogram equalization</Description>
+		
+		<Parameters>
+			<Parameter>
+				<PName>Clip</PName>
+				<PType>float</PType>
+				<PUpper>10.0</PUpper>
+				<PStart>2.0</PStart>
+				<PLower>0.1</PLower>
+				<PStep>0.1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Kernel size</PName>
+				<PType>int</PType>
+				<PUpper>64</PUpper>
+				<PStart>8</PStart>
+				<PLower>4</PLower>
+				<PStep>4</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>Highpass</Name>
+		<Func>highpass</Func>
+		<Description>Accentuates high frequency content, can be useful for velocimetry purposes</Description>
+		
+		<Parameters>
+			<Parameter>
+				<PName>Sigma</PName>
+				<PType>int</PType>
+				<PUpper>153</PUpper>
+				<PStart>51</PStart>
+				<PLower>3</PLower>
+				<PStep>2</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>Laplacian</Name>
+		<Func>laplacian</Func>
+		<Description>Calculates a Laplacian gradient map of a grayscale image, can be useful for detecting tracers</Description>
+		
+		<Parameters></Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>HSV filter</Name>
+		<Func>hsv_filter</Func>
+		<Description>Binarize image using hue, saturation and lightness, can be useful for velocimetry purposes</Description>
+		
+		<Parameters>
+			<Parameter>
+				<PName>Hue lower</PName>
+				<PType>int</PType>
+				<PUpper>255</PUpper>
+				<PStart>0</PStart>
+				<PLower>0</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Hue upper</PName>
+				<PType>int</PType>
+				<PUpper>255</PUpper>
+				<PStart>255</PStart>
+				<PLower>0</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Saturation lower</PName>
+				<PType>int</PType>
+				<PUpper>255</PUpper>
+				<PStart>0</PStart>
+				<PLower>0</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Saturation upper</PName>
+				<PType>int</PType>
+				<PUpper>255</PUpper>
+				<PStart>255</PStart>
+				<PLower>0</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Lightness lower</PName>
+				<PType>int</PType>
+				<PUpper>255</PUpper>
+				<PStart>0</PStart>
+				<PLower>0</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Lightness upper</PName>
+				<PType>int</PType>
+				<PUpper>255</PUpper>
+				<PStart>255</PStart>
+				<PLower>0</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>Denoise</Name>
+		<Func>denoise</Func>
+		<Description>Removes high frequency content, useful for removing camera noise but is VERY SLOW</Description>
+
+		<Parameters>
+			<Parameter>
+				<PName>Strength</PName>
+				<PType>int</PType>
+				<PUpper>15</PUpper>
+				<PStart>3</PStart>
+				<PLower>1</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Strength color</PName>
+				<PType>int</PType>
+				<PUpper>15</PUpper>
+				<PStart>3</PStart>
+				<PLower>1</PLower>
+				<PStep>1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Template size</PName>
+				<PType>int</PType>
+				<PUpper>21</PUpper>
+				<PStart>7</PStart>
+				<PLower>3</PLower>
+				<PStep>2</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Search area</PName>
+				<PType>int</PType>
+				<PUpper>63</PUpper>
+				<PStart>21</PStart>
+				<PLower>9</PLower>
+				<PStep>2</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+	
+	<Filter>
+		<Name>Adjust RGB channels</Name>
+		<Func>modify_channels</Func>
+		<Description>Adjust RGB channel intensities to accentuate different types of details</Description>
+		
+		<Parameters>
+			<Parameter>
+				<PName>Red channel</PName>
+				<PType>float</PType>
+				<PUpper>3.0</PUpper>
+				<PStart>1.0</PStart>
+				<PLower>0.0</PLower>
+				<PStep>0.1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Green channel</PName>
+				<PType>float</PType>
+				<PUpper>3.0</PUpper>
+				<PStart>1.0</PStart>
+				<PLower>0.0</PLower>
+				<PStep>0.1</PStep>
+			</Parameter>
+			<Parameter>
+				<PName>Blue channel</PName>
+				<PType>float</PType>
+				<PUpper>3.0</PUpper>
+				<PStart>1.0</PStart>
+				<PLower>0.0</PLower>
+				<PStep>0.1</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+</Filters>
