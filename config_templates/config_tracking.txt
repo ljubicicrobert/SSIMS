@@ -1,33 +1,39 @@
-﻿;Semicolon denotes comment line, these can be removed
-;Do not change or remove section headers!
+﻿;Lines begining with a semicolon are comments and can be freely removed
+;Do not remove section headers in brackets!
 
 
 [Basic]
 
-InputFolder = "Path to folder containing original frames"
-OutputFolder = "Path to folder in which the results will be stored"
+InputFolder = "Path to folder with original images"
+OutputFolder = "Path to the folder where the results will be stored"
 
-;Specify extension without leading dot
+;Extensions of the original images, without the leading dot
+;
 ImageExtension = jpg
 
-;SA and IA window sizes must be odd integers, e.g. 11, 13, 15, ...
+;SA and IA window sizes must be odd integers and SA must be > IA
+;
 SearchAreaSize = 21
 InterrogationAreaSize = 11
 
-;Size of the subpixel estimation kernel, must be odd integer or 0 if
-;no subpixel estimation is used
+;Subpixel estimation kernel size, must be odd integer. If ==0 then no
+;subpixel estimation of the feature positions will be performed
+;
 Subpixel = 3
 
 
 [Advanced]
 
-;Whether to expand the SA window size by the factor of ExpandSACoef is
-;the SSIM score is below ExpandSAThreshold value
+;Whether to expand the SA window by the factor of ExpandSACoef if the
+;maximal SSIM score is lower than ExpandSAThreshold
+;
 ExpandSA = 0
 ExpandSACoef = 2.0
 ExpandSAThreshold = 0.50
 
-;To update kernels after each frame. USE ONLY IF significant scaling or
-;rotation is present in the sequence since this will reduce the feature
-;tracking accuracy
+;Whether to update feature kernels after each step/frame.
+;USE ONLY if significant rotation (> ~15deg) and/or scaling is present
+;in the original video, as this will redoce the overall stabilization
+;accuracy in order to achieve higher robustness in complex conditions.
+;
 UpdateKernels = 0

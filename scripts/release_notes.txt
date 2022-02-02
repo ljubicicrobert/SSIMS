@@ -1,0 +1,10 @@
+SSIMS_v0.3.0.1
+
+Major changes:
+- Fixed imwrite() bug in stabilization script for OpenCV 4.5+
+
+Minor changes:
+- Added Laplacian filter for preprocessing
+- Fixed problem where form would hang when Python was not found in %PATH%
+- If Python not in %PATH%, environmental variable window not opens in Administrator mode
+- Replaced couple occurances of f-strings with .format() for pre-Python 3.7 compatibility

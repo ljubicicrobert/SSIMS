@@ -1,34 +1,46 @@
-﻿;Semicolon denotes comment line, these can be removed
-;Do not change or remove section headers!
+﻿;Lines begining with a semicolon are comments and can be freely removed
+;Do not remove section headers in brackets!
 
 
 [Unpack video]
 
-VideoPath = "Full path to video file, with extension"
-OutputFolder = "Path to the folder in which the frames will be stored"
+VideoPath = "Path to video file"
+OutputFolder = "Path to folder for storing extracted images"
 
-;Prefix of frame files, can be empty
+;Prefix to add to the extracted image files, can be empty
+;
 Prefix = frame_
 
-;Specify frame extension without leading dot
+;Extensions of the output images, without the leading dot
+;This can impact the output image quality and size
+;
 Extension = jpg
 
-;Image wuality, must be between 1 and 100
+;Quality parameter for output images, must be in range 1-100 (low to high)
+;
 Quality = 95
 
-;Image scale factor, 1.0 keeps the original resolution
+;Scale factor, if ==1.0 then the images have the same resolution as the video
+;
 Scale = 1.0
 
-;Start frame index
+;Index of the first frame to be extracted from the video
+;
 Start = 0
 
-;Start numbering images from
+;Index of the first image file
+;
 StartNum = 0
 
-;End frame index. If higher than total number of frames in video then frames
-;will be extracted up to the end of the video
+;Index of the last frame to be extracted from the video. If it is greater
+;than the total number of frames, then all frames from Start to the
+;end of the video will be extracted
+;
 End = 999999
 
-;Whether to undistort the video using the camera parameters specified
-;in the camera_parameters.txt file in the OutputFolder
+;Whether to also remove the camera distortion by using the intrinsic matrix
+;and the radial and tangential distortion coefficients. KEEP IN MIND that
+;an appropriate configuration file called camera_parameters.txt must
+;be present in the folder where the video is located.
+;
 Undistort = 0
