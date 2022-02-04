@@ -172,7 +172,7 @@ Once the filters have been chosen, user can preview the filtering results using 
 Clicking **Apply filters** will initiate filtering on all frames in the selected folder.
 
 
-### Future feaures
+### Future features
 
 - [ ] Additional filters for preprocessing
 - [ ] Complete camera calibration form
