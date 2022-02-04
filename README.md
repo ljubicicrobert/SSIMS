@@ -81,7 +81,7 @@ The tool also offers frame filtering using the following script:
 ```bash
 python filter_frames.py --folder [path_to_frames_folder] --ext [frames_extension] --multi [0/1]
 ```
-> **Note #6**: The use of the previous script is discouraged due to the dificulties of writing manual filter stack definitions. Users are advised to either use the GUI for this functionality or to fork (i.e., copy and edit) the `filter_frames.py` script to their liking. **DO NOT** change the original script as this will prevent the **Filter frames** form from working properly or at all.
+> **Note #6**: The use of the previous script is discouraged due to the difficulties of writing manual filter stack definitions. Users are advised to either use the GUI for this functionality or to fork (i.e., copy and edit) the `filter_frames.py` script to their liking. **DO NOT** change the original script as this will prevent the **Filter frames** form from working properly or at all.
 
 Final script in the package performs an estimation of how well each feature was tracked by the `feature_tracking.py`:
 ```bash
@@ -106,7 +106,7 @@ Keep in mind that some options are only available after certain steps have alrea
 
 After the **Frames folder** has been selected, user can inspect the frames using the **Inspect frames** button to the left of the **Frames folder** text box.
 
-If the **Output folder** exists, user can open it quickly using the **Open output foldewr** button to the left of the **Output folder** text box.
+If the **Output folder** exists, user can open it quickly using the **Open output folder** button to the left of the **Output folder** text box.
 
 
 ### Selecting features for tracking
@@ -123,7 +123,7 @@ Use keys **O** and **P** to zoom and pan the image. Use keys **LEFT** and **RIGH
 
 Toggle visibility of legend and point list using **F1** key.
 
-> **Note #7**: Feature tracking will not immediatelly produce stabilized images. This will be done after the two following steps have been completed.
+> **Note #7**: Feature tracking will not immediately produce stabilized images. This will be done after the two following steps have been completed.
 
 
 ### Selecting features for transformation
@@ -137,7 +137,7 @@ To help you choose the best features, an additional analysis is available by cli
 
 ### Image stabilization (transformation)
 
-The software offers several options for the final stage, i.e. image transformation: (1) chosing the output images' extension, (2) choosing image quality, (3) whether to also create a video from the transformed images, (4) image transformation method, (5) whether to use RANSAC filtering/outlier detection, and (6) orthorectification. The latter is explained in the **Orthorectification** section below.
+The software offers several options for the final stage, i.e. image transformation: (1) choosing the output images' extension, (2) choosing image quality, (3) whether to also create a video from the transformed images, (4) image transformation method, (5) whether to use RANSAC filtering/outlier detection, and (6) orthorectification. The latter is explained in the **Orthorectification** section below.
 
 The most important parameter is the **transformation method** which can significantly impact the stabilization accuracy. Five methods are available:
 
@@ -154,16 +154,16 @@ The most important parameter is the **transformation method** which can signific
 
 The GUI also offers a simple orthorectification to be performed by estimating the transformation matrix between the in-image positions of tracking features and their corresponding real-world coordinates.
 
-[Form for orthorectification](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png) can be shown by clicking **Orthorectify** in the Image transformation group of the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png). Here the user can specify the known real-world coordinates (in meteres) of a number of ground control points (at least 3). By clicking **Apply** the user will be prompted to select in-image positions of these GCPs, which **CAN BE DIFFERENT** from those features tracked for the stabilization purposes.
+[Form for orthorectification](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png) can be shown by clicking **Orthorectify** in the Image transformation group of the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png). Here the user can specify the known real-world coordinates (in meters) of a number of ground control points (at least 3). By clicking **Apply** the user will be prompted to select in-image positions of these GCPs, which **CAN BE DIFFERENT** from those features tracked for the stabilization purposes.
 
-Users can also set a ground sampling distance (GSD, in px/m) to rescale the image and help with the postprocessing - use this feature carefully as it will always introduce additional errors/noise in the transformaed images. **It's best to keep this ratio as close as possible to the original GSD!**. For these reasons user can click **Measure** button to quickly measure in-image distances and to compare them with real-world data in order to help determine appropriate GSD value.
+Users can also set a ground sampling distance (GSD, in px/m) to rescale the image and help with the postprocessing - use this feature carefully as it will always introduce additional errors/noise in the transformed images. **It's best to keep this ratio as close as possible to the original GSD!**. For these reasons user can click **Measure** button to quickly measure in-image distances and to compare them with real-world data in order to help determine appropriate GSD value.
 
 
 ### Image filtering
 
 Users can perform filtering of images in a folder using the [Filter frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png) form. In the form, user should first define the _frame folder path_ and the _extension_ of images in the folder. Available filters are listed on left side of the form, and the user can add them to the **filtering stack** on the right side by clicking on the desired filter. Only one filter of a given type can be selected at a time.
 
-Once the filters have been added to the filtering stack, user can edit the filter by clicking on the filter button in the filtering stack, which opens the [Filter parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_parameters.png) form, or reorder the filters by draging and dropping them at the desired position. IMPORTANT: Filters will be applied in the top-down order from the filtering stack.
+Once the filters have been added to the filtering stack, user can edit the filter by clicking on the filter button in the filtering stack, which opens the [Filter parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_parameters.png) form, or reorder the filters by dragging and dropping them at the desired position. IMPORTANT: Filters will be applied in the top-down order from the filtering stack.
 
 In the **Filter parameters** form, the user can remove the filter from the stack using the **Remove** button, or adjust the parameters of the filter (using the trackbar of using the neighboring numerical box) and finally apply the parameters using the **Apply** button.
 
@@ -193,7 +193,7 @@ I wish to express my gratitude to the following people (in no particular order):
 
 [Dr Salvatore Manfreda](https://www.salvatoremanfreda.it) and [Dr Silvano Fortunato Dal Sasso](https://www.researchgate.net/profile/Silvano_Fortunato_Dal_Sasso) - for hosting me at the Università Basilicata in Potenza where I have learned and improved my algorithm;
 
-[Dr Matthew T. Perks](https://www.ncl.ac.uk/gps/staff/profile/matthewperks.html#teaching) - for providing me with helpfull comments, as well as providing most of the camera parameters.
+[Dr Matthew T. Perks](https://www.ncl.ac.uk/gps/staff/profile/matthewperks.html#teaching) - for providing me with helpful comments, as well as providing most of the camera parameters.
 
 
 ### References
@@ -210,6 +210,6 @@ Ljubičić R., Strelnikova D., Perks M.T., Eltner A., Pena-Haro S., Pizarro A., 
 Performance evaluation and comparison results to similar tools available at [https://doi.org/10.5281/zenodo.4557921](https://doi.org/10.5281/zenodo.4557921).
 
 
-### Licence and disclaimer
+### License and disclaimer
 
-This tool is published under the [General Public Licence v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) and can be used and distributed freely and without charge. The author does not bear the responsibility regarding any possible (mis)use of the software/code, as well as for any damages (physical, hardware, and/or software) that may arise from the use of this tool. The package was scanned using Avast Antivirus prior to the upload, but a rescan after download is always recommended.
+This tool is published under the [General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) and can be used and distributed freely and without charge. The author does not bear the responsibility regarding any possible (mis)use of the software/code, as well as for any damages (physical, hardware, and/or software) that may arise from the use of this tool. The package was scanned using Avast Antivirus prior to the upload, but a rescan after download is always recommended.
