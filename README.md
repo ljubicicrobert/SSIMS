@@ -172,6 +172,13 @@ Once the filters have been chosen, user can preview the filtering results using 
 Clicking **Apply filters** will initiate filtering on all frames in the selected folder.
 
 
+### Future feaures
+
+- [ ] Additional filters for preprocessing
+- [ ] Complete camera calibration form
+- [ ] Generation of local coordinate system from inter-GCP distances
+
+
 ### Acknowledgements
 
 I wish to express my gratitude to the following people (in no particular order):
@@ -201,6 +208,7 @@ Ljubicic, R. (2021) *SSIMS: Preprocessing tool for UAV image velocimetry*, [http
 Ljubičić R., Strelnikova D., Perks M.T., Eltner A., Pena-Haro S., Pizarro A., Dal Sasso S.F., Scherling U., Vuono P. and Manfreda S (2021) _A comparison of tools and techniques for stabilising unmanned aerial system (UAS) imagery for surface flow observations_. Hydrology and Earth System Sciences. 25 (9), pp.5105--5132, [https://doi.org/10.5194/hess-25-5105-2021](https://doi.org/10.5194/hess-25-5105-2021)
 
 Performance evaluation and comparison results to similar tools available at [https://doi.org/10.5281/zenodo.4557921](https://doi.org/10.5281/zenodo.4557921).
+
 
 ### Licence and disclaimer
 
