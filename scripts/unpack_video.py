@@ -33,6 +33,13 @@ MAX_FRAMES_DEFAULT = 30*60*60*24
 
 
 def get_camera_parameters(path):
+	"""
+	Retreives camera parameters from .cpf file (INI format).
+
+	:param path:    Path as string.
+	:return:        Camera matrix and distortion coeffs vector.
+	"""
+
 	cp = configparser.ConfigParser()
 	cp.optionxform = str
 	cp.read(path, encoding='utf-8-sig')
@@ -40,7 +47,6 @@ def get_camera_parameters(path):
 	sec = 'Intrinsics'
 	fx = float(cp.get(sec, 'fx'))
 	fy = float(cp.get(sec, 'fy'))
-	s = float(cp.get(sec, 's'))			# Skew coefficient currently not used
 	cx = float(cp.get(sec, 'cx'))
 	cy = float(cp.get(sec, 'cy'))
 
@@ -48,19 +54,16 @@ def get_camera_parameters(path):
 	k1 = float(cp.get(sec, 'k1'))
 	k2 = float(cp.get(sec, 'k2'))
 	k3 = float(cp.get(sec, 'k3', fallback='0'))
-	k4 = float(cp.get(sec, 'k4', fallback='0'))
-	k5 = float(cp.get(sec, 'k5', fallback='0'))
-	k6 = float(cp.get(sec, 'k6', fallback='0'))
 
 	sec = 'Tangential'
 	p1 = float(cp.get(sec, 'p1'))
 	p2 = float(cp.get(sec, 'p2'))
 
-	camera_matrix = np.array([[fx, 0, cx],
-							  [0, fy, cy],
-							  [0, 0, 1]])
+	camera_matrix = np.array([[fx, 0,  cx],
+							  [0,  fy, cy],
+							  [0,  0,  1]])
 
-	distortion = np.array([k1, k2, p1, p2, k3, k4, k5, k6])
+	distortion = np.array([k1, k2, p1, p2, k3])
 
 	return camera_matrix, distortion
 

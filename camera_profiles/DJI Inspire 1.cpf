@@ -4,7 +4,6 @@ Model = DJI Inspire 1
 [Intrinsics]
 fx = 0.614578125
 fy = 0.614255208
-s = 0
 cx = 0.4915677083
 cy = 0.4945972222
 

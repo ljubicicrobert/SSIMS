@@ -4,7 +4,6 @@ Model = DJI Phantom 2 Vision+
 [Intrinsics]
 fx = 1.0862776720934
 fy = 1.0925997030047
-s = 0
 cx = 0.5123578050241
 cy = 0.5473193534385
 

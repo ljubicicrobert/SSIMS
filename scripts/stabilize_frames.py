@@ -424,7 +424,7 @@ if __name__ == '__main__':
 
 		if orthorectify:
 			gcps_real = np.multiply(np.loadtxt('{}/gcps_real.txt'.format(results_folder), dtype='float32', delimiter=' '), px_ratio)
-			gcps_image = np.asarray(get_gcps_from_image(img, verbose=True, hide_sliders=True))
+			gcps_image = np.asarray(get_gcps_from_image(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), verbose=True, hide_sliders=True))
 
 			assert gcps_real.shape == gcps_image.shape,\
 				'[ERROR] Number of GCPs [{}] not equal to number of selected features [{}]'.format(gcps_real.shape[0], gcps_image.shape[0])

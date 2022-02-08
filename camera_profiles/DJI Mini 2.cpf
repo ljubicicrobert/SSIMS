@@ -4,7 +4,6 @@ Model = DJI Mini 2
 [Intrinsics]
 fx = 0.7126984127
 fy = 0.7126984127
-s = 0
 cx = 0.5
 cy = 0.5
 

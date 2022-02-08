@@ -86,6 +86,10 @@ def to_int(a):
 	return int(round(a))
 
 
+show_legend = True
+legend_toggle = False
+
+
 def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hide_sliders=False) -> list:
 	"""
 	Extracts [x, y] pixel coordinates from an image using right mouse click.
@@ -100,6 +104,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 	:return:				A list of initial pixel positions to use with coordTransform().
 	"""
 
+	global show_legend
 	global legend_toggle
 
 	image = image_orig.copy()
@@ -167,9 +172,8 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 			plt.draw()
 
 	def keypress(event):
-		global show_legend
 		global p_list
-		# global is_laplacian
+		global show_legend
 
 		if event.key == 'd' and len(points) > 0:
 			p = points.pop()
@@ -182,15 +186,6 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 			update_ia(sl_ax_ia_size.val)
 			update_sa(sl_ax_sa_size.val)
 			plt.draw()
-
-		# if event.key == ' ':
-		# 	if not is_laplacian and not hide_sliders:
-		# 		img_ref.set_data(img_laplacian)
-		# 	else:
-		# 		img_ref.set_data(image)
-		#
-		# 	plt.draw()
-		# 	is_laplacian = not is_laplacian
 
 		elif event.key == 'enter':
 			plt.close()
@@ -216,7 +211,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 
 	fig.canvas.mpl_connect('button_press_event', getPixelValue)
 	fig.canvas.mpl_connect('key_press_event', keypress)
-	img_ref = plt.imshow(image, cmap='gray')
+	img_ref = plt.imshow(image)
 
 	def update_sa(val):
 		global search_size
@@ -307,19 +302,23 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 			 'Mouse RIGHT = select feature\n' \
 			 'Mouse MIDDLE or D = remove last feature\n' \
 			 'ENTER/RETURN = accept selected features\n' \
+			 'ESC or Q = abort operation\n' \
 			 'Use sliders to change IA/SA window size'
 
 	if hide_sliders:
 		ax_ia_size.set_visible(False)
 		ax_sa_size.set_visible(False)
 
-		legend = 'O = zoom to window\n' \
-				 'P = pan image\n' \
-				 'Mouse RIGHT = select feature\n' \
-				 'Mouse MIDDLE or D = remove last feature\n' \
-				 'ENTER/RETURN = accept selected features'
+		ax.set_title('Choose GCPs in the same order as in the orthorectification GCP list')
 
-	legend_toggle = plt.text(0.02, 0.97, legend,
+		legend = 'O = zoom to window\n' \
+		         'P = pan image\n' \
+		         'Mouse RIGHT = select GCP\n' \
+		         'Mouse MIDDLE or D = remove last GCP\n' \
+		         'ENTER/RETURN = accept selected GCPs\n' \
+		         'ESC or Q = abort operation'
+
+	legend_toggle = ax.text(0.02, 0.97, legend,
 							 horizontalalignment='left',
 							 verticalalignment='top',
 							 transform=ax.transAxes,
@@ -327,14 +326,14 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 							 fontsize=9,
 							 )
 
-	hint = plt.text(0.02, 1.02, 'F1: toggle legend',
+	hint = ax.text(0.02, 1.02, 'F1: toggle legend',
 					 horizontalalignment='left',
 					 verticalalignment='bottom',
 					 transform=ax.transAxes,
 					 fontsize=9,
 					 )
 
-	points_list = plt.text(0.99, 0.02, '',
+	points_list = ax.text(0.99, 0.02, '',
 				  horizontalalignment='right',
 				  verticalalignment='bottom',
 				  transform=ax.transAxes,
@@ -566,11 +565,7 @@ if __name__ == '__main__':
 		img = cv2.imread(img_path)
 		img_gray = cv2.imread(img_path, 0)
 		img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-		# img_laplacian = cv2.Laplacian(img_gray, cv2.CV_8U)
 
-		# is_laplacian = False
-		show_legend = True
-		legend_toggle = None
 		markers = get_gcps_from_image(img_rgb, verbose=True, ia=k_size, sa=search_size)
 		cfg['Basic']['SearchAreaSize'] = str(search_size)
 		cfg['Basic']['InterrogationAreaSize'] = str(k_size)
