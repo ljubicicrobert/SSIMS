@@ -1,53 +1,63 @@
-﻿;Semicolon denotes comment line, these can be removed
-;Do not change or remove section headers!
+﻿;Lines begining with a semicolon are comments and can be freely removed
+;Do not remove section headers in brackets!
 
 
 [Stabilization]
 
-InputFolder = "Path to folder containing original frames"
-OutputFolder = "Path to folder containing feature tracking results"
+InputFolder = "Path to folder with individual original images"
+OutputFolder = "Path to the feature tracking results folder"
 
-;Specify extension without leading dot
+;Extensions of the original images, without the leading dot
+;
 ImageExtension = jpg
 
-;Quality must be between 1 and 100
+;Quality parameter for output images, must be in range 1-100 (low to high)
+;
 ImageQuality = 95
 
-;Whether to create a video from stabilized frames
-CreateVideo = 1
-
-;Framerate for the stabilized video
-fps = 30.00
-
-;Transformation method:
-;   0-similarity
-;   1-affine2D_strict
-;   2-affine2D_optimal
-;   3-affine3D_optimal
-;   4-projective_strict
-;   5-projective_optimal
+;Transformation matrix estimation method, available:
+;   0 - similarity (min. 2 feature points required)
+;   1 - affine2D_strict (exactly 3 points)
+;   2 - affine2D_optimal (min. 3 points)
+;   3 - affine3D_optimal (min. 3 points)
+;   4 - projective_strict (exactly 4 points)
+;   5 - projective_optimal (min. 4 points)
+;
 Method = 5
 
-;Whether to filter feature points using RANSAC
+;Whether to use Random Sample Concensus filter
+;with a threshold value of RANSACThreshold
+;
 UseRANSAC = 0
-
-;RANSAC threshold
 RANSACThreshold = 2.0
 
-;Whether to also orthorectify images. Keep in mind that the real-world GCP
-;coordinates must be specified in gcp_real.txt file in the OutputFolder
+;Whether to also orthorectify images using real-world GCP coordinates.
+; KEEP IN MIND that the real world coordinates must be specified in the
+; gcp_real.txt fine in the OutputFolder
+;
 Orthorectify = 0
 
-;PX per meter
+;Pixels per meter ratio for the orthorectified images
+;
 PXRatio = 100
 
-;Which tracked features to use for the stabilization, e.g. 10110 means only
-;the first, third and fourth feature will be used. If == 1 then all features
-;are used.
+;Specifies which of the tracked features will be used for the stabilization.
+;If == 1 then all features are used.
+;If a string such as 01101 then features on positions 2, 3, and 5 are used.
+;
 FeatureMask = 1
 
-;If orthorectifying, number of pixels to gather from original images around
-;the specified GCPs, e.g. PaddX = 50-100 will collect 50 pixels to the left
-;of the leftmost GCP and 100 to the right of the rightmost GCP
+;Pixel padding outside of the GCP-covered area, i.e. how many pixels are
+;grabbed left and right, and up and down of the GCP-covered area from the
+;stabilized images
+;
 PaddX = 0-0
 PaddY = 0-0
+
+;Whether to create a video from the stabilized images
+;
+CreateVideo = 0
+
+;Framerate of the output video, used if CreateVideo==1
+;
+fps = 30.00

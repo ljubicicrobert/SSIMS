@@ -4,7 +4,6 @@ Model = GoPro Hero4
 [Intrinsics]
 fx = 0.582625
 fy = 0.58759375
-s = 0
 cx = 0.501177083333333
 cy = 0.505030555555556
 

@@ -1,13 +1,15 @@
-﻿;Semicolon denotes comment line, these can be removed
-;Do not change or remove section headers!
+﻿;Lines begining with a semicolon are comments and can be freely removed
+;Do not remove section headers in brackets!
 
-;Explanation on camera parameters can be found at:
+;Details on camera intrinsic and distortion parameters can be found at:
+;
 ;https://www.mathworks.com/help/vision/ref/cameraparameters.html
-;or at
+;or
 ;https://docs.opencv.org/master/dc/dbb/tutorial_py_calibration.html
 
 
 [Camera]
+
 Model = Sony RX10 M2
 
 [Intrinsics]

@@ -1,0 +1,39 @@
+SSIMS_v0.3.0.2
+
+Minor changes:
+- Removed skew coefficient from camera profiles and GUI
+- Reduced number of possible radial distortion coefficients from 6 to 3
+- Transposed camera matrix to match OpenCV style
+- Fixed issue of legend not showing in GCP selection plot for orthorectification
+
+-------------------------------------------------------------------------------
+
+SSIMS_v0.3.0.1
+
+Major changes:
+- Fixed imwrite() bug in stabilization script for OpenCV 4.5+
+
+Minor changes:
+- Added Laplacian filter for preprocessing
+- Fixed problem where form would hang when Python was not found in %PATH%
+- If Python not in %PATH%, environmental variable window not opens in Administrator mode
+- Replaced couple occurances of f-strings with .format() for pre-Python 3.7 compatibility
+
+-------------------------------------------------------------------------------
+
+SSIMS_v0.3.0.0
+
+Major changes:
+- Migrated from .NET 4.0 to .NET 4.5 to enable new version checking using GitHub
+- Added automatic and manual checking for new versions on GUI start
+- Added link to GitHub readme as help
+- Added frame filtering capabilities
+- Replaced RMSD analysis for tracked feature quality with SSIM scores
+- Added a Measure tool to help with determining optimal GSD in "Orthorectify" form
+
+Minor changes:
+- Changed name of the tool
+- Updated screenshots to match new version
+- Minor changes to Matplotlib windows' key shortcuts
+- Added "Inspect frames" and "Open results folder" shortcuts
+- Added shortcut for %PATH% variables window
