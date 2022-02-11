@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
 This is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,7 +31,7 @@ try:
 except Exception as ex:
 	print('\n[EXCEPTION] Import failed: \n\n'
 		  '  {}'.format(ex))
-	input('\nPress any key to exit...')
+	input('\nPress ENTER/RETURN to exit...')
 	exit()
 
 
@@ -149,9 +152,16 @@ if __name__ == '__main__':
 		                         fontsize=9,
 		                         )
 
+		try:
+			mng = plt.get_current_fig_manager()
+			mng.window.state('zoomed')
+			mng.set_window_title('Inspect frames')
+		except:
+			pass
+
 		plt.show()
 
 	except Exception as ex:
 		print('\n[EXCEPTION] The following exception has occurred: \n\n'
 		      '  {}'.format(ex))
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN to exit...')

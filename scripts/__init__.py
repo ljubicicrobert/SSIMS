@@ -1,13 +1,17 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import cv2
 import numpy as np
 import configparser
 from argparse import ArgumentParser
+from datetime import datetime
 
 __package_name__ = 'SSIMS: Preprocessing tool for UAV image velocimetry'
 __description__ = 'Preprocessing and video stabilization tool for UAS/UAV image velocimetry based on Structural Similarity (SSIM) Index metric'
-__version__ = '0.3.0.2'
+__version__ = '0.3.0.3'
 __status__ = 'beta'
-__date_deployed__ = '2022-02-02'
+__date_deployed__ = '2022-02-11'
 
 __author__ = 'Robert Ljubicic, University of Belgrade - Civil Engineering Faculty'
 __author_email__ = 'rljubicic@grf.bg.ac.rs'

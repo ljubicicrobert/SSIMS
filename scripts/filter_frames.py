@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
 This is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,7 +31,7 @@ try:
 except Exception as ex:
 	print('\n[EXCEPTION] Import failed: \n\n'
 	      '  {}'.format(ex))
-	input('\nPress any key to exit...')
+	input('\nPress ENTER/RETURN to exit...')
 	exit()
 
 separator = '---'
@@ -127,7 +130,7 @@ if __name__ == '__main__':
 		parser.add_argument('--multi', type=int, help='Path to filter list file', default=0)
 		args = parser.parse_args()
 
-		img_list = glob.glob(r'{0}\*.{1}'.format(args.folder, args.ext))
+		img_list = glob.glob(r'{0}/*.{1}'.format(args.folder, args.ext))
 		num_frames = len(img_list)
 		filters_data = np.loadtxt(args.folder + '/filters.txt', dtype='str', delimiter=r'/', ndmin=2)
 		num_filters = filters_data.shape[0]
@@ -197,4 +200,4 @@ if __name__ == '__main__':
 	except Exception as ex:
 		print('\n[EXCEPTION] The following exception has occurred: \n\n'
 		      '  {}'.format(ex))
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN to exit...')

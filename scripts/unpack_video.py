@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
 This is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,7 +27,7 @@ try:
 except Exception as ex:
 	print('\n[EXCEPTION] Import failed: \n\n'
 		  '  {}'.format(ex))
-	input('\nPress any key to exit...')
+	input('\nPress ENTER/RETURN to exit...')
 	exit()
 
 
@@ -96,7 +99,7 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 
 	if not path.exists(video):
 		print('[ERROR] Video file not found at {}'.format(video))
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN to exit...')
 		exit()
 
 	vidcap = cv2.VideoCapture(video)
@@ -216,9 +219,9 @@ if __name__ == '__main__':
 					  )
 
 		print('\a')
-		input('Press any key to exit...')
+		input('Press ENTER/RETURN to exit...')
 
 	except Exception as ex:
 		print('\n[EXCEPTION] The following exception has occurred: \n\n'
 			  '  {}'.format(ex))
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN to exit...')

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
 This is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +30,7 @@ try:
 except Exception as ex:
 	print('\n[EXCEPTION] Import failed: \n\n'
 	      '  {}'.format(ex))
-	input('\nPress any key to exit...')
+	input('\nPress ENTER/RETURN to exit...')
 	exit()
 
 separator = '---'
@@ -88,19 +91,19 @@ if __name__ == '__main__':
 
 		if frames_folder is None:
 			print('\nFrames folder not provided!')
-			input('\nPress any key to exit...')
+			input('\nPress ENTER/RETURN to exit...')
 			exit()
 		elif ext is None:
 			print('\nNo frame extension provided!')
-			input('\nPress any key to exit...')
+			input('\nPress ENTER/RETURN to exit...')
 			exit()
 
-		frames_list = glob.glob(r'{}\*.{}'.format(frames_folder, ext))
+		frames_list = glob.glob(r'{}/*.{}'.format(frames_folder, ext))
 		num_frames = len(frames_list)
 
 		if num_frames == 0:
 			print('\nNo frames were found in folder [{0}] with extension [{1}]'.format(frames_folder, ext))
-			input('\nPress any key to exit...')
+			input('\nPress ENTER/RETURN to exit...')
 			exit()
 
 		fig, ax = plt.subplots()
@@ -145,4 +148,4 @@ if __name__ == '__main__':
 	except Exception as ex:
 		print('\n[EXCEPTION] The following exception has occurred: \n\n'
 		      '  {}'.format(ex))
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN to exit...')

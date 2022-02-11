@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import setuptools
 
 setuptools.setup(name='SSIMS: Preprocessing tool for UAV image velocimetry',

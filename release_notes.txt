@@ -1,3 +1,13 @@
+SSIMS_v0.3.0.3
+
+Minor changes:
+- Measure distance window now opens in full screen mode
+- Added shebang lines for Linux
+- Replaced a couple accidental backslashes in path strings
+- Fixed DJI Mini 2 tangential distortion coeff's swap
+
+-------------------------------------------------------------------------------
+
 SSIMS_v0.3.0.2
 
 Minor changes:

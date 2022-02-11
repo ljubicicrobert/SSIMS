@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
 This is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,9 +21,9 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-	from datetime import timedelta
 	from shutil import copy, SameFileError
 	from time import time
+	from datetime import timedelta
 	from os import path, listdir, makedirs, remove
 	from feature_tracking import get_gcps_from_image, fresh_folder
 	from itertools import product
@@ -32,7 +35,7 @@ try:
 except Exception as ex:
 	print('\n[EXCEPTION] Import failed: \n\n'
 		  '  {}'.format(ex))
-	input('\nPress any key to exit...')
+	input('\nPress ENTER/RETURN to exit...')
 	exit()
 
 
@@ -111,7 +114,7 @@ def framesToVideo(output, folder='.', ext='jpg', codec='MJPG', fps=30.00, scale=
 				if not size_adj:
 					print('[ERROR] Frame {} does not have the same size as the first frame!\n'
 						  '[ERROR] OpenCV Video writer requires all frames to be the same size!'.format(i))
-					input('\nPress any key to exit...')
+					input('\nPress ENTER/RETURN to exit...')
 					exit()
 				else:
 					print('[WARNING] Adjusting the size of frame {} to {}x{} px'.format(i, width, height))
@@ -206,7 +209,7 @@ def coordTransform(image: np.ndarray,
 
 	else:
 		print('[ERROR] Unknown transformation method for stabilization point set!')
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN to exit...')
 
 	if M_ortho is not None:
 		M_final = np.matmul(M_ortho, M_stable)
