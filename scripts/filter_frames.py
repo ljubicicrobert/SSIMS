@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
 This is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,6 +24,7 @@ try:
 	from os import path, makedirs
 	from scipy.signal import gaussian, convolve2d
 
+	import inspect
 	import glob
 	import matplotlib.pyplot as plt
 	import mplcursors
@@ -28,7 +32,7 @@ try:
 except Exception as ex:
 	print('\n[EXCEPTION] Import failed: \n\n'
 	      '  {}'.format(ex))
-	input('\nPress any key to exit...')
+	input('\nPress ENTER/RETURN to exit...')
 	exit()
 
 separator = '---'
@@ -127,7 +131,7 @@ if __name__ == '__main__':
 		parser.add_argument('--multi', type=int, help='Path to filter list file', default=0)
 		args = parser.parse_args()
 
-		img_list = glob.glob(r'{0}\*.{1}'.format(args.folder, args.ext))
+		img_list = glob.glob(r'{0}/*.{1}'.format(args.folder, args.ext))
 		num_frames = len(img_list)
 		filters_data = np.loadtxt(args.folder + '/filters.txt', dtype='str', delimiter=r'/', ndmin=2)
 		num_filters = filters_data.shape[0]
@@ -146,7 +150,10 @@ if __name__ == '__main__':
 
 			legend = 'Filters:'
 			for i in range(num_filters):
-				legend += '\n    ' + filters_data[i][0] + '/' + filters_data[i][1]
+				func_args_names = locals()[filters_data[i][0]]
+				func_args = inspect.getfullargspec(func_args_names)[0][1:] if filters_data[i][1] != '' else []
+				legend_values = ['{}={}'.format(p, v) for p, v in zip(func_args, filters_data[i][1].split(','))]
+				legend += '\n    ' + filters_data[i][0] + ': ' + ', '.join(legend_values if filters_data[i][1] != '' else '')
 
 			legend_toggle = plt.text(0.02, 0.97, legend,
 			                         horizontalalignment='left',
@@ -197,4 +204,4 @@ if __name__ == '__main__':
 	except Exception as ex:
 		print('\n[EXCEPTION] The following exception has occurred: \n\n'
 		      '  {}'.format(ex))
-		input('\nPress any key to exit...')
+		input('\nPress ENTER/RETURN to exit...')
