@@ -24,6 +24,7 @@ try:
 	from os import path, makedirs
 	from scipy.signal import gaussian, convolve2d
 
+	import inspect
 	import glob
 	import matplotlib.pyplot as plt
 	import mplcursors
@@ -149,7 +150,10 @@ if __name__ == '__main__':
 
 			legend = 'Filters:'
 			for i in range(num_filters):
-				legend += '\n    ' + filters_data[i][0] + '/' + filters_data[i][1]
+				func_args_names = locals()[filters_data[i][0]]
+				func_args = inspect.getfullargspec(func_args_names)[0][1:] if filters_data[i][1] != '' else []
+				legend_values = ['{}={}'.format(p, v) for p, v in zip(func_args, filters_data[i][1].split(','))]
+				legend += '\n    ' + filters_data[i][0] + ': ' + ', '.join(legend_values if filters_data[i][1] != '' else '')
 
 			legend_toggle = plt.text(0.02, 0.97, legend,
 			                         horizontalalignment='left',

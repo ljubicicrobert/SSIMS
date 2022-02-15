@@ -1,5 +1,8 @@
 SSIMS_v0.3.0.3
 
+Major changes:
+- Fixed bug in Filter form where canceled filter does not properly return to the available filters list
+
 Minor changes:
 - Measure distance window now opens in full screen mode
 - Added shebang lines for Linux

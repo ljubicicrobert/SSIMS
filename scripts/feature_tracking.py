@@ -131,7 +131,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 		s = ''
 		i = 1
 		for x, y in l:
-			s += '{}: {}, {}\n'.format(i, x, y)
+			s += '#{}: X={}, Y={}\n'.format(i, x, y)
 			i += 1
 
 		return s[:-1]
