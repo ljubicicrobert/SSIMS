@@ -120,6 +120,7 @@ Argument `--folder` should point to the stabilization folder created by the `fea
 ### Main form
 
 <img align="right" width="400" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png">
+
 If used on Windows platform, a more convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png) in which the feature tracking and image transformation parameters are defined.
 
 Keep in mind that some options are only available after certain steps have already been completed (e.g. choosing features for image transformation is only available after the feature tracking stage has been completed, etc.).
@@ -138,6 +139,7 @@ If the **Output folder** exists, user can open it quickly using the **Open outpu
 ### Camera calibration
 
 <img align="right" width="300" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png">
+
 Form for camera calibration is a part of the [Unpack video](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) form. Clicking on the **Camera parameters** button will open a [Camera parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png) form which allows two methods of selecting camera parameters: (1) from an existing calibration, or (2) by performing a new calibration.
 
 If option (1) is selected, camera model can be chosen from a dropdown list, from a file by browsing, or by manual input of parameters.
