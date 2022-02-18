@@ -194,7 +194,9 @@ Clicking **Apply filters** will initiate filtering on all frames in the selected
 ### Future features
 
 &#9744; Additional filters for preprocessing
+
 &#10004; Complete camera calibration form (as of v0.3.1.0)
+
 &#9744; Generation of local coordinate system from inter-GCP distances
 
 
