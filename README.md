@@ -198,7 +198,7 @@ The most important parameter is the **transformation method** which can signific
 
 ### Orthorectification
 
-<img align="right" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
+<img align="right" width="220" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
 
 The GUI also offers a simple orthorectification to be performed by estimating the transformation matrix between the in-image positions of tracking features and their corresponding real-world coordinates.
 
