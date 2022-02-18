@@ -197,7 +197,7 @@ The most important parameter is the **transformation method** which can signific
 
 **Note #10:** RANSAC filtering option is only available for methods labeled as **(optimal)**.
 
-<img align="right" width="230" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
+<img align="right" width="210" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
 
 ### Orthorectification
 
