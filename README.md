@@ -138,7 +138,7 @@ If the **Output folder** exists, user can open it quickly using the **Open outpu
 
 ### Camera calibration
 
-<img align="right" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png">
+<img align="right" width="250" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png">
 
 Form for camera calibration is a part of the [Unpack video](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) form. Clicking on the **Camera parameters** button will open a [Camera parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png) form which allows two methods of selecting camera parameters: (1) from an existing calibration, or (2) by performing a new calibration.
 
@@ -178,7 +178,7 @@ Not all of the tracked features have to be used for the transformation (stabiliz
 
 To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the `ssim_scores.py` script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
 
-<img src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png">
+<img width="800" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png">
 
 
 ### Image stabilization (transformation)
@@ -195,10 +195,9 @@ The most important parameter is the **transformation method** which can signific
 
 **Note #10:** RANSAC filtering option is only available for methods labeled as **(optimal)**.
 
+<img align="right" width="230" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
 
 ### Orthorectification
-
-<img align="right" width="230" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
 
 The GUI also offers a simple orthorectification to be performed by estimating the transformation matrix between the in-image positions of tracking features and their corresponding real-world coordinates.
 
