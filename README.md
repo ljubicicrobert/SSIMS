@@ -3,6 +3,25 @@
 Complete preprocessing tool for UAV image velocimetry - unpacking, filtering, stabilization, orthorectification and video creation. Video stabilization algorithm is based on _Structural Similarity Index (SSIM)_ metric. Developed in cooperation with the COST Action HARMONIOUS (CA16219, funded by the European Cooperation in Science and Technology - COST Association).
 
 
+## Contents
+
+1. [Capabilities](#capabilities)
+2. [Requirements and installation](#requirements-and-installation)
+3. [New versions](#new-versions)
+4. [Usage: Scripts](#usage-scripts)
+5. [Usage: Graphical user interface (GUI)](#usage-graphical-user-interface-gui)
+   5.1. [Main form](#main-form)
+   5.2. [Camera calibration](#camera-calibration)
+   5.3. [Selecting features for tracking](#selecting-features-for-tracking)
+   5.4. [Orthorectification](#orthorectification)
+   5.5. [Image filtering](#image-filtering)
+6. [Future features](#future-features)
+7. [Acknowledgements](#acknowledgements)
+8. [References](#references)
+9. [How to cite](#how-to-cite)
+10. [License and disclaimer](#license-and-disclaimer)
+
+
 ## Capabilities
 
 The most important functionality of the tool is video stabilization which includes both jitter removal and annulment of camera motion relative to a fixed frame of reference. Since it aims to completely remove apparent camera motion, it is different than most general-purpose digital stabilization tools.
