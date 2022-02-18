@@ -119,7 +119,7 @@ If the **Output folder** exists, user can open it quickly using the **Open outpu
 
 Form for camera calibration is a part of the [Unpack video](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) form. Clicking on the **Camera parameters** button will open a [Camera parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png) form which allows two methods of selecting camera parameters: (1) from an existing calibration, or (2) by performing a new calibration.
 
-If option (1) is selected, camera model can be chosen from (1) a dropdown list, (2) from a file by browsing, or (3) by manual input of parameters.
+If option (1) is selected, camera model can be chosen from a dropdown list, from a file by browsing, or by manual input of parameters.
 
 When option (2) is selected, the [form will expand](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_calibration.png) to reveal additional options and explanations on how to perform a calibration of a new camera. The calibration process involves detection of [chequerboard patterns](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_calibration_plot.png) in a series of images, and minimizing the reprojection errors between the image- and object-space by modifying the camera parameters. At the end of the procedure, a report will show the [RMS reprojection errors](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_calibration_bars.png) obtained using the new camera parameters.
 
