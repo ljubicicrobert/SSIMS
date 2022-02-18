@@ -178,6 +178,8 @@ Not all of the tracked features have to be used for the transformation (stabiliz
 
 To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the `ssim_scores.py` script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
 
+<img src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png">
+
 
 ### Image stabilization (transformation)
 
@@ -196,6 +198,8 @@ The most important parameter is the **transformation method** which can signific
 
 ### Orthorectification
 
+<img align="right" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
+
 The GUI also offers a simple orthorectification to be performed by estimating the transformation matrix between the in-image positions of tracking features and their corresponding real-world coordinates.
 
 [Form for orthorectification](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png) can be shown by clicking **Orthorectify** in the Image transformation group of the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png). Here the user can specify the known real-world coordinates (in meters) of a number of ground control points (at least 3). By clicking **Apply** the user will be prompted to select in-image positions of these GCPs, which **CAN BE DIFFERENT** from those features tracked for the stabilization purposes.
@@ -204,6 +208,8 @@ Users can also set a ground sampling distance (GSD, in px/m) to rescale the imag
 
 
 ### Image filtering
+
+<img align="right" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png">
 
 Users can perform filtering of images in a folder using the [Filter frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png) form. In the form, user should first define the _frame folder path_ and the _extension_ of images in the folder. Available filters are listed on left side of the form, and the user can add them to the **filtering stack** on the right side by clicking on the desired filter. Only one filter of a given type can be selected at a time.
 
