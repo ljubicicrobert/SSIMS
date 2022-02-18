@@ -178,7 +178,7 @@ Not all of the tracked features have to be used for the transformation (stabiliz
 
 To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the `ssim_scores.py` script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
 
-<img width="800" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png">
+<img width="800" align="center" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png">
 
 
 ### Image stabilization (transformation)
