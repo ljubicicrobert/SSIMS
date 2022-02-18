@@ -198,7 +198,7 @@ The most important parameter is the **transformation method** which can signific
 
 ### Orthorectification
 
-<img align="right" width="220" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
+<img align="right" width="230" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
 
 The GUI also offers a simple orthorectification to be performed by estimating the transformation matrix between the in-image positions of tracking features and their corresponding real-world coordinates.
 
@@ -211,7 +211,7 @@ Users can also set a ground sampling distance (GSD, in px/m) to rescale the imag
 
 Users can perform filtering of images in a folder using the [Filter frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png) form. In the form, user should first define the _frame folder path_ and the _extension_ of images in the folder. Available filters are listed on left side of the form, and the user can add them to the **filtering stack** on the right side by clicking on the desired filter. Only one filter of a given type can be selected at a time.
 
-<img align="right" width="300" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png">
+<img align="right" width="320" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png">
 
 Once the filters have been added to the filtering stack, user can edit the filter by clicking on the filter button in the filtering stack, which opens the [Filter parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_parameters.png) form, or reorder the filters by dragging and dropping them at the desired position. IMPORTANT: Filters will be applied in the top-down order from the filtering stack.
 
