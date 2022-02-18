@@ -119,6 +119,7 @@ Argument `--folder` should point to the stabilization folder created by the `fea
 
 ### Main form
 
+<img align="right" width="400" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png">
 If used on Windows platform, a more convenient alternative to the console usage is the GUI (.exe) which is located in the **gui** folder. The GUI initializes with the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png) in which the feature tracking and image transformation parameters are defined.
 
 Keep in mind that some options are only available after certain steps have already been completed (e.g. choosing features for image transformation is only available after the feature tracking stage has been completed, etc.).
@@ -132,8 +133,6 @@ Keep in mind that some options are only available after certain steps have alrea
 After the **Frames folder** has been selected, user can inspect the frames using the **Inspect frames** button to the left of the **Frames folder** text box.
 
 If the **Output folder** exists, user can open it quickly using the **Open output folder** button to the left of the **Output folder** text box.
-
-<img align="right" width="400" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png">
 
 
 ### Camera calibration
