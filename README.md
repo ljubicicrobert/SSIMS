@@ -3,7 +3,6 @@
 Complete preprocessing tool for UAV image velocimetry - unpacking, filtering, stabilization, orthorectification and video creation. Video stabilization algorithm is based on _Structural Similarity Index (SSIM)_ metric. Developed in cooperation with the COST Action HARMONIOUS (CA16219, funded by the European Cooperation in Science and Technology - COST Association).
 
 
-
 ## Contents
 
 1. [Capabilities](#capabilities)
@@ -23,7 +22,6 @@ Complete preprocessing tool for UAV image velocimetry - unpacking, filtering, st
 10. [License and disclaimer](#license-and-disclaimer)
 
 
-
 ## Capabilities
 
 The most important functionality of the tool is video stabilization which includes both jitter removal and annulment of camera motion relative to a fixed frame of reference. Since it aims to completely remove apparent camera motion, it is different than most general-purpose digital stabilization tools.
@@ -39,7 +37,6 @@ Stabilization workflow:
 4. **Creating** stabilized video from transformed images.
 
 Other, more general capabilities of the tool include image filtering, creating videos from images, etc.
-
 
 
 ## Requirements and installation
@@ -76,13 +73,11 @@ skimage (scikit-image) >= 0.16.1    # pip install scikit-image
 >```
 
 
-
 ## New versions
 
 The GUI will automatically check for latest releases of the tool on program start. If new release was found in the official repository a form will be displayed from where the user can read the new release information, choose to view/download the new release on/from GitHub, or pause automatic checking for new versions for some period of time.
 
 > **Note #5**: User can also manually check for new releases by clicking on _Build version: ..._ text in the bottom-left corner of the MAIN form.
-
 
 
 ## Usage: Scripts
@@ -120,7 +115,6 @@ python ssim_scores.py --folder [path_to_output_folder]
 Argument `--folder` should point to the stabilization folder created by the `feature_tracking.py` script. The output of the script is a boxplot of SSIM tracking scores for individual features selected by the `feature_tracking.py`.
 
 
-
 ## Usage: Graphical user interface (GUI)
 
 ### Main form
@@ -142,7 +136,6 @@ After the **Frames folder** has been selected, user can inspect the frames using
 If the **Output folder** exists, user can open it quickly using the **Open output folder** button to the left of the **Output folder** text box.
 
 
-
 ### Camera calibration
 
 <img align="right" width="250" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png">
@@ -156,7 +149,6 @@ When option (2) is selected, the [form will expand](https://github.com/ljubicicr
 > **Note #7**: If certain images have a relatively high reprojection error value, it can be beneficial to remove them from the calibration folder and repeat the calibration procedure, as this might improve the calibration accuracy. For best results try to keep between 15 and 30 images with chequerboard (target) pattern. Also, generation and manual inspection of undistorted chequerboard images is highly advised.
 
 Calibration script will create a `ret_list.txt` file which contains per-image mean reprojection errors, and a `[camera_model_name].cpf` file which contains the camera parameters - camera intrinsics, radial and tangential distortion coefficients. Copying this file to the `camera_profiles` folder of the **SSIMS** tool will make this camera profile available in the dropdown list of the Camera parameters form.
-
 
 
 ### Selecting features for tracking
@@ -178,7 +170,6 @@ Toggle visibility of legend and point list using **F1** key.
 > **Note #8**: Feature tracking will not immediately produce stabilized images. This will be done after the two following steps have been completed.
 
 
-
 ### Selecting features for transformation
 
 Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the [Select features for transformation](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png) button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
@@ -188,7 +179,6 @@ Not all of the tracked features have to be used for the transformation (stabiliz
 To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the `ssim_scores.py` script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
 
 <img width="800" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png">
-
 
 
 ### Image stabilization (transformation)
@@ -205,7 +195,6 @@ The most important parameter is the **transformation method** which can signific
 
 **Note #10:** RANSAC filtering option is only available for methods labeled as **(optimal)**.
 
-
 <img align="right" width="230" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png">
 
 ### Orthorectification
@@ -215,7 +204,6 @@ The GUI also offers a simple orthorectification to be performed by estimating th
 [Form for orthorectification](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/orthorectify.png) can be shown by clicking **Orthorectify** in the Image transformation group of the [MAIN form](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png). Here the user can specify the known real-world coordinates (in meters) of a number of ground control points (at least 3). By clicking **Apply** the user will be prompted to select in-image positions of these GCPs, which **CAN BE DIFFERENT** from those features tracked for the stabilization purposes.
 
 Users can also set a ground sampling distance (GSD, in px/m) to rescale the image and help with the postprocessing - use this feature carefully as it will always introduce additional errors/noise in the transformed images. **It's best to keep this ratio as close as possible to the original GSD!**. For these reasons user can click **Measure** button to quickly measure in-image distances and to compare them with real-world data in order to help determine appropriate GSD value.
-
 
 
 ### Image filtering
@@ -233,7 +221,6 @@ Once the filters have been chosen, user can preview the filtering results using 
 Clicking **Apply filters** will initiate filtering on all frames in the selected folder.
 
 
-
 ### Future features
 
 &#9744; Additional filters for preprocessing
@@ -241,7 +228,6 @@ Clicking **Apply filters** will initiate filtering on all frames in the selected
 &#9746; Complete camera calibration form (as of v0.3.1.0)
 
 &#9744; Generation of local coordinate system from inter-GCP distances
-
 
 
 ### Acknowledgements
@@ -261,7 +247,6 @@ I wish to express my gratitude to the following people (in no particular order):
 [Dr Matthew T. Perks](https://www.ncl.ac.uk/gps/staff/profile/matthewperks.html#teaching) - for providing me with helpful comments, as well as providing most of the camera parameters.
 
 
-
 ### References
 
 Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P. (2004) *Image Quality Assessment: From Error Visibility to Structural Similarity*, IEEE Trans. Image Process., 13(4), 600–612, [https://doi.org/10.1109/TIP.2003.819861](https://doi.org/10.1109/TIP.2003.819861)
@@ -274,7 +259,6 @@ Ljubicic, R. (2021) *SSIMS: Preprocessing tool for UAV image velocimetry*, [http
 Ljubičić R., Strelnikova D., Perks M.T., Eltner A., Pena-Haro S., Pizarro A., Dal Sasso S.F., Scherling U., Vuono P. and Manfreda S (2021) _A comparison of tools and techniques for stabilising unmanned aerial system (UAS) imagery for surface flow observations_. Hydrology and Earth System Sciences. 25 (9), pp.5105--5132, [https://doi.org/10.5194/hess-25-5105-2021](https://doi.org/10.5194/hess-25-5105-2021)
 
 Performance evaluation and comparison results to similar tools available at [https://doi.org/10.5281/zenodo.4557921](https://doi.org/10.5281/zenodo.4557921).
-
 
 
 ### License and disclaimer
