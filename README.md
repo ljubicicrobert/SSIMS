@@ -138,7 +138,7 @@ If the **Output folder** exists, user can open it quickly using the **Open outpu
 
 ### Camera calibration
 
-<img align="right" width="300" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png">
+<img align="right" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png">
 
 Form for camera calibration is a part of the [Unpack video](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) form. Clicking on the **Camera parameters** button will open a [Camera parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png) form which allows two methods of selecting camera parameters: (1) from an existing calibration, or (2) by performing a new calibration.
 
@@ -152,6 +152,8 @@ Calibration script will create a `ret_list.txt` file which contains per-image me
 
 
 ### Selecting features for tracking
+
+<img align="right" width="550" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/select_features.png">
 
 In the MAIN form, user can select or input the location of original frames, as well as the location for storing results (output). Once the images have been found, user can start feature selection and tracking using the Track features button in the bottom-left corner, which will open [a new window](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/select_features.png) to allow the user to manually select static features which will be tracked.
 
