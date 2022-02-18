@@ -9,7 +9,7 @@ Complete preprocessing tool for UAV image velocimetry - unpacking, filtering, st
 2. [Requirements and installation](#requirements-and-installation)
 3. [New versions](#new-versions)
 4. [Usage: Scripts](#usage-scripts)
-5. [Usage: Graphical user interface (GUI)](#usage-graphical-user-interface-gui)
+5. [Usage: Graphical user interface (GUI)](#usage-graphical-user-interface-gui)<br/>
     5.1. [Main form](#main-form)
     5.2. [Camera calibration](#camera-calibration)
     5.3. [Selecting features for tracking](#selecting-features-for-tracking)
