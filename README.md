@@ -72,6 +72,12 @@ python frames_to_video.py --cfg [path_to_config_file]
 ```
 Each script requires a slightly different INI-type configuration file. Template configurations for each script can be found in the **Templates** folder. Keep in mind that names of sections and variables in configuration files **should not be changed**. If GUI is used, such files will be automatically created for each script before they are called, and no manual intervention is needed.
 
+The tool provides a script for camera calibration:
+```bash
+python camera_calibration.py --model [camera_model_name] --folder [path_to_images_folder] --ext [image_extension] -w [num_chequerboard_squares_longside] -h [num_chequerboard_squares_shortside] --use_k3 [0/1] --output [0/1]
+```
+Argument `--use_k3` defines whether two or three radial distortion coefficients will be used, while `--output` defines whether or not the chequerboard calibration images will be undistorted (the results will be saved to `[path_to_images_folder]/undistorted`).
+
 There is an option to (p)review frames in the given folder with a specified extension (excluding dot) using the script:
 ```bash
 python inspect_frames.py --folder [path_to_frames_folder] --ext [frames_extension]
@@ -109,6 +115,19 @@ After the **Frames folder** has been selected, user can inspect the frames using
 If the **Output folder** exists, user can open it quickly using the **Open output folder** button to the left of the **Output folder** text box.
 
 
+### Camera calibration
+
+Form for camera calibration is a part of the [Unpack video](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) form. Clicking on the **Camera parameters** button will open a [Camera parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png) form which allows two methods of selecting camera parameters: (1) from an existing calibration, or (2) by performing a new calibration.
+
+If option (1) is selected, camera model can be chosen from (1) a dropdown list, (2) from a file by browsing, or (3) by manual input of parameters.
+
+When option (2) is selected, the [form will expand](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_calibration.png) to reveal additional options and explanations on how to perform a calibration of a new camera. The calibration process involves detection of [chequerboard patterns](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_calibration_plot.png) in a series of images, and minimizing the reprojection errors between the image- and object-space by modifying the camera parameters. At the end of the procedure, a report will show the [RMS reprojection errors](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_calibration_bars.png) obtained using the new camera parameters.
+
+> **Note #7**: If certain images have a relatively high reprojection error value, it can be beneficial to remove them from the calibration folder and repeat the calibration procedure, as this might improve the calibration accuracy. For best results try to keep between 15 and 30 images with chequerboard (target) pattern. Also, generation and manual inspection of undistorted chequerboard images is highly advised.
+
+Calibration script will create a `ret_list.txt` file which contains per-image mean reprojection errors, and a `[camera_model_name].cpf` file which contains the camera parameters - camera intrinsics, radial and tangential distortion coefficients. Copying this file to the `camera_profiles` folder of the **SSIMS** tool will make this camera profile available in the dropdown list of the Camera parameters form.
+
+
 ### Selecting features for tracking
 
 In the MAIN form, user can select or input the location of original frames, as well as the location for storing results (output). Once the images have been found, user can start feature selection and tracking using the Track features button in the bottom-left corner, which will open [a new window](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/select_features.png) to allow the user to manually select static features which will be tracked.
@@ -123,14 +142,14 @@ Use keys **O** and **P** to zoom and pan the image. Use keys **LEFT** and **RIGH
 
 Toggle visibility of legend and point list using **F1** key.
 
-> **Note #7**: Feature tracking will not immediately produce stabilized images. This will be done after the two following steps have been completed.
+> **Note #8**: Feature tracking will not immediately produce stabilized images. This will be done after the two following steps have been completed.
 
 
 ### Selecting features for transformation
 
 Not all of the tracked features have to be used for the transformation (stabilization) of images. You can select features that will be used for the transformation using the [Select features for transformation](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_features.png) button. This will open a new form which display the positions and coordinates of tracked features. From the given list, you can choose which ones will be used to stabilize the original images.
 
-> **Note #8**: An average SSIM tracking score (higher is better, 1 is ideal) will be shown next to each feature coordinates on the right side of the form.
+> **Note #9**: An average SSIM tracking score (higher is better, 1 is ideal) will be shown next to each feature coordinates on the right side of the form.
 
 To help you choose the best features, an additional analysis is available by clicking the **Plot SSIM scores** button in the top-left corner of the **Select features for transformation** window. This will run the `ssim_scores.py` script and will show a [bar graph of SSIM tracking scores for all frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/ssim_boxplot.png). In the bar graph, better features will have a higher SSIM score and lower variance, which can help you decide which ones to keep and which ones to remove from the transformation.
 
@@ -147,7 +166,7 @@ The most important parameter is the **transformation method** which can signific
 4. **Projective (strict)**, based on [cv2.getPerspectiveTransform](https://docs.opencv.org/3.4/da/d54/group__imgproc__transform.html#ga8c1ae0e3589a9d77fffc962c49b22043), which requires exactly 4 features, and
 5. **Projective (optimal)**, based on [cv2.findHomography](https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html#ga4abc2ece9fab9398f2e560d53c8c9780), which requires at least 4 features. This is the default option and is usually the best starting point.
 
-**Note #9:** RANSAC filtering option is only available for methods labeled as **(optimal)**.
+**Note #10:** RANSAC filtering option is only available for methods labeled as **(optimal)**.
 
 
 ### Orthorectification
@@ -175,7 +194,7 @@ Clicking **Apply filters** will initiate filtering on all frames in the selected
 ### Future features
 
 - [ ] Additional filters for preprocessing
-- [ ] Complete camera calibration form
+- [x] Complete camera calibration form (as of v0.3.1.0)
 - [ ] Generation of local coordinate system from inter-GCP distances
 
 
