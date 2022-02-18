@@ -1,4 +1,12 @@
-SSIMS_v0.3.0.3
+SSIMS_v0.3.1.0 ----------------------------------------------------------------
+
+Major changes:
+- Added a camera calibration workflow based on OpenCV
+
+Minor changes:
+- Added a calibration chequerboard template to camera_profiles folder
+
+SSIMS_v0.3.0.3 ----------------------------------------------------------------
 
 Major changes:
 - Fixed bug in Filter form where canceled filter does not properly return to the available filters list
@@ -9,9 +17,7 @@ Minor changes:
 - Replaced a couple accidental backslashes in path strings
 - Fixed DJI Mini 2 tangential distortion coeff's swap
 
--------------------------------------------------------------------------------
-
-SSIMS_v0.3.0.2
+SSIMS_v0.3.0.2 ----------------------------------------------------------------
 
 Minor changes:
 - Removed skew coefficient from camera profiles and GUI
@@ -19,9 +25,7 @@ Minor changes:
 - Transposed camera matrix to match OpenCV style
 - Fixed issue of legend not showing in GCP selection plot for orthorectification
 
--------------------------------------------------------------------------------
-
-SSIMS_v0.3.0.1
+SSIMS_v0.3.0.1 ----------------------------------------------------------------
 
 Major changes:
 - Fixed imwrite() bug in stabilization script for OpenCV 4.5+
@@ -32,9 +36,7 @@ Minor changes:
 - If Python not in %PATH%, environmental variable window not opens in Administrator mode
 - Replaced couple occurances of f-strings with .format() for pre-Python 3.7 compatibility
 
--------------------------------------------------------------------------------
-
-SSIMS_v0.3.0.0
+SSIMS_v0.3.0.0 ----------------------------------------------------------------
 
 Major changes:
 - Migrated from .NET 4.0 to .NET 4.5 to enable new version checking using GitHub
