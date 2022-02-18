@@ -137,6 +137,7 @@ If the **Output folder** exists, user can open it quickly using the **Open outpu
 
 ### Camera calibration
 
+<img align="right" width="300" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png">
 Form for camera calibration is a part of the [Unpack video](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/video_unpack.png) form. Clicking on the **Camera parameters** button will open a [Camera parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/camera_parameters_file.png) form which allows two methods of selecting camera parameters: (1) from an existing calibration, or (2) by performing a new calibration.
 
 If option (1) is selected, camera model can be chosen from a dropdown list, from a file by browsing, or by manual input of parameters.
