@@ -133,6 +133,8 @@ After the **Frames folder** has been selected, user can inspect the frames using
 
 If the **Output folder** exists, user can open it quickly using the **Open output folder** button to the left of the **Output folder** text box.
 
+<img align="right" width="400" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/main.png">
+
 
 ### Camera calibration
 
