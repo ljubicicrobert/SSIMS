@@ -131,15 +131,9 @@ if __name__ == '__main__':
 
 		print('   [INFO] Mean reprojection error = {:.3f} px'.format(mean_error))
 
-		mtx_scaled = mtx.copy()
+		mtx_scaled = mtx / w
 
-		mtx_scaled[0, 0] = mtx[0, 0] / w
-		mtx_scaled[1, 1] = mtx[1, 1] / w
-		mtx_scaled[0, 2] = mtx[0, 2] / w
-		mtx_scaled[1, 2] = mtx[1, 2] / h
-		mtx_scaled[2, 2] = 1.0
-
-		print('\nCamera matrix (fx=Fx/W, fy=Fy/W, cx=Cx/W, cy=Cy/H):')
+		print('\nCamera matrix (f=F/W, c=C/W):')
 		print('fx = {:.8f}'.format(mtx_scaled[0, 0]))
 		print('fy = {:.8f}'.format(mtx_scaled[1, 1]))
 		print('cx = {:.8f}'.format(mtx_scaled[0, 2]))

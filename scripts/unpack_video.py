@@ -138,7 +138,7 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 			cm[0, 0] = cm[0, 0] * width			# fx
 			cm[1, 1] = cm[1, 1] * width			# fy
 			cm[0, 2] = cm[0, 2] * width			# cx
-			cm[1, 2] = cm[1, 2] * height		# cy
+			cm[1, 2] = cm[1, 2] * width		    # cy
 			image = cv2.undistort(image, cm, dist)
 
 		if scale is not None and scale != 1.0:

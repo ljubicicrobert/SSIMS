@@ -4,9 +4,8 @@ Model = DJI Mavic 2 Pro
 [Intrinsics]
 fx = 0.8308250783
 fy = 0.8336311717
-s = 0
 cx = 0.5084247558
-cy = 0.4789756380
+cy = 0.2694237964
 
 [Radial]
 k1 = 0.0237
