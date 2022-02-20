@@ -1,10 +1,17 @@
+SSIMS_v0.3.1.1 ----------------------------------------------------------------
+
+Minor changes:
+- Camera intrinsics scaling changed to image width (W) for all parameters
+
+
 SSIMS_v0.3.1.0 ----------------------------------------------------------------
 
 Major changes:
-- Added a camera calibration workflow based on OpenCV
+- Added a camera calibration workflow
 
 Minor changes:
-- Added a calibration chequerboard template to camera_profiles folder
+- Added a calibration chequerboard template to `camera_profiles` folder
+
 
 SSIMS_v0.3.0.3 ----------------------------------------------------------------
 
@@ -17,6 +24,7 @@ Minor changes:
 - Replaced a couple accidental backslashes in path strings
 - Fixed DJI Mini 2 tangential distortion coeff's swap
 
+
 SSIMS_v0.3.0.2 ----------------------------------------------------------------
 
 Minor changes:
@@ -24,6 +32,7 @@ Minor changes:
 - Reduced number of possible radial distortion coefficients from 6 to 3
 - Transposed camera matrix to match OpenCV style
 - Fixed issue of legend not showing in GCP selection plot for orthorectification
+
 
 SSIMS_v0.3.0.1 ----------------------------------------------------------------
 
@@ -34,7 +43,8 @@ Minor changes:
 - Added Laplacian filter for preprocessing
 - Fixed problem where form would hang when Python was not found in %PATH%
 - If Python not in %PATH%, environmental variable window not opens in Administrator mode
-- Replaced couple occurances of f-strings with .format() for pre-Python 3.7 compatibility
+- Replaced couple occurrences of f-strings with .format() for pre-Python 3.7 compatibility
+
 
 SSIMS_v0.3.0.0 ----------------------------------------------------------------
 
