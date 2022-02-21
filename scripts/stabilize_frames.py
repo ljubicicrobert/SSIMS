@@ -136,7 +136,7 @@ def framesToVideo(output, folder='.', ext='jpg', codec='MJPG', fps=30.00, scale=
 	if verbose:
 		print(separator)
 		print('[END] Video written to {} using {} codec'.format(saveStr, codec))
-		print('[END] Total number of num_frames written is', i)
+		print('[END] Total number of frames written is', i)
 		print('[END] Total duration of the video is', timedelta(seconds=(i / fps)))
 		size = path.getsize(saveStr) / (1024 * 1024)
 		print('[END] Total size of the file is', round(size, 2), 'MB')
