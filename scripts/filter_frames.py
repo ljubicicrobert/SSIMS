@@ -158,7 +158,7 @@ def keypress(event):
 		if not is_original:
 			img_shown.set_data(original)
 		else:
-			img_shown.set_data(img)
+			img_shown.set_data(img_rgb)
 
 		plt.draw()
 		is_original = not is_original
@@ -191,6 +191,7 @@ if __name__ == '__main__':
 
 			for i in range(num_filters):
 				img = func(locals()[filters_data[i][0]], img, params_to_list(filters_data[i][1]))
+				img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 			legend = 'Filters:'
 			for i in range(num_filters):
@@ -216,7 +217,7 @@ if __name__ == '__main__':
 
 			plt.title('Use SPACE to toggle between original and filtered image, and Q or ESC to exit')
 			plt.axis('off')
-			img_shown = plt.imshow(img)
+			img_shown = plt.imshow(img_rgb)
 			plt.show()
 			exit()
 
