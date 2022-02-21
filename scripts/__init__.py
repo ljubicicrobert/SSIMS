@@ -9,9 +9,9 @@ from datetime import datetime
 
 __package_name__ = 'SSIMS: Preprocessing tool for UAV image velocimetry'
 __description__ = 'Preprocessing and video stabilization tool for UAS/UAV image velocimetry based on Structural Similarity (SSIM) Index metric'
-__version__ = '0.3.1.1'
+__version__ = '0.3.1.2'
 __status__ = 'beta'
-__date_deployed__ = '2022-02-20'
+__date_deployed__ = '2022-02-21'
 
 __author__ = 'Robert Ljubicic, University of Belgrade - Civil Engineering Faculty'
 __author_email__ = 'rljubicic@grf.bg.ac.rs'
