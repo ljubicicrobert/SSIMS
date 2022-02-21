@@ -38,6 +38,46 @@ except Exception as ex:
 separator = '---'
 
 
+def addBackgroundImage(fore: np.ndarray, back: np.ndarray) -> np.ndarray:
+	"""
+	Combines ima image of the detected water level and the original image. Requires an alpha channel as a
+	parameter. Optionally prints the new image to a file. See parameters for more details.
+
+	:param fore: 		Foreground image as numpy.ndarray.
+	:param back: 		Background image as numpy.ndarray.
+	:return: 			A combined image of the water level and original image as numpy.ndarray.
+	"""
+
+	# Added .copy() to avoid pass-by-reference problems
+	background = back.copy().astype(float)
+	alpha = fore
+
+	try:  # Try to read the third dimension of an array. If fails, the array is 2D.
+		background.shape[2]
+		dimension = 3
+	except IndexError:
+		dimension = 2
+
+	foreground = fore.copy().astype(float)
+	alpha = alpha.copy().astype(float) / 255
+
+	if dimension == 3:
+		if len(foreground.shape) == 2:
+			# Color me purple
+			foreground = np.stack((foreground,) * 3, -1)
+			foreground = np.where(foreground == [0., 0., 0.], [0., 0., 0.], [0., 0., 0.])
+			alpha = np.stack((alpha,) * 3, -1)
+		else:
+			foreground = np.where(foreground == [0., 0., 0.], [0., 0., 0.], [0., 0., 0.])
+
+	foreground = cv2.multiply(alpha, foreground)
+	alpha = 1.0 - alpha
+	background = cv2.multiply(alpha, background)
+	combined = cv2.add(foreground, background)
+
+	return combined.astype('uint8')
+
+
 def func(name, image, params):
 	return name(image, *params)
 
@@ -62,8 +102,8 @@ def denoise(img, h=3, hcolor=3, template_size=7, search_size=21):
 
 def hsv_filter(img, hu=255, hl=0, su=255, sl=0, vu=255, vl=0):
 	img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-	new = cv2.inRange(img, (hu, su, vu), (hl, sl, vl))
-	return cv2.cvtColor(new, cv2.COLOR_GRAY2BGR)
+	mask = ~cv2.inRange(img, (hu, su, vu), (hl, sl, vl))
+	return addBackgroundImage(mask, img)
 
 
 def brightness_contrast(img, alpha=1.0, beta=0.0):
@@ -87,6 +127,10 @@ def modify_channels(img, r=1.0, g=1.0, b=1.0):
 
 def grayscale(img):
 	return cv2.cvtColor(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), cv2.COLOR_GRAY2BGR)
+
+
+def negative(img):
+	return ~img
 
 
 def highpass(img, sigma=51):
@@ -127,7 +171,7 @@ if __name__ == '__main__':
 	try:
 		parser = ArgumentParser()
 		parser.add_argument('--folder', type=str, help='Path to frames folder')
-		parser.add_argument('--ext', type=str, help='Frames\' extension')
+		parser.add_argument('--ext', type=str, help='Frames\' extension', default='jpg')
 		parser.add_argument('--multi', type=int, help='Path to filter list file', default=0)
 		args = parser.parse_args()
 

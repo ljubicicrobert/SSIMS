@@ -1,7 +1,15 @@
+SSIMS_v0.3.1.2 ----------------------------------------------------------------
+
+Minor changes:
+- Added a negative image filter
+- HSV filter now returns masked image instead of binary image
+- Fixed sorting issue in Filters form
+
+
 SSIMS_v0.3.1.1 ----------------------------------------------------------------
 
 Minor changes:
-- Camera intrinsics scaling changed to image width (W) for all parameters
+- Camera matrix scaling factor changed to image width (W)
 
 
 SSIMS_v0.3.1.0 ----------------------------------------------------------------

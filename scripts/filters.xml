@@ -7,6 +7,14 @@
 		
 		<Parameters></Parameters>
 	</Filter>
+
+	<Filter>
+		<Name>Negative</Name>
+		<Func>negative</Func>
+		<Description>Creates a negative of an 8bit image</Description>
+
+		<Parameters></Parameters>
+	</Filter>
 	
 	<Filter>
 		<Name>Brightness/Contrast</Name>
@@ -111,13 +119,14 @@
 	<Filter>
 		<Name>HSV filter</Name>
 		<Func>hsv_filter</Func>
-		<Description>Binarize image using hue, saturation and lightness, can be useful for velocimetry purposes</Description>
+		<Description>Filter image using hue, saturation and value (lightness). If slider values are left at default
+			(upper at max, lower at min), the image is simply transformed to HSV colorspace</Description>
 		
 		<Parameters>
 			<Parameter>
 				<PName>Hue lower</PName>
 				<PType>int</PType>
-				<PUpper>255</PUpper>
+				<PUpper>180</PUpper>
 				<PStart>0</PStart>
 				<PLower>0</PLower>
 				<PStep>1</PStep>
@@ -125,8 +134,8 @@
 			<Parameter>
 				<PName>Hue upper</PName>
 				<PType>int</PType>
-				<PUpper>255</PUpper>
-				<PStart>255</PStart>
+				<PUpper>180</PUpper>
+				<PStart>180</PStart>
 				<PLower>0</PLower>
 				<PStep>1</PStep>
 			</Parameter>
@@ -147,7 +156,7 @@
 				<PStep>1</PStep>
 			</Parameter>
 			<Parameter>
-				<PName>Lightness lower</PName>
+				<PName>Lightness/value lower</PName>
 				<PType>int</PType>
 				<PUpper>255</PUpper>
 				<PStart>0</PStart>
@@ -155,7 +164,7 @@
 				<PStep>1</PStep>
 			</Parameter>
 			<Parameter>
-				<PName>Lightness upper</PName>
+				<PName>Lightness/value upper</PName>
 				<PType>int</PType>
 				<PUpper>255</PUpper>
 				<PStart>255</PStart>
@@ -209,7 +218,7 @@
 	<Filter>
 		<Name>Adjust RGB channels</Name>
 		<Func>modify_channels</Func>
-		<Description>Adjust RGB channel intensities to accentuate different types of details</Description>
+		<Description>Adjust RGB image channels intensities to accentuate different types of details</Description>
 		
 		<Parameters>
 			<Parameter>
