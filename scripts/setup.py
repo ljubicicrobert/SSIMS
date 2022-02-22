@@ -18,7 +18,7 @@ setuptools.setup(name='SSIMS: Preprocessing tool for UAV image velocimetry',
 			     ],
 				 install_requires=[
 					 'numpy>=1.1',
-					 'opencv_python>=4',
+					 'opencv-python>=4',
 					 'matplotlib>=3',
 					 'mplcursors>=0.3',
 					 'scipy>=1',
