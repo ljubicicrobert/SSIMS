@@ -3,7 +3,7 @@
 	<Filter>
 		<Name>Grayscale</Name>
 		<Func>grayscale</Func>
-		<Description>Converts a color image to 8bit grayscale [0..255]</Description>
+		<Description>Converts a color image to 8bit grayscale [0..255].</Description>
 		
 		<Parameters></Parameters>
 	</Filter>
@@ -11,7 +11,7 @@
 	<Filter>
 		<Name>Negative</Name>
 		<Func>negative</Func>
-		<Description>Creates a negative of an 8bit image</Description>
+		<Description>Creates a negative of an 8bit image.</Description>
 
 		<Parameters></Parameters>
 	</Filter>
@@ -19,7 +19,7 @@
 	<Filter>
 		<Name>Brightness/Contrast</Name>
 		<Func>brightness_contrast</Func>
-		<Description>Adjusts overall brightness and contrast using linear transformation [Alpha*Y + Beta]</Description>
+		<Description>Adjusts overall brightness and contrast using linear transformation [Alpha*Y + Beta].</Description>
 		
 		<Parameters>
 			<Parameter>
@@ -44,11 +44,11 @@
 	<Filter>
 		<Name>Adjust gamma</Name>
 		<Func>gamma</Func>
-		<Description>Adjusts gamma exposure of the image using linear transformation [Alpha*Y]</Description>
+		<Description>Adjusts gamma exposure of the image using linear transformation [Gamma*Y].</Description>
 		
 		<Parameters>
 			<Parameter>
-				<PName>Alpha</PName>
+				<PName>Gamma</PName>
 				<PType>float</PType>
 				<PUpper>3.0</PUpper>
 				<PStart>1.0</PStart>
@@ -61,7 +61,7 @@
 	<Filter>
 		<Name>Hist. equalization</Name>
 		<Func>histeq</Func>
-		<Description>Stretches the histogram of the image to improve dynamic range and accentuate details</Description>
+		<Description>Stretches the histogram of the image to improve dynamic range and accentuate details.</Description>
 		
 		<Parameters></Parameters>
 	</Filter>
@@ -69,11 +69,11 @@
 	<Filter>
 		<Name>CLAHE</Name>
 		<Func>clahe</Func>
-		<Description>Contrast limiting adaptive histogram equalization, i.e., adaptive version of the histogram equalization</Description>
+		<Description>Adaptive version of the histogram equalization with histogram clipping.</Description>
 		
 		<Parameters>
 			<Parameter>
-				<PName>Clip</PName>
+				<PName>Clip limit</PName>
 				<PType>float</PType>
 				<PUpper>10.0</PUpper>
 				<PStart>2.0</PStart>
@@ -81,7 +81,7 @@
 				<PStep>0.1</PStep>
 			</Parameter>
 			<Parameter>
-				<PName>Kernel size</PName>
+				<PName>Tile size</PName>
 				<PType>int</PType>
 				<PUpper>64</PUpper>
 				<PStart>8</PStart>
@@ -94,7 +94,7 @@
 	<Filter>
 		<Name>Highpass</Name>
 		<Func>highpass</Func>
-		<Description>Accentuates high frequency content, can be useful for velocimetry purposes</Description>
+		<Description>Accentuates high frequency image content such as tracer particles.</Description>
 		
 		<Parameters>
 			<Parameter>
@@ -107,11 +107,28 @@
 			</Parameter>
 		</Parameters>
 	</Filter>
+
+	<Filter>
+		<Name>Intensity capping</Name>
+		<Func>intensity_capping</Func>
+		<Description>Limits local brightness using neighboring mean and variance.</Description>
+
+		<Parameters>
+			<Parameter>
+				<PName>Num. standard deviations (n)</PName>
+				<PType>float</PType>
+				<PUpper>3.0</PUpper>
+				<PStart>1.0</PStart>
+				<PLower>0.0</PLower>
+				<PStep>0.1</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
 	
 	<Filter>
 		<Name>Laplacian</Name>
 		<Func>laplacian</Func>
-		<Description>Calculates a Laplacian gradient map of a grayscale image, can be useful for detecting tracers</Description>
+		<Description>Calculates a gradient map of a grayscale image using Laplacian, can be useful for detecting tracer particles.</Description>
 		
 		<Parameters></Parameters>
 	</Filter>
@@ -119,8 +136,7 @@
 	<Filter>
 		<Name>HSV filter</Name>
 		<Func>hsv_filter</Func>
-		<Description>Filter image using hue, saturation and value (lightness). If slider values are left at default
-			(upper at max, lower at min), the image is simply transformed to HSV colorspace</Description>
+		<Description>Filter image using hue, saturation and value (lightness). If slider values are left at default (upper at max, lower at min), the image is simply transformed to HSV colorspace.</Description>
 		
 		<Parameters>
 			<Parameter>
@@ -177,7 +193,7 @@
 	<Filter>
 		<Name>Denoise</Name>
 		<Func>denoise</Func>
-		<Description>Removes high frequency content, useful for removing camera noise but is VERY SLOW</Description>
+		<Description>Removes high frequency content, useful for removing camera noise but is VERY SLOW.</Description>
 
 		<Parameters>
 			<Parameter>
@@ -216,13 +232,13 @@
 	</Filter>
 	
 	<Filter>
-		<Name>Adjust RGB channels</Name>
+		<Name>Adjust image channels</Name>
 		<Func>modify_channels</Func>
-		<Description>Adjust RGB image channels intensities to accentuate different types of details</Description>
+		<Description>Adjust image channels intensities to accentuate different types of details.</Description>
 		
 		<Parameters>
 			<Parameter>
-				<PName>Red channel</PName>
+				<PName>Channel #1</PName>
 				<PType>float</PType>
 				<PUpper>3.0</PUpper>
 				<PStart>1.0</PStart>
@@ -230,7 +246,7 @@
 				<PStep>0.1</PStep>
 			</Parameter>
 			<Parameter>
-				<PName>Green channel</PName>
+				<PName>Channel #2</PName>
 				<PType>float</PType>
 				<PUpper>3.0</PUpper>
 				<PStart>1.0</PStart>
@@ -238,12 +254,29 @@
 				<PStep>0.1</PStep>
 			</Parameter>
 			<Parameter>
-				<PName>Blue channel</PName>
+				<PName>Channel #1</PName>
 				<PType>float</PType>
 				<PUpper>3.0</PUpper>
 				<PStart>1.0</PStart>
 				<PLower>0.0</PLower>
 				<PStep>0.1</PStep>
+			</Parameter>
+		</Parameters>
+	</Filter>
+
+	<Filter>
+		<Name>Background removal</Name>
+		<Func>remove_background</Func>
+		<Description>Subtracts background (median of sequence) from individual images.</Description>
+
+		<Parameters>
+			<Parameter>
+				<PName>Number of images for calculating</PName>
+				<PType>int</PType>
+				<PUpper>100</PUpper>
+				<PStart>10</PStart>
+				<PLower>2</PLower>
+				<PStep>1</PStep>
 			</Parameter>
 		</Parameters>
 	</Filter>

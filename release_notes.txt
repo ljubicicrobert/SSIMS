@@ -1,3 +1,10 @@
+SSIMS_v0.3.1.4 ----------------------------------------------------------------
+
+Minor changes:
+- HSV filter result reverted to binary image
+- Fixed an HSV filter ranging bug
+
+
 SSIMS_v0.3.1.3 ----------------------------------------------------------------
 
 Minor changes:

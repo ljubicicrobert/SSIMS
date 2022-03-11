@@ -23,6 +23,7 @@ try:
 	from __init__ import *
 	from os import path, makedirs
 	from scipy.signal import gaussian, convolve2d
+	from matplotlib.widgets import Slider
 
 	import inspect
 	import glob
@@ -39,16 +40,6 @@ separator = '---'
 
 
 def addBackgroundImage(fore: np.ndarray, back: np.ndarray) -> np.ndarray:
-	"""
-	Combines ima image of the detected water level and the original image. Requires an alpha channel as a
-	parameter. Optionally prints the new image to a file. See parameters for more details.
-
-	:param fore: 		Foreground image as numpy.ndarray.
-	:param back: 		Background image as numpy.ndarray.
-	:return: 			A combined image of the water level and original image as numpy.ndarray.
-	"""
-
-	# Added .copy() to avoid pass-by-reference problems
 	background = back.copy().astype(float)
 	alpha = fore
 
@@ -83,16 +74,19 @@ def func(name, image, params):
 
 
 def histeq(img):
+	print('[FILTER] Histogram equalization')
 	eq = cv2.equalizeHist(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY))
 	return cv2.cvtColor(eq, cv2.COLOR_GRAY2BGR)
 
 
 def clahe(img, clip=2.0, tile=8):
+	print('[FILTER] CLAHE: clip={:.1f}, tile={:.0f}'.format(clip, tile))
 	clahe = cv2.createCLAHE(clipLimit=clip, tileGridSize=(int(tile), int(tile)))
 	return cv2.cvtColor(clahe.apply(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)), cv2.COLOR_GRAY2BGR)
 
 
 def denoise(img, h=3, hcolor=3, template_size=7, search_size=21):
+	print('[FILTER] Denoise: h={:.0f}, hcolor={:.0f}, template_size={:.0f}, search_size={:.0f}'.format(h, hcolor, template_size, search_size))
 	if template_size % 2 == 1:
 		template_size += 1
 	if search_size % 2 == 1:
@@ -101,17 +95,20 @@ def denoise(img, h=3, hcolor=3, template_size=7, search_size=21):
 
 
 def hsv_filter(img, hu=255, hl=0, su=255, sl=0, vu=255, vl=0):
+	print('[FILTER] HSV: Hu={:.0f}, Hl={:.0f}, Su={:.0f}, Sl={:.0f}, Vu={:.0f}, Vl={:.0f}'.format(hu, hl, su, sl, vu, vl))
 	img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-	mask = ~cv2.inRange(img, (hu, su, vu), (hl, sl, vl))
-	return addBackgroundImage(mask, img)
+	mask = cv2.inRange(img, (hl, sl, vl), (hu, su, vu))
+	return mask
 
 
 def brightness_contrast(img, alpha=1.0, beta=0.0):
+	print('[FILTER] Brightness and contrast: alpha={:.1f}, beta={:.1f}'.format(alpha, beta))
 	new = cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
 	return new
 
 
 def gamma(img, gamma=1.0):
+	print('[FILTER] Gamma correction: gamma={:.1f}'.format(gamma))
 	invGamma = 1.0 / gamma
 	table = np.array([((i / 255.0) ** invGamma) * 255
 		for i in np.arange(0, 256)]).astype("uint8")
@@ -119,29 +116,85 @@ def gamma(img, gamma=1.0):
 
 
 def modify_channels(img, r=1.0, g=1.0, b=1.0):
+	print('[FILTER] Modify channels: c1={:.1f}, c2={:.1f}, c3={:.1f}'.format(r, g, b))
 	img_r = cv2.convertScaleAbs(img[:, :, 2], alpha=r, beta=0)
 	img_g = cv2.convertScaleAbs(img[:, :, 1], alpha=g, beta=0)
 	img_b = cv2.convertScaleAbs(img[:, :, 0], alpha=b, beta=0)
+
+	if g == 0 and b == 0:
+		img_g, img_b = img_r, img_r
+	elif r == 0 and b == 0:
+		img_r, img_b = img_g, img_g
+	elif r == 0 and g == 0:
+		img_r, img_g = img_b, img_b
+
 	return np.dstack([img_b, img_g, img_r])
 
 
 def grayscale(img):
+	print('[FILTER] Convert to grayscale')
 	return cv2.cvtColor(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), cv2.COLOR_GRAY2BGR)
 
 
 def negative(img):
+	print('[FILTER] Convert to image negative')
 	return ~img
 
 
 def highpass(img, sigma=51):
+	print('[FILTER] Highpass filter: sigma={:.0f}'.format(sigma))
 	if sigma % 2 == 1:
 		sigma += 1
-	return img - cv2.GaussianBlur(img, (0, 0), int(sigma)) + 127
+	new = img - cv2.GaussianBlur(img, (0, 0), int(sigma)) + 127
+
+	return new
 
 
 def laplacian(img):
+	print('[FILTER] Laplacian of an image')
 	new = cv2.Laplacian(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), cv2.CV_8U, ksize=3)
 	return cv2.cvtColor(new, cv2.COLOR_GRAY2BGR)
+
+
+def intensity_capping(img, n_std=2):
+	print('[FILTER] Pixel intensity capping: n_std='.format(n_std))
+	img_g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	median = np.median(img_g)
+	stdev = np.std(img_g)
+	cap = median + n_std * stdev
+
+	img_g[img_g > cap] = cap
+
+	return cv2.cvtColor(img_g, cv2.COLOR_GRAY2BGR)
+
+
+def remove_background(img, num_imgs=10):
+	print('[FILTER] Remove image background: num_imgs={:.0f}'.format(num_imgs))
+	num_imgs = int(num_imgs)
+	new = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype('int')
+	h, w = new.shape
+
+	if len(img_list) < num_imgs:
+		num_imgs = len(img_list)
+
+	back_path = r'{}/../median_{}.{}'.format(path.dirname(img_list[0]), num_imgs, args.ext)
+
+	if path.exists(back_path):
+		back = cv2.imread(back_path, 0).astype('int')
+	else:
+		stack = np.ndarray([h, w, num_imgs], dtype='int')
+
+		for i in range(num_imgs):
+			stack[:, :, i] = cv2.imread(img_list[i], 0)
+
+		back = np.median(stack, axis=2).astype('int')
+		cv2.imwrite(back_path, back.astype('uint8'))
+
+	new -= back
+	new[new < 0] = 0
+	new[new > 255] = 255
+
+	return cv2.cvtColor(new.astype('uint8'), cv2.COLOR_GRAY2BGR)
 
 
 def params_to_list(params):
@@ -155,16 +208,56 @@ def keypress(event):
 	global is_original
 
 	if event.key == ' ':
-		if not is_original:
-			img_shown.set_data(original)
-		else:
+		if is_original:
 			img_shown.set_data(img_rgb)
+		else:
+			img_shown.set_data(original)
 
-		plt.draw()
 		is_original = not is_original
+		plt.draw()
 
 	elif event.key == 'escape':
 		exit()
+
+
+def update_frame(val):
+	global original
+	global img
+	global img_rgb
+
+	original = cv2.imread(img_list[sl_ax_frame_num.val])
+	img, img_rgb = apply_filters(original, filters_data)
+
+	if is_original:
+		img_shown.set_data(img_rgb)
+	else:
+		img_shown.set_data(img)
+
+	plt.draw()
+	return
+
+
+def apply_filters(img, filters_data):
+	for i in range(filters_data.shape[0]):
+		img = func(globals()[filters_data[i][0]], img, params_to_list(filters_data[i][1]))
+		img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+	legend = 'Filters:'
+	for i in range(filters_data.shape[0]):
+		func_args_names = globals()[filters_data[i][0]]
+		func_args = inspect.getfullargspec(func_args_names)[0][1:] if filters_data[i][1] != '' else []
+		legend_values = ['{}={}'.format(p, v) for p, v in zip(func_args, filters_data[i][1].split(','))]
+		legend += '\n    ' + filters_data[i][0] + ': ' + ', '.join(legend_values if filters_data[i][1] != '' else '')
+
+	legend_toggle = plt.text(0.02, 0.97, legend,
+	                         horizontalalignment='left',
+	                         verticalalignment='top',
+	                         transform=ax.transAxes,
+	                         bbox=dict(facecolor='white', alpha=0.5),
+	                         fontsize=9,
+	                         )
+
+	return img, img_rgb
 
 
 if __name__ == '__main__':
@@ -175,13 +268,21 @@ if __name__ == '__main__':
 		parser.add_argument('--multi', type=int, help='Path to filter list file', default=0)
 		args = parser.parse_args()
 
-		img_list = glob.glob(r'{0}/*.{1}'.format(args.folder, args.ext))
+		img_list = glob.glob(r'{}/*.{}'.format(args.folder, args.ext))
 		num_frames = len(img_list)
 		filters_data = np.loadtxt(args.folder + '/filters.txt', dtype='str', delimiter=r'/', ndmin=2)
-		num_filters = filters_data.shape[0]
 
 		fig, ax = plt.subplots()
 		fig.canvas.mpl_connect('key_press_event', keypress)
+		plt.subplots_adjust(bottom=0.13)
+		plt.axis('off')
+
+		axcolor = 'lightgoldenrodyellow'
+		valfmt = "%d"
+
+		ax_frame_num = plt.axes([0.2, 0.05, 0.63, 0.03], facecolor=axcolor)
+		sl_ax_frame_num = Slider(ax_frame_num, f'Frame #\n({num_frames} total)', 0, num_frames - 1, valinit=0, valstep=1, valfmt=valfmt)
+		sl_ax_frame_num.on_changed(update_frame)
 
 		if args.multi == 0:
 			img_path = img_list[0]
@@ -189,24 +290,7 @@ if __name__ == '__main__':
 			original = cv2.cvtColor(cv2.imread(img_path), cv2.COLOR_BGR2RGB)
 			is_original = False
 
-			for i in range(num_filters):
-				img = func(locals()[filters_data[i][0]], img, params_to_list(filters_data[i][1]))
-				img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-			legend = 'Filters:'
-			for i in range(num_filters):
-				func_args_names = locals()[filters_data[i][0]]
-				func_args = inspect.getfullargspec(func_args_names)[0][1:] if filters_data[i][1] != '' else []
-				legend_values = ['{}={}'.format(p, v) for p, v in zip(func_args, filters_data[i][1].split(','))]
-				legend += '\n    ' + filters_data[i][0] + ': ' + ', '.join(legend_values if filters_data[i][1] != '' else '')
-
-			legend_toggle = plt.text(0.02, 0.97, legend,
-			                         horizontalalignment='left',
-			                         verticalalignment='top',
-			                         transform=ax.transAxes,
-			                         bbox=dict(facecolor='white', alpha=0.5),
-			                         fontsize=9,
-			                         )
+			img, img_rgb = apply_filters(img, filters_data)
 
 			try:
 				mng = plt.get_current_fig_manager()
@@ -215,9 +299,9 @@ if __name__ == '__main__':
 			except:
 				pass
 
-			plt.title('Use SPACE to toggle between original and filtered image, and Q or ESC to exit')
-			plt.axis('off')
-			img_shown = plt.imshow(img_rgb)
+			ax.set_title('Use SPACE to toggle between original and filtered image, and Q or ESC to exit')
+			ax.axis('off')
+			img_shown = ax.imshow(img_rgb)
 			plt.show()
 			exit()
 
@@ -235,10 +319,10 @@ if __name__ == '__main__':
 				img_path = img_list[j]
 				img = cv2.imread(img_path)
 
-				for i in range(num_filters):
+				for i in range(filters_data.shape[0]):
 					img = func(locals()[filters_data[i][0]], img, params_to_list(filters_data[i][1]))
 
-				cv2.imwrite('{0}/{1}'.format(filtered_folder, path.basename(img_path)), img)
+				cv2.imwrite('{}/{}'.format(filtered_folder, path.basename(img_path)), img)
 
 				print(' [INFO] Filtering frame {}/{} ({:.1f}%)'.format(j, num_frames - 1, j/(num_frames - 1) * 100))
 
