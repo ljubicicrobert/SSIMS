@@ -104,14 +104,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SSIM Stabilization GUI.exe" size="354304">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SSIM Stabilization GUI.exe" size="355840">
       <assemblyIdentity name="SSIM Stabilization GUI" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>/v7FKLV31aXlizNnHufDdFIzUxggDtTkrLuWv6dbCP0=</dsig:DigestValue>
+        <dsig:DigestValue>1SUVMnjos5qUF8w1wPSg2INKvq5fIY0VWlQgF7N6+pQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

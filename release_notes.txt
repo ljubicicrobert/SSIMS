@@ -1,3 +1,15 @@
+SSIMS_v0.3.2.0 ----------------------------------------------------------------
+
+Major changes:
+- Added "Explore colorspaces" option in Filter frames form
+
+Minor changes:
+- Added new filters and polished old ones
+- RGB model now default for filtering
+- Keybindings changed for inspect_images.py
+- New DJI Mini 2 parameters from Metashape
+
+
 SSIMS_v0.3.1.4 ----------------------------------------------------------------
 
 Minor changes:

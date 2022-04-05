@@ -52,25 +52,25 @@ def keypress(event):
 	if event.key == 'escape':
 		exit()
 
-	elif event.key == 'left':
+	elif event.key == 'down':
 		if sl_ax_frame_num.val == 0:
 			sl_ax_frame_num.set_val(num_frames - 1)
 		else:
 			sl_ax_frame_num.set_val(sl_ax_frame_num.val - 1)
 
-	elif event.key == 'right':
+	elif event.key == 'up':
 		if sl_ax_frame_num.val == num_frames - 1:
 			sl_ax_frame_num.set_val(0)
 		else:
 			sl_ax_frame_num.set_val(sl_ax_frame_num.val + 1)
 
-	elif event.key == 'up':
+	elif event.key == 'pageup':
 		if sl_ax_frame_num.val >= num_frames - 10:
 			sl_ax_frame_num.set_val(0)
 		else:
 			sl_ax_frame_num.set_val(sl_ax_frame_num.val + 10)
 
-	elif event.key == 'down':
+	elif event.key == 'pagedown':
 		if sl_ax_frame_num.val <= 9:
 			sl_ax_frame_num.set_val(num_frames - 1)
 		else:
@@ -118,8 +118,8 @@ if __name__ == '__main__':
 		sl_ax_frame_num.on_changed(update_frame)
 
 		legend = 'Use slider to select frame,\n' \
-				 'use LEFT and RIGHT keys to move by 1 frame\n' \
-				 'or UP and DOWN keys to move by 10 frames\n' \
+				 'use UP and DOWN keys to move by +/- 1 frame\n' \
+				 'or PageUP and PageDOWN keys to move by +/- 10 frames\n' \
 				 'Press ESC or Q to exit'
 
 		legend_toggle = plt.text(0.02, 0.97, legend,
