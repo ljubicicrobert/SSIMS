@@ -8,9 +8,9 @@ from argparse import ArgumentParser
 
 __package_name__ = 'SSIMS: Preprocessing tool for UAV image velocimetry'
 __description__ = 'Preprocessing and video stabilization tool for UAS/UAV image velocimetry based on Structural Similarity (SSIM) Index metric'
-__version__ = '0.3.1.4'
+__version__ = '0.3.2.0'
 __status__ = 'beta'
-__date_deployed__ = '2022-03-11'
+__date_deployed__ = '2022-04-05'
 
 __author__ = 'Robert Ljubicic, University of Belgrade - Civil Engineering Faculty'
 __author_email__ = 'rljubicic@grf.bg.ac.rs'
