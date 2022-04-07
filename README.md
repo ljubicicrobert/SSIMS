@@ -14,7 +14,7 @@ Complete preprocessing tool for UAV image velocimetry - unpacking, filtering, st
     5.2. [Camera calibration](#camera-calibration)<br/>
     5.3. [Selecting features for tracking](#selecting-features-for-tracking)<br/>
     5.4. [Orthorectification](#orthorectification)<br/>
-    5.5. [Image filtering](#image-filtering)
+    5.5. [Image filtering / image enhancement](#image-filtering--image-enhancement)
 6. [Future features](#future-features)
 7. [Acknowledgements](#acknowledgements)
 8. [References](#references)
@@ -208,24 +208,36 @@ The GUI also offers a simple orthorectification to be performed by estimating th
 Users can also set a ground sampling distance (GSD, in px/m) to rescale the image and help with the postprocessing - use this feature carefully as it will always introduce additional errors/noise in the transformed images. **It's best to keep this ratio as close as possible to the original GSD!**. For these reasons user can click **Measure** button to quickly measure in-image distances and to compare them with real-world data in order to help determine appropriate GSD value.
 
 
-### Image filtering
+### Image filtering / image enhancement
 
 <img align="right" width="320" src="https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png">
 
+Image filtering/enhancement is often a crucial part of the image velocimetry workflow. This tools offers a form in which such filtering can easily be performed. For those users unfamiliar with the image filtering/enhancement process, it is advisable to visit the [Image enhancement for UAV velocimetry](https://github.com/ljubicicrobert/Image-enhancement-for-UAV-velocimetry) repository. In this repository, a detailed overview of different aspects of image enhancement is provided through a series of Jupyter notebooks, along with a detailed PDF instructions on how to perform [filtering with SSIMS tool](https://github.com/ljubicicrobert/Image-enhancement-for-UAV-velocimetry/blob/main/using_ssims.pdf).
+
 Users can perform filtering of images in a folder using the [Filter frames](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_form.png) form. In the form, user should first define the _frame folder path_ and the _extension_ of images in the folder. Available filters are listed on left side of the form, and the user can add them to the **filtering stack** on the right side by clicking on the desired filter. Only one filter of a given type can be selected at a time.
 
-Once the filters have been added to the filtering stack, user can edit the filter by clicking on the filter button in the filtering stack, which opens the [Filter parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_parameters.png) form, or reorder the filters by dragging and dropping them at the desired position. IMPORTANT: Filters will be applied in the top-down order from the filtering stack.
+Before filtering, it is highly advisable to inspect the different colorspace models of the frames. This can be done by clicking on the **Explore colorspaces** button at the top-left of the **Filter frames** form.
+
+Once the filters have been added to the filtering stack, user can edit the filter by clicking on the filter button in the filtering stack, which opens the [Filter parameters](https://github.com/ljubicicrobert/SSIMS/blob/master/screenshots/filter_parameters.png) form, or reorder the filters by dragging and dropping them at the desired position.
 
 In the **Filter parameters** form, the user can remove the filter from the stack using the **Remove** button, or adjust the parameters of the filter (using the trackbar of using the neighboring numerical box) and finally apply the parameters using the **Apply** button.
 
 Once the filters have been chosen, user can preview the filtering results using the **Preview results** button in the bottom-middle section of the **Filter frames** form. In the opened window, user can toggle between the filtered and original image using the **SPACE** key.
 
+Some of the available filter are just colorspace model conversions (titled _Convert to..._). These will transform the image from the previous colorspace to the chosen one. **Default colorspace model**, which is active when the image is loaded for filtering, is **RGB**.
+
+> SSIMS will keep track of the colorspace conversions during filtering. For example, if _Convert to L\*a\*b\*_ is in the stack, followed by the _Single image channel_, by choosing the channel in the **Filter parameters** form, the user will effectively be selecting a channel of the image from its L\*a\*b\* colorspace model.
+
 Clicking **Apply filters** will initiate filtering on all frames in the selected folder.
+
+> **IMPORTANT**: Filters will be applied in the top-down order from the filtering stack.
 
 
 ### Future features
 
-&#9744; Additional filters for preprocessing
+&#9746; Additional filters for preprocessing
+
+&#9746; Colorspace model inspection and conversion
 
 &#9746; Complete camera calibration form (as of v0.3.1.0)
 
@@ -236,11 +248,13 @@ Clicking **Apply filters** will initiate filtering on all frames in the selected
 
 I wish to express my gratitude to the following people (in no particular order):
 
-[Dr Budo Zindović](https://www.grf.bg.ac.rs/fakultet/pro/e?nid=153) - for helping me with many implementational details and extensive testing of the tool;
-
 [Mrs. Sophie Pierce](https://www.worcester.ac.uk/about/profiles/sophie-pearce) - for motivating me to start the work in the first place;
 
-[Mrs. Dariia Strelnikova](https://www.fh-kaernten.at/en/en/faculty-and-staff-details?personId=4298793872) and [Dr Anette Eltner](https://tu-dresden.de/bu/umwelt/geo/ipf/photogrammetrie/die-professur/beschaeftigte/Anette_Eltner?set_language=en) - for testing the software and allowing me to learn from their own work;
+[Dr Budo Zindović](https://www.grf.bg.ac.rs/fakultet/pro/e?nid=153) - for helping me with many implementational details and extensive testing of the tool;
+
+[Mrs. Dariia Strelnikova](https://www.fh-kaernten.at/en/en/faculty-and-staff-details?personId=4298793872) for supporting and reviewing the work related to the image enhancement;
+
+[Mrs. Dariia Strelnikova](https://www.fh-kaernten.at/en/en/faculty-and-staff-details?personId=4298793872) (again) and [Dr Anette Eltner](https://tu-dresden.de/bu/umwelt/geo/ipf/photogrammetrie/die-professur/beschaeftigte/Anette_Eltner?set_language=en) - for testing the software and allowing me to learn from their own work;
 
 [Dr Alonso Pizarro](https://www.researchgate.net/profile/Alonso_Pizarro) and [Dr Salvador Peña‐Haro](https://www.researchgate.net/profile/Salvador_Pena-Haro) - for providing me with valuable insights into their own work;
 
