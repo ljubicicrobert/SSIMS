@@ -23,33 +23,37 @@ try:
 	from __init__ import *
 	from sys import exit
 	from os import path
+	from glob import glob
+	from class_console_printer import tag_string
 
-	import glob
 	import matplotlib.pyplot as plt
-	import mplcursors
 
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-		  '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
 
 
-def xy2str(l, dist):
+def xy2str(points_list: list, distance: float) -> str:
+	"""
+	Formats a display of distance between two points.
+	"""
+
 	s = ''
 	i = 1
-	for x, y in l:
+	for x, y in points_list:
 		s += '{}: {}, {}\n'.format(i, x, y)
 		i += 1
 
-	if dist > 0:
-		s += 'Distance = {} px'.format(np.round(dist, 1))
+	if distance > 0:
+		s += 'Distance = {:.1f} px'.format(distance)
 
 	return s
 
 
 def getMeasurement(event):
-	global line
 	global d
 	global ax
 	global points
@@ -112,13 +116,13 @@ if __name__ == '__main__':
 
 		try:
 			path.exists(img_path)
-		except:
+		except Exception:
 			raise ValueError('The path argument [--img_path] does not seem to correspond to an image or folder with images, or could be missing!')
 
 		if path.isfile(img_path):
 			img = cv2.imread(img_path)
 		elif path.isdir(img_path):
-			images = glob.glob('{}/*.{}'.format(img_path, ext))
+			images = glob('{}/*.{}'.format(img_path, ext))
 			img = cv2.imread(images[0])
 		else:
 			raise ValueError('The path argument [--img_path] does not seem to correspond to an image or folder with images, or could be missing!')
@@ -144,24 +148,25 @@ if __name__ == '__main__':
 		         'O = zoom to window\n' \
 				 'P = pan image'
 
-		legend_toggle = plt.text(0.01, 0.98, legend,
-		                         horizontalalignment='left',
-		                         verticalalignment='top',
-		                         transform=ax.transAxes,
-		                         bbox=dict(facecolor='white', alpha=0.5),
-		                         fontsize=9,
-		                         )
+		plt.text(0.01, 0.98, legend,
+				 horizontalalignment='left',
+				 verticalalignment='top',
+				 transform=ax.transAxes,
+				 bbox=dict(facecolor='white', alpha=0.5),
+				 fontsize=9,
+				 )
 
 		try:
 			mng = plt.get_current_fig_manager()
 			mng.window.state('zoomed')
 			mng.set_window_title('Inspect frames')
-		except:
+		except Exception:
 			pass
 
 		plt.show()
 
 	except Exception as ex:
-		print('\n[EXCEPTION] The following exception has occurred: \n\n'
-		      '  {}'.format(ex))
-		input('\nPress ENTER/RETURN to exit...')
+		print()
+		print(tag_string('exception', 'The following exception has occurred: \n'))
+		print('  {}'.format(ex))
+		input('\nPress ENTER/RETURN key to exit...')

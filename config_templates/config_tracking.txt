@@ -16,11 +16,6 @@ ImageExtension = jpg
 SearchAreaSize = 21
 InterrogationAreaSize = 11
 
-;Subpixel estimation kernel size, must be odd integer. If ==0 then no
-;subpixel estimation of the feature positions will be performed
-;
-Subpixel = 3
-
 
 [Advanced]
 

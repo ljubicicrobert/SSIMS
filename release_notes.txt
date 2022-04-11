@@ -1,3 +1,17 @@
+SSIMS_v0.3.3.0 ----------------------------------------------------------------
+
+Major changes:
+- Huge speed improvement for feature tracking by using https://github.com/chinue/Fast-SSIM
+- Significantly reduced computational complexity for feature tracking step
+- Removed option to choose subpixel estimator size, Gaussian 2x3 fit now default
+
+Minor changes:
+- Changes to console printing format, added progress bar
+- Bugfixes in filter_frames.py
+- Minor bugfixes in GUI
+- Added docstrings and type hints in Python files
+
+
 SSIMS_v0.3.2.0 ----------------------------------------------------------------
 
 Major changes:

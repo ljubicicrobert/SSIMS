@@ -23,126 +23,23 @@ try:
 	from __init__ import *
 	from shutil import copy, SameFileError
 	from time import time
-	from datetime import timedelta
-	from os import path, listdir, makedirs, remove
+	from os import path, makedirs, remove
 	from feature_tracking import get_gcps_from_image, fresh_folder
-	from itertools import product
 	from warnings import warn
 	from math import log
-
-	import glob
+	from frames_to_video import framesToVideo
+	from glob import glob
+	from collections import deque
+	from class_console_printer import Console_printer, tag_string
+	from class_progress_bar import Progress_bar
+	from class_logger import time_hms
 
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-		  '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
-
-
-MAX_FRAMES_DEFAULT = 60**3  # 60 minutes at 60fps
-separator = '---'
-
-
-def framesToVideo(output, folder='.', ext='jpg', codec='MJPG', fps=30.00, scale=1.0,
-				  max_frames=MAX_FRAMES_DEFAULT, verbose=True, interp=cv2.INTER_LINEAR, size_adj=False) -> bool:
-	"""
-	Convert individual images to a video. Images are specified using prefix and extension and the code iterates through
-	corresponding images in a specified folder. Several video codecs are available, scaling is provided, FPS
-	and a maximum number of num_frames can be set.
-
-	:param output:		Video output filename as a string. Enter without the extension as only .avi is available.
-	:param folder:		Folder containing the images to be written to a video. The video will be created in the same
-						folder. Default is the parent folder, i.e. '.'.
-	:param prefix:		String prefix of files to be written to a video. Default is 'frame'.
-	:param ext:			Extension of the image files. Should be a string, without the leading dot. Default is 'jpg'.
-	:param codec:		Codec for the output video. Default is MJPG which has the best quality but a large file size.
-						Other available are DIVX, XVID, WMV1 and WMV2, which are all smaller in size but provide worse quality video.
-	:param fps:			FPS count for the output video. Default is 30.
-	:param scale:		Scale factor for the video. Linear interpolation is used if scale != 1.0. Default is 1.0.
-	:param max_frames:	Maximum number of num_frames to write to video. Default is defined by MAX_FRAMES_DEFAULT global.
-						Be careful not to exceed the PC RAM limit since the video is stored in RAM until the final frame is encoded.
-	:param verbose:		Whether to use a verbose output. Default is False.
-	:param interp:		Interpolation algorithm for image resizing from cv2 package. Default is cv2.INTER_CUBIC.
-	:param size_adj:	Whether to adjust the size of all frames to the size of the first frame. Default is False.
-	:return:			True is success, raises an error if something is wrong.
-	"""
-
-	# Check for allowed codec
-	# codec = 'H264' if '264' in codec else ('HEVC' if '265' in codec else codec)
-
-	assert codec in ('MJPG', 'DIVX', 'XVID', 'WMV1', 'WMV2')
-
-	# Get the first image shape
-	for filename in listdir(folder):
-		if filename.endswith('.' + ext):
-			image = cv2.imread(folder + '/' + filename)
-			height, width, *_ = image.shape
-			break
-
-	# Verify shape available
-	try:
-		height, width
-	except NameError:
-		raise ValueError('[ERROR] Could not obtain image shape. Check file frame_path or type!')
-
-	# TODO: Should I include other extensions?
-	saveStr = folder + '/' + output + '.avi'
-
-	out = cv2.VideoWriter(saveStr, cv2.VideoWriter_fourcc(*codec), fps,
-						  (int(scale * width), int(scale * height)))
-
-	if verbose:
-		print(separator)
-		print('[BEGIN] :STARTING FRAMESTOVIDEO: '.ljust(len(separator), '-'))
-		print('[INFO] Encoding frames to video from folder', folder + '/')
-		print('[INFO] Writing results to', saveStr)
-		print(separator)
-
-	i = 0
-
-	if max_frames is None:
-		max_frames = 60**3  # 60 minutes at 60fps
-
-	# Go through all frames
-	for filename in listdir(folder):
-		if filename.endswith('.' + ext) and i < max_frames:
-			image = cv2.imread(folder + '/' + filename)
-			h, w, *_ = image.shape
-
-			# Happens sometimes with oddly packed videos
-			if h != height or w != width:
-				if not size_adj:
-					print('[ERROR] Frame {} does not have the same size as the first frame!\n'
-						  '[ERROR] OpenCV Video writer requires all frames to be the same size!'.format(i))
-					input('\nPress ENTER/RETURN to exit...')
-					exit()
-				else:
-					print('[WARNING] Adjusting the size of frame {} to {}x{} px'.format(i, width, height))
-					cv2.resize(image, [height, width], interpolation=interp)
-
-			if scale != 1.0:
-				image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=interp)
-
-			out.write(image)
-
-			if verbose:
-				print('[INFO] Writing frame: {}'.format(i))
-
-			i += 1
-
-	# Clear output video from memory
-	out.release()
-
-	if verbose:
-		print(separator)
-		print('[END] Video written to {} using {} codec'.format(saveStr, codec))
-		print('[END] Total number of frames written is', i)
-		print('[END] Total duration of the video is', timedelta(seconds=(i / fps)))
-		size = path.getsize(saveStr) / (1024 * 1024)
-		print('[END] Total size of the file is', round(size, 2), 'MB')
-		print(separator)
-
-	return True
 
 
 def coordTransform(image: np.ndarray,
@@ -171,7 +68,6 @@ def coordTransform(image: np.ndarray,
 	:param ransac_thr:		Threshold for RANSAC outlier detection. Default is 1.
 	:param confidence:		Required confidence for the transformation matrix. Default is 0.995.
 	:param LM_iters:		Number of Levenberg-Marquardt iterations for refining. Default is 10.
-	:param show:			Whether to show the original and the stabilized image. Default is False.
 	:return:				New transformed image as numpy.ndarray.
 	"""
 
@@ -208,7 +104,7 @@ def coordTransform(image: np.ndarray,
 			status = []
 
 	else:
-		print('[ERROR] Unknown transformation method for stabilization point set!')
+		print(tag_string('error', 'Unknown transformation method for stabilization point set!'))
 		input('\nPress ENTER/RETURN to exit...')
 
 	if M_ortho is not None:
@@ -224,7 +120,7 @@ def coordTransform(image: np.ndarray,
 	return ortho, M_stable, status
 
 
-def imcrop(img, bbox):
+def imcrop(img: np.ndarray, bbox: list) -> np.ndarray:
 	"""
 	Crop image to boundary box.
 
@@ -241,19 +137,7 @@ def imcrop(img, bbox):
 	return img[y1:y2, x1:x2, :]
 
 
-def gcp_distances(gcp_coord):
-	N = len(gcp_coord)
-	dists = np.ndarray([N, N])
-
-	for i, j in product(range(N), range(N)):
-		fr = gcp_coord[i]
-		to = gcp_coord[j]
-		dists[i, j] = ((fr[0] - to[0])**2 + (fr[1] - to[1])**2) ** 0.5
-
-	return dists
-
-
-def pad_img_to_fit_bbox(img, x1, x2, y1, y2):
+def pad_img_to_fit_bbox(img: np.ndarray, x1: int, x2: int, y1: int, y2:int) -> tuple:
 	"""
 	Pad image with zeros for cropping.
 
@@ -276,7 +160,14 @@ def pad_img_to_fit_bbox(img, x1, x2, y1, y2):
 	return img, x1, x2, y1, y2
 
 
-def compress(data, selectors):
+def compress(data: np.ndarray, selectors: list) -> list:
+	"""
+	Removal of unselected GCP markers from stabilization.
+
+	:param data:		Previously tracked GCP markers loaded from file.
+	:param selectors:	List of 0s and 1s to mark used GCP markers.
+	:return:			List of selected GCP markers.
+	"""
 	return list(d for d, s in zip(data, selectors) if s)
 
 
@@ -291,9 +182,10 @@ if __name__ == '__main__':
 
 		try:
 			cfg.read(args.cfg, encoding='utf-8-sig')
-		except:
-			print('[ERROR] There was a problem reading the configuration file!\nCheck if project has valid configuration.')
-			input('Press ENTER/RETURN key to exit...')
+		except Exception:
+			print(tag_string('error', 'There was a problem reading the configuration file!'))
+			print(tag_string('error', 'Check if project has valid configuration.'))
+			input('\nPress ENTER/RETURN key to exit...')
 			exit()
 
 		section = 'Stabilization'
@@ -347,9 +239,16 @@ if __name__ == '__main__':
 		remove_distortion = int(cfg.get(section, 'Undistort', fallback=0))
 
 		if remove_distortion and not path.exists(r'{}/camera_parameters.txt'.format(results_folder)):
-			print('[WARNING] Camera parameters file not found in {}'.format(results_folder))
-			input('[PROCEED?] If you wish to proceed without the camera parameters (without undistortion), press Enter/Return key...')
-			remove_distortion = 0
+			print(tag_string('warning', 'Camera parameters file not found in {}'.format(results_folder)))
+
+			while True:
+				answer = input(tag_string('warning', 'Proceed without the removal of camera distortion? [y/n]'))
+				if answer.lower() == 'y':
+					remove_distortion = 0
+					break
+				elif answer.lower() == 'n':
+					input(tag_string('end', 'Camera parameters not found, exiting...'))
+					break
 
 		# Whether to create a video from frames
 		create_video = int(cfg.get(section, 'CreateVideo'))
@@ -385,13 +284,14 @@ if __name__ == '__main__':
 		if path.exists(end_file):
 			remove(end_file)
 
-		raw_frames_list = glob.glob('{}/*.{}'.format(frames_folder, ext_in))
-		features_coord = glob.glob('{}/*.txt'.format(gcp_folder))
-		total_frames = len(raw_frames_list)
-		num_len = int(log(total_frames, 10)) + 1
+		raw_frames_list = glob('{}/*.{}'.format(frames_folder, ext_in))
+		features_coord = glob('{}/*.txt'.format(gcp_folder))
+		num_frames = len(raw_frames_list)
+		num_len = int(log(num_frames, 10)) + 1
 		total_features = np.loadtxt(features_coord[0], dtype='float32', delimiter=' ').shape[0]
 
-		print('[BEGIN] Stabilization starting for data in {}'.format(results_folder))
+		print(tag_string('start', 'Starting image transformation for data in {}'.format(results_folder)))
+		print()
 
 		anchors = np.loadtxt(features_coord[0], dtype='float32', delimiter=' ')
 
@@ -463,6 +363,11 @@ if __name__ == '__main__':
 
 		i = 0
 
+		console_printer = Console_printer()
+		progress_bar = Progress_bar(total=num_frames, prefix=tag_string('info', 'Stabilized frame '))
+		times = deque(maxlen=10)
+		script_start_time = time()
+
 		while True:
 			try:
 				start_time = time()
@@ -501,9 +406,26 @@ if __name__ == '__main__':
 
 				note = ''
 				if [0] in status:
-					note = '==> Outlier detected: {}'.format([i[0] for i in status])
+					note = '{}'.format([i[0] for i in status])
 
-				print('[INFO] Stabilized frame {}/{} in {:.3f} sec ({:.1f}%) {}'.format(i, total_frames-1, time() - start_time, i/(total_frames-1) * 100, note))
+				dt = time() - start_time
+				times.append(dt)
+
+				elapsed = time() - script_start_time
+				remaining = np.mean(times) * (num_frames - i)				
+
+				console_printer.add_line(progress_bar.get(i))
+
+				if use_ransac_filtering:
+					console_printer.add_line(tag_string('info', 'Outliers: {}'.format(note)))
+
+				console_printer.add_line(tag_string('info', 'Frame processing time = {:.3f} sec'.format(dt)))
+				hours, minutes, seconds = time_hms(elapsed)
+				console_printer.add_line(tag_string('info', 'Elapsed time = {} h {} min {} sec'.format(hours, minutes, seconds)))
+				hours, minutes, seconds = time_hms(remaining)
+				console_printer.add_line(tag_string('info', 'Remaining time ~ {} h {} min {} sec'.format(hours, minutes, seconds)))
+
+				console_printer.console_overwrite()
 
 				i += 1
 
@@ -511,14 +433,29 @@ if __name__ == '__main__':
 				break
 
 		if create_video:
-			framesToVideo('!stabilized' if not orthorectify else '!orthorectified', folder=stabilized_folder, ext=ext_out, fps=fps, verbose=True)
+			progress_bar.prefix = tag_string('info', 'Writing frame ')
+			console_printer.reset()
+			print()
 
+			framesToVideo('!stabilized' if not orthorectify else '!orthorectified',
+						  folder=stabilized_folder,
+						  ext=ext_out,
+						  fps=fps,
+						  verbose=True,
+						  pb=progress_bar,
+						  cp=console_printer
+						  )
+
+		# Touch
 		open(end_file, 'w').close()
 
+		print()
+		print(tag_string('end', 'Image stabilization complete!'))
 		print('\a')
-		input('Press ENTER/RETURN key to exit...')
+		input('\nPress ENTER/RETURN key to exit...')
 
 	except Exception as ex:
-		print('\n[EXCEPTION] The following exception has occurred: \n\n'
-			  '  {}'.format(ex))
-		input('Press ENTER/RETURN key to exit...')
+		print()
+		print(tag_string('exception', 'The following exception has occurred: \n'))
+		print('  {}'.format(ex))
+		input('\nPress ENTER/RETURN key to exit...')

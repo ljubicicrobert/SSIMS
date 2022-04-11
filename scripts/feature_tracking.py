@@ -23,74 +23,52 @@ try:
 	from __init__ import *
 	from math import log
 	from shutil import copy, SameFileError
-	from os import makedirs, listdir, remove, rename
-	from os.path import exists, isfile, islink
-	from time import time
-	from warnings import warn
+	from os import makedirs, remove
+	from os.path import exists
 	from sys import exit
+	from time import time
 	from collections import deque
 	from scipy.optimize import leastsq
-	from skimage.metrics import structural_similarity as ssim
 	from matplotlib.widgets import Slider
+	from class_logger import Logger, time_hms
+	from class_console_printer import Console_printer, tag_string
+	from class_progress_bar import Progress_bar
+	from glob import glob
+	from FastSSIM.ssim import SSIM
 
-	import glob
 	import matplotlib.pyplot as plt
 
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-		  '  {}'.format(ex))
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
 	input('\nPress ENTER/RETURN key to exit...')
 	exit()
 
 
-separator = '---'
-
-
-class Logger:
-	"""
-	Simple class for .txt logging.
-	Initialize with path to .txt log file.
-	Use method log(str) to write to file.
-	Use method close() to close the file.
-	"""
-	def __init__(self, path):
-		self.file = open(path, 'w')
-
-	def log(self, string):
-		try:
-			print(string)
-
-			h, m, s = time_hms(time())
-			h = str(h + 2).rjust(2, '0')
-			m = str(m).rjust(2, '0')
-			s = str(s).rjust(2, '0')
-			self.file.write('{}:{}:{} -> {}\n'.format(h, m, s, string))
-
-			return True
-
-		except IOError:
-			return False
-
-	def close(self):
-		self.file.close()
-
-
-def to_odd(a, side=0):
-	a = int(a)
-	if a % 2 == 1:
-		return a
-	if side == 0:
-		return a + 1
-	else:
-		return a - 1
-
-
-def to_int(a):
-	return int(round(a))
-
-
 show_legend = True
 legend_toggle = False
+
+
+def to_odd(x, side=0) -> int:
+	"""
+	Returns the closest odd ingeter of :x:, if :x: not already odd.
+
+	:param side:	If 0 then returns next larger odd integer, else next smaller.
+	:return:		Odd integer.
+	"""
+	x = int(x)
+	if x % 2 == 1:
+		return x
+
+	if side == 0:
+		return x + 1
+	else:
+		return x - 1
+
+
+def to_int(x: float) -> int:
+	return int(round(x))
 
 
 def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hide_sliders=False) -> list:
@@ -195,7 +173,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 
 		elif event.key in ['escape', 'q']:
 			plt.close()
-			input('EXECUTION STOPPED: Operation aborted by user! Press ENTER/RETURN key to exit...')
+			input(tag_string('abort', 'EXECUTION STOPPED: Operation aborted by user! Press ENTER/RETURN key to exit...'))
 			exit()
 
 		elif event.key == 'f1':
@@ -205,12 +183,11 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 			event.canvas.draw()
 
 	if verbose:
-		print('---')
-		print('Click MOUSE RIGHT to add a point to the list')
-		print('Press ENTER key to accept the list of points')
-		print('Press D or click MOUSE MIDDLE to remove the last point in the list')
-		print("Press ESC or Q to cancel the operation")
-		print('---')
+		print()
+		print(tag_string('info', 'Click MOUSE RIGHT to add a point to the list'))
+		print(tag_string('info', 'Press ENTER key to accept the list of points'))
+		print(tag_string('info', 'Press D or click MOUSE MIDDLE to remove the last point in the list'))
+		print(tag_string('info', 'Press ESC or Q to cancel the operation\n'))
 
 	fig.canvas.mpl_connect('button_press_event', getPixelValue)
 	fig.canvas.mpl_connect('key_press_event', keypress)
@@ -293,11 +270,11 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 		plt.draw()
 
 	ax_ia_size = plt.axes([0.3, 0.1, 0.40, 0.03], facecolor=axcolor)
-	sl_ax_ia_size = Slider(ax_ia_size, 'IA size', 3, 101, valinit=ia, valstep=2, valfmt=valfmt)
+	sl_ax_ia_size = Slider(ax_ia_size, 'IA size', 7, 51, valinit=ia, valstep=2, valfmt=valfmt)
 	sl_ax_ia_size.on_changed(update_ia)
 
 	ax_sa_size = plt.axes([0.3, 0.05, 0.40, 0.03], facecolor=axcolor)
-	sl_ax_sa_size = Slider(ax_sa_size, 'SA size', 5, 101, valinit=sa, valstep=2, valfmt=valfmt)
+	sl_ax_sa_size = Slider(ax_sa_size, 'SA size', 13, 101, valinit=sa, valstep=2, valfmt=valfmt)
 	sl_ax_sa_size.on_changed(update_sa)
 
 	legend = 'O = zoom to window\n' \
@@ -348,7 +325,7 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 		mng = plt.get_current_fig_manager()
 		mng.window.state('zoomed')
 		mng.set_window_title('Feature selection')
-	except:
+	except Exception:
 		pass
 
 	plt.show()
@@ -359,15 +336,13 @@ def get_gcps_from_image(image_orig: np.ndarray, verbose=False, ia=11, sa=21, hid
 	return points
 
 
-def find_gcp(single_ch: np.ndarray, kernel: np.ndarray, show=False, subpixel=True, subpixel_ksize=3) -> tuple:
+def find_gcp(single_ch: np.ndarray, kernel: np.ndarray, show=False) -> tuple:
 	"""
 	Detects a GCP center in the using SSIM.
 
 	:param single_ch: 		Input image to search for GCP in.
 	:param kernel:			Kernel to use for SSIM comparison.
 	:param show: 			Whether to show the SSIM map. Default is False.
-	:param subpixel: 		Whether to use subpixel estimator. Default is True.
-	:param subpixel_ksize: 	The size of the subpixel search area. Default is 3.
 	:return: 				Position (x,y) of the GCP center in the input image.
 	"""
 
@@ -377,7 +352,7 @@ def find_gcp(single_ch: np.ndarray, kernel: np.ndarray, show=False, subpixel=Tru
 		for i in range(k_span, search_area.shape[1] - k_span):
 			for j in range(k_span, search_area.shape[0] - k_span):
 				subarea = cv2.getRectSubPix(search_area, (k_size, k_size), (i, j))
-				pixel_score[i, j] = ssim(subarea, ker)
+				pixel_score[i, j] = SSIM(subarea, ker)
 
 		if show:
 			plt.imshow(pixel_score)
@@ -392,90 +367,42 @@ def find_gcp(single_ch: np.ndarray, kernel: np.ndarray, show=False, subpixel=Tru
 	except ValueError:
 		score_max = 0
 		xpix, ypix = 0, 0
+		
 		return (xpix, ypix), score_max
 
 	x_pix, y_pix = np.unravel_index(np.argmax(score_map), score_map.shape)
 
-	if subpixel:
-		subpixel_area = subpixel_ksize // 2
-		params = fit_gaussian_2d(score_map[x_pix - subpixel_area: x_pix + subpixel_area + 1,
-										   y_pix - subpixel_area: y_pix + subpixel_area + 1])
-		h, dx, dy, wx, wy = params
-		x_sub, y_sub = x_pix + dx - subpixel_area, y_pix + dy - subpixel_area
+	# Gaussian 2x3 fit
+	dx = (log(score_map[x_pix-1, y_pix]) - log(score_map[x_pix+1, y_pix])) / (2*(log(score_map[x_pix-1, y_pix]) + log(score_map[x_pix+1, y_pix]) - 2*log(score_map[x_pix, y_pix])))
+	dy = (log(score_map[x_pix, y_pix-1]) - log(score_map[x_pix, y_pix+1])) / (2*(log(score_map[x_pix, y_pix-1]) + log(score_map[x_pix, y_pix+1]) - 2*log(score_map[x_pix, y_pix])))
 
-		return (x_sub, y_sub), score_max
+	x_sub = x_pix + dx
+	y_sub = y_pix + dy
 
-	else:
-		return (x_pix, y_pix), score_max
+	return (x_sub, y_sub), score_max
 
 
-def gaussian_2d_func(height, center_x, center_y, stddev_x, stddev_y):
-	"""
-	Returns a gaussian_2d_func function with the given parameters.
-
-	:param height:		Peak of the 2D Gaussian.
-	:param center_x:	X position of the Gaussian peak.
-	:param center_y:	Y position of the Gaussian peak.
-	:param stddev_x:	Standard deviation in X direction.
-	:param stddev_y:	Standard deviation in Y direction.
-	:return:			Generator function for 2D Gaussian.
-	"""
-
-	stddev_x = float(stddev_x)
-	stddev_y = float(stddev_y)
-
-	return lambda x, y: height*np.exp(-(((center_x-x) / stddev_x) ** 2 + ((center_y - y) / stddev_y) ** 2) / 2)
-
-
-def moments(data):
-	"""Returns the 2D Gaussian parameters by calculating its moments.
-
-	:param data:	Data to fit 2D Gaussian to.
-	:return:		Height, x, y, stddev_x, stddev_y
-	"""
-
-	total = data.sum()
-	X, Y = np.indices(data.shape)
-	x = (X * data).sum()/total
-	y = (Y * data).sum()/total
-	col = data[:, int(y)]
-	stddev_x = np.sqrt(np.abs((np.arange(col.size) - y) ** 2 * col).sum() / col.sum())
-	row = data[int(x), :]
-	stddev_y = np.sqrt(np.abs((np.arange(row.size) - x) ** 2 * row).sum() / row.sum())
-	height = data.max()
-
-	return height, x, y, stddev_x, stddev_y
-
-
-def fit_gaussian_2d(data):
-	"""Fits a 2D Gaussian to data using least square minimization.
-
-	:param data:	Data to fit 2D Gaussian to.
-	:return:		Parameters of the least-square-fitted 2D Gaussian.
-	"""
-
-	params = moments(data)
-	errorfunction = lambda p: np.ravel(gaussian_2d_func(*p)(*np.indices(data.shape)) - data)
-	p, *_ = leastsq(errorfunction, params)
-
-	return p
-
-
-def fresh_folder(path):
+def fresh_folder(path, ext='*'):
 	if not exists(path):
 		makedirs(path)
 	else:
-		files = glob.glob('{}/*'.format(path))
+		files = glob('{}/*.{}'.format(path, ext))
 		for f in files:
 			remove(f)
 
 
-def time_hms(time):
-	hours = int(time // 3600)
-	minutes = int((time - hours * 3600) // 60)
-	seconds = int(time % 60)
+def print_markers(marker_list):
+	s = ''
+	for i, marker in enumerate(marker_list):
+		x, y = marker
+		s += '{}=({:.2f}, {:.2f}), '.format(i, x, y)
+	
+	return s[:-2]
 
-	return hours, minutes, seconds
+
+
+def print_and_log(string, printer_obj: Console_printer, logger_obj: Logger):
+	logger_obj.log(printer_obj.add_line(string))
 
 
 if __name__ == '__main__':
@@ -489,8 +416,8 @@ if __name__ == '__main__':
 
 		try:
 			cfg.read(args.cfg, encoding='utf-8-sig')
-		except:
-			input('[ERROR] There was a problem reading the configuration file!\nCheck if project has valid configuration.')
+		except Exception:
+			input(tag_string('error', 'There was a problem reading the configuration file!\nCheck if project has valid configuration.'))
 			exit()
 
 		section = 'Basic'
@@ -516,9 +443,6 @@ if __name__ == '__main__':
 		k_size = int(cfg.get(section, 'InterrogationAreaSize', fallback='11'))
 		k_span = k_size // 2
 
-		# Optional, to improve accuracy (low cost)
-		subp = int(cfg.get(section, 'Subpixel', fallback='3'))
-
 		section = 'Advanced'
 
 		# Expand the search area width/height if SSIM score is below :expand_ssim_thr:
@@ -530,13 +454,6 @@ if __name__ == '__main__':
 		# SSIM score threshold for expanded search
 		expand_ssim_thr = float(cfg.get(section, 'ExpandSAThreshold', fallback='0.5'))
 
-		if subp > 1:
-			subpixel = True
-			# Use 3-7 px, must be odd
-			subpixel_ksize = subp
-		else:
-			subpixel = False
-			subpixel_ksize = 1
 
 		# If significant image rotation is expected
 		update_kernels = int(cfg.get(section, 'UpdateKernels', fallback='0'))
@@ -545,18 +462,16 @@ if __name__ == '__main__':
 		get_new_gcps = True
 
 		# Do not change from this point on ------------------------------------------------------------
-		assert search_size > 0 and search_size % 2 == 1 and type(search_size) == int, \
-			'[ERROR] Search area size must be a positive odd integer!'
-		assert 0 < k_size < search_size and k_size % 2 == 1 and type(k_size) == int, \
-			'[ERROR] Interrogation area size (kernel size) must be a positive odd integer, and smaller than search area size!'
+		assert search_size > 13 and search_size % 2 == 1 and type(search_size) == int, \
+			tag_string('error', 'Search area size must be an integer >= 13!')
+		assert 7 < k_size < search_size and k_size % 2 == 1 and type(k_size) == int, \
+			tag_string('error', 'Interrogation area size (kernel size) must be an integer >= 7, and smaller than search area size!')
 		assert expand_coef > 1, \
-			'[ERROR] Search area expansion coefficient must be higher than 1!'
+			tag_string('error', 'Search area expansion coefficient must be higher than 1!')
 		assert 0 < expand_ssim_thr < 1, \
-			'[ERROR] Search area expansion threshold must be in range (0, 1)!'
-		assert 0 < subpixel_ksize < k_size and subpixel_ksize % 2 == 1 and type(subpixel_ksize) == int, \
-			'[ERROR] Subpixel estimator size must be a positive odd integer and smaller than investigation area size!'
+			tag_string('error', 'Search area expansion threshold must be in range (0, 1)!')
 
-		raw_frames_list = glob.glob('{}/*.{}'.format(frames_folder, ext))
+		raw_frames_list = glob('{}/*.{}'.format(frames_folder, ext))
 		num_raw_frames = len(raw_frames_list)
 		numbering_len = int(log(num_raw_frames, 10)) + 1
 
@@ -566,10 +481,15 @@ if __name__ == '__main__':
 
 		img_path = raw_frames_list[0]
 		img = cv2.imread(img_path)
-		img_gray = cv2.imread(img_path, 0)
 		img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-		markers = get_gcps_from_image(img_rgb, verbose=True, ia=k_size, sa=search_size)
+		markers = get_gcps_from_image(img_rgb, ia=k_size, sa=search_size)
+
+		if len(markers) == 1:
+			print(tag_string('error', 'Number of GCPs must be at least 2!'))
+			input('\nPress ENTER/RETURN key to exit...')
+			exit()
+
 		cfg['Basic']['SearchAreaSize'] = str(search_size)
 		cfg['Basic']['InterrogationAreaSize'] = str(k_size)
 		
@@ -588,8 +508,15 @@ if __name__ == '__main__':
 		try:
 			log_path = '{}/log_gcps.txt'.format(results_folder)
 			logger = Logger(log_path)
-			logger.log(separator)
-			logger.log('[LOG] Log file {}/'.format(log_path))
+			logger.log('')
+			logger.log(tag_string('start', 'Feature tracking for frames in [{}]'.format(frames_folder)), to_print=True)
+			logger.log(tag_string('info', 'Output to [{}]'.format(results_folder)), to_print=True)
+			logger.log(tag_string('info', 'Total frames = {}'.format(num_raw_frames)), to_print=True)
+			logger.log(tag_string('info', 'Number of markers = {}'.format(len(markers))), to_print=True)
+			logger.log(tag_string('info', 'Log file {}/\n'.format(log_path)), to_print=True)
+
+			printer = Console_printer()
+			progress_bar = Progress_bar(total=num_raw_frames, prefix=tag_string('info', 'Frame '))
 
 			kernels = []
 			img = cv2.cvtColor(img, cv2.COLOR_RGB2LAB)
@@ -601,15 +528,18 @@ if __name__ == '__main__':
 				kernels.append(k)
 
 			times = deque(maxlen=10)
-			script_start = time()
+			script_start_time = time()
 
 			ssim_scores = np.zeros([num_raw_frames, len(markers)])
 
 			for n in range(num_raw_frames):
 				try:
-					logger.log(separator)
-					logger.log('[INFO] Image: {}/{} ({:.1f}%)'.format(n, num_raw_frames - 1, n/(num_raw_frames - 1) * 100))
-					frame_start = time()
+					logger.log('')
+					print_and_log(
+						progress_bar.get(n), printer, logger
+					)
+
+					start_time = time()
 
 					img_path = raw_frames_list[n]
 					img = cv2.imread(img_path)
@@ -625,26 +555,22 @@ if __name__ == '__main__':
 
 							rel_center, ssim_max = find_gcp(search_space,
 															kernels[j],
-															show=False,
-															subpixel=subpixel,
-															subpixel_ksize=subpixel_ksize)
+															show=False
+															)
 
 							if expand_ssim_search and ssim_max < expand_ssim_thr:
-								logger.log('[WARNING] Expanding the search area, SSIM={:.3f} < {:.3f}'.format(ssim_max, expand_ssim_thr))
+								print_and_log(
+									tag_string('warning', 'Expanding the search area, SSIM={:.3f} < {:.3f}'.format(ssim_max, expand_ssim_thr)), printer, logger
+								)
+
 								is_expanded_search = True
 								search_size = exp_search_size
 								search_space = cv2.getRectSubPix(img_ch, (search_size, search_size), (xx, yy))
 
 								rel_center, ssim_max = find_gcp(search_space,
-														 kernels[j],
-														 show=False,
-														 subpixel=subpixel,
-														 subpixel_ksize=subpixel_ksize)
-
-							# cx, cy = [to_int(x) for x in rel_center]
-
-							# cv2.circle(search_space, (cx, cy), 1, (0, 0, 255), -1)
-							# cv2.circle(search_space, (search_size // 2 + 1, search_size // 2 + 1), 1, (255, 0, 0))
+															kernels[j],
+															show=False,
+															)
 
 							real_x = rel_center[0] + xx - (search_size - 1) / 2
 							real_y = rel_center[1] + yy - (search_size - 1) / 2
@@ -664,36 +590,56 @@ if __name__ == '__main__':
 									'{}/gcps_img/{}_{}.{}'.format(results_folder, str(n).rjust(numbering_len, '0'), j, ext),
 									cv2.getRectSubPix(img_ch, (search_size, search_size), (real_x, real_y)))
 							except SystemError:
-								logger.log('[WARNING] Marker {} lost! Setting coordinates to (0, 0).'.format(j))
+								print_and_log(
+									tag_string('warning', 'Marker {} lost! Setting coordinates to (0, 0).'.format(j)), printer, logger
+								)
+
 								markers[j] = [0, 0]
 								markers_mask[j] = 0
+
 								plt.imsave(
 									'{}/gcps_img/{}_{}.{}'.format(results_folder, str(n).rjust(numbering_len, '0'), j, ext),
 									np.zeros([search_size, search_size]))
 
 						else:
-							logger.log('[WARNING] Marker {} lost! Setting coordinates to (0, 0).'.format(j))
+							print_and_log(
+								tag_string('warning', 'Marker {} lost! Setting coordinates to (0, 0).'.format(j)), printer, logger
+							)
+
 							markers[j] = [0, 0]
 							markers_mask[j] = 0
 
 				except (AttributeError, IOError, IndexError):
 					break
 
-				dt = time() - frame_start
+				dt = time() - start_time
 				times.append(dt)
 
-				elapsed = time() - script_start
+				elapsed = time() - script_start_time
 				remaining = np.mean(times) * (num_raw_frames - n)
 
 				np.savetxt('{}/gcps_csv/{}.txt'.format(results_folder, str(n).rjust(numbering_len, '0')), markers, fmt='%.3f', delimiter=' ')
 				np.savetxt('{}/ssim_scores.txt'.format(results_folder), ssim_scores, fmt='%.3f', delimiter=' ')
 
-				logger.log('[INFO] Markers: {}'.format([[round(x, 3), round(y, 3)] for x, y in markers]))
-				logger.log('[INFO] Frame processing time = {:.3f} sec'.format(dt))
+				print_and_log(
+					tag_string('info', 'Markers: {}'.format(print_markers(markers))), printer, logger
+				)
+
+				print_and_log(
+					tag_string('info', 'Frame processing time = {:.3f} sec'.format(dt)), printer, logger
+				)
+
 				hours, minutes, seconds = time_hms(elapsed)
-				logger.log('[INFO] Elapsed time = {} h {} min {} sec'.format(hours, minutes, seconds))
+				print_and_log(
+					tag_string('info', 'Elapsed time = {} h {} min {} sec'.format(hours, minutes, seconds)), printer, logger
+				)
+
 				hours, minutes, seconds = time_hms(remaining)
-				logger.log('[INFO] Remaining time ~ {} h {} min {} sec'.format(hours, minutes, seconds))
+				print_and_log(
+					tag_string('info', 'Remaining time ~ {} h {} min {} sec'.format(hours, minutes, seconds)), printer, logger
+				)
+
+				printer.console_overwrite()
 
 		except IOError:
 			try:
@@ -706,10 +652,13 @@ if __name__ == '__main__':
 
 		np.savetxt('{}/markers_mask.txt'.format(results_folder), markers_mask, fmt='%d', delimiter=' ')
 
+		print()
+		print(tag_string('end', 'Feature tracking complete!'))
 		print('\a')
 		input('\nPress ENTER/RETURN key to exit...')
 
 	except Exception as ex:
-		print('\n[EXCEPTION] The following exception has occurred: \n\n'
-			  '  {}'.format(ex))
+		print()
+		print(tag_string('exception', 'The following exception has occurred: \n'))
+		print('  {}'.format(ex))
 		input('\nPress ENTER/RETURN key to exit...')

@@ -267,6 +267,8 @@ I wish to express my gratitude to the following people (in no particular order):
 
 Wang, Z., Bovik, A. C., Sheikh, H. R. and Simoncelli, E. P. (2004) *Image Quality Assessment: From Error Visibility to Structural Similarity*, IEEE Trans. Image Process., 13(4), 600–612, [https://doi.org/10.1109/TIP.2003.819861](https://doi.org/10.1109/TIP.2003.819861)
 
+Fast-SSIM by Chen Yu ([https://github.com/chinue/Fast-SSIM](https://github.com/chinue/Fast-SSIM))
+
 ### How to cite
 Ljubicic, R. (2021) *SSIMS: Preprocessing tool for UAV image velocimetry*, [https://github.com/ljubicicrobert/SSIMS](https://github.com/ljubicicrobert/SSIMS)
 
