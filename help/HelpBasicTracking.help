@@ -6,9 +6,3 @@ Width/height (in pixels) of the feature area. Must be lower than the search area
 
 --- Search area size ---
 Width/height (in pixels) of the area used for feature detection/tracking. Must be higher than the interrogation area size. Must be odd integer.
-
---- Use subpixel estimator ---
-Whether to try to improve the feature position estimation accuracy using 2D Gaussian distribution.
-
---- Subpixel estimator ---
-Size of the 2D Gaussian kernel used for subpixel feature position estimation. Optimally 3 or 5 pixels. Must be odd integer.

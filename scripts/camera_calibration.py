@@ -20,16 +20,18 @@ Created by Robert Ljubicic.
 """
 
 try:
-	import os
-	import glob
+	from __init__ import *
+	from os import path, mkdir
+	from glob import glob
+	from class_console_printer import tag_string
+
 	import matplotlib.pyplot as plt
 
-	from __init__ import *
-
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-	      '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
 
 
@@ -50,8 +52,8 @@ if __name__ == '__main__':
 		extension = args.ext
 		camera_model = 'camera_parameters' if args.model == '' else args.model
 
-		if not os.path.exists(output_folder):
-			os.mkdir(output_folder)
+		if not path.exists(output_folder):
+			mkdir(output_folder)
 
 		cheq_w = int(args.w) - 1
 		cheq_h = int(args.h) - 1
@@ -68,8 +70,8 @@ if __name__ == '__main__':
 
 		fig, ax = plt.subplots()
 
-		images = glob.glob('{}/*.{}'.format(input_folder, extension))
-		image_names = [os.path.basename(x) for x in images]
+		images = glob('{}/*.{}'.format(input_folder, extension))
+		image_names = [path.basename(x) for x in images]
 		num_images = len(images)
 		ret_list = [None] * num_images
 
@@ -81,10 +83,10 @@ if __name__ == '__main__':
 		try:
 			mng = plt.get_current_fig_manager()
 			mng.set_window_title('Chequerboard corners detection')
-		except:
+		except Exception:
 			pass
 
-		print('[START] Starting camera calibration using images in folder [{}]\n'.format(input_folder))
+		print(tag_string('start', 'Starting camera calibration using images in folder [{}]\n'.format(input_folder)))
 
 		for i, fname in enumerate(images):
 			img_bgr = cv2.imread(fname)
@@ -92,26 +94,26 @@ if __name__ == '__main__':
 
 			if img_gray.shape != (h, w):
 				if img_gray.shape == (w, h):
-					print('   [INFO] Rotating image {}/{}'.format(i+1, num_images))
+					print(tag_string('info', 'Rotating image {}/{}'.format(i+1, num_images)))
 					img_bgr = cv2.rotate(img_bgr, cv2.ROTATE_90_CLOCKWISE)
 					img_gray = cv2.rotate(img_gray, cv2.ROTATE_90_CLOCKWISE)
 					rotations[i] = 1
 				else:
-					print('[ERROR] All images in the folder [{}] must be of the same size!'.format(input_folder))
-					input(input('\nPress ENTER/RETURN to exit...'))
+					print(tag_string('error', 'All images in the folder [{}] must be of the same size!'.format(input_folder)))
+					input('\nPress ENTER/RETURN to exit...')
 					exit()
 
 			ret, corners = cv2.findChessboardCorners(img_gray, board_size)
 			plt.cla()
 
 			if ret:
-				print('[SUCCESS] Detected corners in image {}/{}'.format(i+1, num_images))
+				print(tag_string('success', 'Detected corners in image {}/{}'.format(i+1, num_images)))
 				ret_list[i] = ret
 				objpoints.append(objp)
 				corners_subpixel = cv2.cornerSubPix(img_gray, corners, (11, 11), (-1, -1), (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001))
 				imgpoints.append(corners_subpixel)
 			else:
-				print(' [FAILED] Corner detection failed in image {}/{}'.format(i+1, num_images))
+				print(tag_string('failed', 'Corner detection failed in image {}/{}'.format(i+1, num_images)))
 
 			if ret:
 				xs = corners_subpixel[:, 0, 0].tolist()
@@ -127,9 +129,10 @@ if __name__ == '__main__':
 		plt.pause(1.0)
 		plt.close()
 
-		print('\n   [INFO] Calculating camera intrinsics and distortion coefficients...', end='')
+		print()
+		print(tag_string('info', 'Calculating camera intrinsics and distortion coefficients... '), end='')
 		ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, (w, h), None, None, None, None, flags=calibration_flags)
-		print(' DONE!\n')
+		print(tag_string('info', 'DONE!\n'))
 
 		mean_img_errors = []
 
@@ -147,7 +150,7 @@ if __name__ == '__main__':
 
 		np.savetxt('{}/ret_list.txt'.format(input_folder), mean_img_errors, fmt='%.4f')
 
-		print('   [INFO] Mean reprojection error = {:.3f} px'.format(mean_error))
+		print(tag_string('info',  'Mean reprojection error = {:.3f} px'.format(mean_error)))
 
 		mtx_scaled = mtx / w
 
@@ -213,10 +216,12 @@ if __name__ == '__main__':
 		with open('{}/{}.cpf'.format(input_folder, camera_model), 'w') as configfile:
 			cfg.write(configfile)
 
-		print('\n [END] Camera calibration complete!')
+		print()
+		print(tag_string('end', 'Camera calibration complete!'))
 		input('\nPress ENTER/RETURN to exit...')
 
 	except Exception as ex:
-		print('\n[EXCEPTION] The following exception has occurred: \n\n'
-		      '  {}'.format(ex))
-		input('\nPress ENTER/RETURN to exit...')
+		print()
+		print(tag_string('exception', 'The following exception has occurred: \n'))
+		print('  {}'.format(ex))
+		input('\nPress ENTER/RETURN key to exit...')

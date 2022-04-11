@@ -21,16 +21,16 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-	from os import path, listdir
-	from glob import glob
-	from math import log
+	from os import path
+	from class_console_printer import tag_string
 
 	import matplotlib.pyplot as plt
 
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-		  '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
 
 
@@ -44,11 +44,11 @@ try:
 	parser.add_argument('--folder', type=str, help='Path to stabilization folder')
 	args = parser.parse_args()
 
-	fold = args.folder
-	ssim_path = r'{}/ssim_scores.txt'.format(fold)
+	folder = args.folder
+	ssim_path = '{}/ssim_scores.txt'.format(folder)
 
 	if not path.exists(ssim_path):
-		print('[ERROR] SSIM scores file not found in folder [{}]!'.format(fold))
+		print(tag_string('error', 'SSIM scores file not found in folder [{}]!'.format(folder)))
 		exit()
 
 	data = np.loadtxt(ssim_path, dtype='float')
@@ -71,12 +71,13 @@ try:
 		mng = plt.get_current_fig_manager()
 		mng.window.state('zoomed')
 		mng.set_window_title('SSIM score comparison')
-	except:
+	except Exception:
 		pass
 
 	plt.show()
 
 except Exception as ex:
-	print('\n[EXCEPTION] The following exception has occurred: \n\n'
-		  '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'The following exception has occurred: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')

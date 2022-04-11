@@ -23,17 +23,17 @@ try:
 	from __init__ import *
 	from matplotlib.widgets import Slider
 	from sys import exit
+	from glob import glob
+	from class_console_printer import tag_string
 
-	import glob
 	import matplotlib.pyplot as plt
 
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-	      '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
-
-separator = '---'
 
 
 def update_frame(val):
@@ -42,7 +42,7 @@ def update_frame(val):
 	h, w = img_new.shape[:2]
 
 	img_shown.set_data(img_new)
-	ax.set_title(r'Frame #{}/{}, {}x{}px'.format(sl_ax_frame_num.val, num_frames - 1, w, h))
+	ax.set_title('Frame #{}/{}, {}x{}px'.format(sl_ax_frame_num.val, num_frames - 1, w, h))
 	plt.draw()
 
 	return
@@ -90,19 +90,22 @@ if __name__ == '__main__':
 		ext = str(args.ext).replace('.', '')
 
 		if frames_folder is None:
-			print('\nFrames folder not provided!')
+			print()
+			print(tag_string('error', 'Frames folder not provided!'))
 			input('\nPress ENTER/RETURN to exit...')
 			exit()
 		elif ext is None:
-			print('\nNo frame extension provided!')
+			print()
+			print(tag_string('error', 'No frame extension provided!'))
 			input('\nPress ENTER/RETURN to exit...')
 			exit()
 
-		frames_list = glob.glob(r'{}/*.{}'.format(frames_folder, ext))
+		frames_list = glob('{}/*.{}'.format(frames_folder, ext))
 		num_frames = len(frames_list)
 
 		if num_frames == 0:
-			print('\nNo frames were found in folder [{0}] with extension [{1}]'.format(frames_folder, ext))
+			print()
+			print(tag_string('error', 'No frames were found in folder [{0}] with extension [{1}]'.format(frames_folder, ext)))
 			input('\nPress ENTER/RETURN to exit...')
 			exit()
 
@@ -139,13 +142,14 @@ if __name__ == '__main__':
 			mng = plt.get_current_fig_manager()
 			mng.window.state('zoomed')
 			mng.set_window_title('Inspect frames')
-		except:
+		except Exception:
 			pass
 
-		ax.set_title(r'Frame #0/{}, {}x{}px'.format(num_frames - 1, w, h))
+		ax.set_title('Frame #0/{}, {}x{}px'.format(num_frames - 1, w, h))
 		plt.show()
 
 	except Exception as ex:
-		print('\n[EXCEPTION] The following exception has occurred: \n\n'
-		      '  {}'.format(ex))
-		input('\nPress ENTER/RETURN to exit...')
+		print()
+		print(tag_string('exception', 'The following exception has occurred: \n'))
+		print('  {}'.format(ex))
+		input('\nPress ENTER/RETURN key to exit...')

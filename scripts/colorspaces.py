@@ -23,20 +23,26 @@ try:
 	from __init__ import *
 	from matplotlib.widgets import Slider
 	from sys import exit
+	from glob import glob
+	from class_console_printer import tag_string
 
-	import glob
 	import matplotlib.pyplot as plt
 
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-		  '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
 
 
-def snr(a):
-	m = np.mean(a)
-	sd = np.std(a)
+def snr(x: np.ndarray) -> float:
+	"""
+	Calculate signal-to-noise ratio of :x:.
+	"""
+	
+	m = np.mean(x)
+	sd = np.std(x)
 	return m/sd
 
 
@@ -80,7 +86,11 @@ def keypress(event):
 	update_frame(sl_ax_frame_num.val)
 
 
-def get_colospaces(path, xlim, ylim):
+def get_colospaces(path: str, xlim: list, ylim: list):
+	"""
+	Update plot with new colorspace channels.
+	"""
+
 	img_bgr = cv2.imread(path)
 	img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
 	img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
@@ -118,6 +128,10 @@ def get_colospaces(path, xlim, ylim):
 
 
 def on_lims_change(event_ax):
+	"""
+	Matplotlib event to connect all axes to zoom and pan simultaneously.
+	"""
+	
 	global xlim
 	global ylim
 
@@ -151,7 +165,7 @@ if __name__ == '__main__':
 		parser.add_argument('--ext', type=str, help='Path to image file')
 		args = parser.parse_args()
 
-		frames_list = glob.glob('{}/*.{}'.format(args.folder, args.ext))
+		frames_list = glob('{}/*.{}'.format(args.folder, args.ext))
 		num_frames = len(frames_list)
 		first_frame = cv2.imread(frames_list[0], 0)
 
@@ -247,12 +261,13 @@ if __name__ == '__main__':
 			mng = plt.get_current_fig_manager()
 			mng.window.state('zoomed')
 			mng.set_window_title('Inspect frames')
-		except:
+		except Exception:
 			pass
 
 		plt.show()
 
 	except Exception as ex:
-		print('\n[EXCEPTION] The following exception has occurred: \n\n'
-		      '  {}'.format(ex))
-		input('\nPress ENTER/RETURN to exit...')
+		print()
+		print(tag_string('exception', 'The following exception has occurred: \n'))
+		print('  {}'.format(ex))
+		input('\nPress ENTER/RETURN key to exit...')

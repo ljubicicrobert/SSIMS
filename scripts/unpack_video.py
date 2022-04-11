@@ -21,21 +21,24 @@ Created by Robert Ljubicic.
 
 try:
 	from __init__ import *
-	from os import path, makedirs
+	from os import path
 	from math import log
+	from class_console_printer import Console_printer, tag_string
+	from class_progress_bar import Progress_bar
+	from feature_tracking import fresh_folder
 
 except Exception as ex:
-	print('\n[EXCEPTION] Import failed: \n\n'
-		  '  {}'.format(ex))
-	input('\nPress ENTER/RETURN to exit...')
+	print()
+	print(tag_string('exception', 'Import failed: \n'))
+	print('  {}'.format(ex))
+	input('\nPress ENTER/RETURN key to exit...')
 	exit()
 
 
-separator = '---'
-MAX_FRAMES_DEFAULT = 30*60*60*24
+MAX_FRAMES_DEFAULT = 60**3
 
 
-def get_camera_parameters(path):
+def get_camera_parameters(path: str) -> tuple:
 	"""
 	Retreives camera parameters from .cpf file (INI format).
 
@@ -71,9 +74,9 @@ def get_camera_parameters(path):
 	return camera_matrix, distortion
 
 
-def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbose=False,
+def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg',
 				  start=0, start_num=0, end=MAX_FRAMES_DEFAULT, qual=95, scale=None, interp=cv2.INTER_LINEAR,
-				  cm=None, dist=None) -> bool:
+				  camera_matrix=None, dist=None, cp=None, pb=None, verbose=False,) -> bool:
 	"""
 	Extracts all num_frames from a video to separate images. Optionally writes to a specified folder,
 	creates one if it does not exist. If no folder is specified, it writes to the parent folder.
@@ -84,68 +87,78 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 							parent folder. Creates a folder if it does not already exist.
 	:param frame_prefix:	Default prefix for the image files. Default is 'frame'.
 	:param ext: 			Extension for the image files. Should be a string, without the leading dot. Default is 'jpg'.
-	:param verbose: 		Whether to use a verbose output. Default is False.
 	:param start:			Starting frame. Default is 0, i.e. the first frame.
 	:param start_num:		Frame numbering sequence start. Default is 0.
 	:param end:				End frame MAX_FRAMES_DEFAULT global.
 	:param qual:			Output image quality in range (1-100). Default is 95.
 	:param scale:			Scale parameter for the output images. Default is None, which preserves the original size.
 	:param interp:			Interpolation algorithm for image resizing from cv2 package. Default is cv2.INTER_LINEAR.
-	:param cm:				Camera matrix. If None, no camera rectification will be performed.
+	:param camera_matrix:	Camera matrix. If None, no camera rectification will be performed.
 							Note that parameters [fx, fy, cx, cy] are divided by image size so they are dimensionless here.
 	:param dist:			Camera distortion parameters. If None, no camera rectification will be performed.
+	:param pb:				Progress bar writer object.
+	:param cp:				Console printer writer object.
+	:param verbose: 		Whether to use a verbose output. Default is False.
 	:return: 				True (if success) or False (if error).
 	"""
 
 	if not path.exists(video):
-		print('[ERROR] Video file not found at {}'.format(video))
+		print(tag_string('error', 'Video file not found at {}'.format(video)))
 		input('\nPress ENTER/RETURN to exit...')
 		exit()
 
 	vidcap = cv2.VideoCapture(video)
-	numFrames = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
+	num_frames_total = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 	vidcap.set(1, start)
 	success, image = vidcap.read()
 
 	height, width = image.shape[:2]
 
 	if verbose:
-		print('[BEGIN] Starting VIDEOTOFRAMES '.ljust(len(separator), '-'))
-		print('[INFO] Starting extraction of frames from', video, 'starting from frame', start)
+		print(tag_string('start', 'Starting frame extraction'))
+		print(tag_string('info', 'Extraction of frames from [{}] starting from frame {}'.format(video, start)))
+		print()
 
 	i = start
 	j = start_num
 	success = True
 	size = 0
 
-	if end is None:
+	if not end:
 		end = MAX_FRAMES_DEFAULT
 
+	num_frames_to_extract = end - start
+
+	if cp and pb:
+		pb.set_total(num_frames_to_extract)
+
 	num_len = int(log(end-start, 10)) + 1
+	fresh_folder(folder, ext=ext)
 
 	while success and i < end:  # If new frame exists
+
 		if folder is None:
 			n = str(j).zfill(num_len)
-			save_str = '{}{}.ext'.format(frame_prefix, n, ext)
+			save_str = '{}{}.{}'.format(frame_prefix, n, ext)
 		else:
-			if not path.exists(folder):  # Create :folder: if it does not already exist
-				makedirs(folder)
-
 			n = str(j).zfill(num_len)
 			save_str = '{}/{}{}.{}'.format(folder, frame_prefix, n, ext)
 
-		if cm is not None and dist is not None:
-			cm[0, 0] = cm[0, 0] * width			# fx
-			cm[1, 1] = cm[1, 1] * width			# fy
-			cm[0, 2] = cm[0, 2] * width			# cx
-			cm[1, 2] = cm[1, 2] * width		    # cy
-			image = cv2.undistort(image, cm, dist)
+		if camera_matrix is not None and dist is not None:
+			camera_matrix[0, 0] = camera_matrix[0, 0] * width			# fx
+			camera_matrix[1, 1] = camera_matrix[1, 1] * width			# fy
+			camera_matrix[0, 2] = camera_matrix[0, 2] * width			# cx
+			camera_matrix[1, 2] = camera_matrix[1, 2] * width		    # cy
+			image = cv2.undistort(image, camera_matrix, dist)
 
 		if scale is not None and scale != 1.0:
 			image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=interp)
 
 		if verbose:
-			print('[INFO] Extracting frame: {}'.format(i))
+			if cp and pb:
+				cp.single_line(pb.get(i - start))
+			else:
+				print(tag_string('info', 'Extracting frame: {}'.format(i)))
 
 		if ext.lower() in ['jpg', 'jpeg']:
 			cv2.imwrite(save_str, image,
@@ -166,15 +179,14 @@ def videoToFrames(video: str, folder='.', frame_prefix='frame', ext='jpg', verbo
 		j += 1
 
 	if verbose:
-		print(separator)
-		print('[END] Images written to folder {}/'.format(folder))
-		print('[END] Total number of extracted images is {}'.format(i-start))
-		print('[END] Total size of extracted images is {} MB'.format(round(size, 2)))
-		print(separator)
+		print()
+		print(tag_string('end', 'Images written to folder [{}]'.format(folder)))
+		print(tag_string('end', 'Total number of extracted images is {}'.format(i-start)))
+		print(tag_string('end', 'Total size of extracted images is {} MB'.format(round(size, 2))))
 
 	vidcap.release()  # Clear video from memory
 
-	if i == numFrames or i == end + 1:
+	if i == num_frames_total or i == end + 1:
 		return True
 	else:
 		return False
@@ -192,8 +204,8 @@ if __name__ == '__main__':
 
 		try:
 			cfg.read(args.cfg, encoding='utf-8-sig')
-		except:
-			print('[ERROR] There was a problem reading the configuration file!\nCheck if project has valid configuration.')
+		except Exception:
+			print(tag_string('error', 'There was a problem reading the configuration file!\nCheck if project has valid configuration.'))
 			exit()
 
 		video_path = cfg.get(section, 'VideoPath')
@@ -201,27 +213,39 @@ if __name__ == '__main__':
 		results_folder = cfg.get(section, 'FramesFolder')
 		remove_distortion = int(cfg.get(section, 'Undistort'))
 
+		vidcap = cv2.VideoCapture(video_path)
+		num_frames_total = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
+		vidcap.release()
+
+		unpack_end = int(cfg.get(section, 'End', fallback=str(num_frames_total)))
+
 		camera_matrix, distortion = get_camera_parameters('{}/camera_parameters.txt'.format(video_folder))\
 										if remove_distortion else None, None
 
-		videoToFrames(video=		video_path,
-					  folder=		results_folder,
-					  frame_prefix=	cfg.get(section, 'Prefix', fallback=''),
-					  ext=			cfg.get(section, 'Extension', fallback='jpg'),
-					  qual=			int(cfg.get(section, 'Quality', fallback='95')),
-					  scale=		float(cfg.get(section, 'Scale', fallback='1.0')),
-					  start=		int(cfg.get(section, 'Start', fallback='0')),
-					  start_num=	int(cfg.get(section, 'StartNum', fallback='0')),
-					  end=			int(cfg.get(section, 'End', fallback='2592000')),
-					  cm=			camera_matrix,
-					  dist=			distortion,
-					  verbose=True,
+		console_printer = Console_printer()
+		progress_bar = Progress_bar(total=1, prefix=tag_string('info', 'Extracting frame '))
+
+		videoToFrames(video=		 video_path,
+					  folder=		 results_folder,
+					  frame_prefix=	 cfg.get(section, 'Prefix', fallback=''),
+					  ext=			 cfg.get(section, 'Extension', fallback='jpg'),
+					  qual=			 int(cfg.get(section, 'Quality', fallback='95')),
+					  scale=		 float(cfg.get(section, 'Scale', fallback='1.0')),
+					  start=		 int(cfg.get(section, 'Start', fallback='0')),
+					  start_num=	 int(cfg.get(section, 'StartNum', fallback='0')),
+					  end=			 unpack_end,
+					  camera_matrix= camera_matrix,
+					  dist=			 distortion,
+					  pb=			 progress_bar,
+					  cp=			 console_printer,
+					  verbose=		 True,
 					  )
 
 		print('\a')
-		input('Press ENTER/RETURN to exit...')
+		input('\nPress ENTER/RETURN to exit...')
 
 	except Exception as ex:
-		print('\n[EXCEPTION] The following exception has occurred: \n\n'
-			  '  {}'.format(ex))
-		input('\nPress ENTER/RETURN to exit...')
+		print()
+		print(tag_string('exception', 'The following exception has occurred: \n'))
+		print('  {}'.format(ex))
+		input('\nPress ENTER/RETURN key to exit...')
