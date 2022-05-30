@@ -1,5 +1,6 @@
 # **[Deprecated]** SSIMS: Preprocessing tool for UAV image velocimetry
-# See [SSIMS Flow](https://github.com/ljubicicrobert/SSIMS-Flow) for new versions
+
+> See [SSIMS Flow](https://github.com/ljubicicrobert/SSIMS-Flow) for new versions
 
 Complete preprocessing tool for UAV image velocimetry - unpacking, filtering, stabilization, orthorectification and video creation. Video stabilization algorithm is based on _Structural Similarity Index (SSIM)_ metric. Developed in cooperation with the COST Action HARMONIOUS (CA16219, funded by the European Cooperation in Science and Technology - COST Association).
 
